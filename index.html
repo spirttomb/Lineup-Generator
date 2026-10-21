@@ -8,8 +8,7 @@
     <style>
         @font-face {
             font-family: 'Apercu Regular Pro';
-            src: url('apercu_regular_pro.otf') format('opentype'),
-                 url('https://spirttomb.github.io/Checklist-Tracker/apercu_regular_pro.otf') format('opentype');
+            src: url('apercu_regular_pro.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -240,6 +239,24 @@
         .task-icon.cater { background: #fce7f3; color: #be185d; }
         .task-icon.train { background: #ccfbf1; color: #0f766e; }
         .task-icon.close { background: #fce7f3; color: #9d174d; }
+        .loc-name { font-weight: 700; font-size: 0.86rem; margin-right: 0.3rem; }
+        .loc-box { padding: 0.6rem 0 0.4rem; display: flex; flex-direction: column; gap: 0.45rem; }
+        .loc-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .loc-row .field { flex: 1; min-width: 10rem; }
+        .loc-hit { text-align: left; border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 0.45rem 0.6rem; cursor: pointer; font-size: 0.85rem; color: var(--ink); }
+        .loc-hit:hover { border-color: var(--navy-800); }
+        .loc-hit small { color: var(--muted); }
+        .weather-line b { color: var(--ink); }
+        .import-text { width: 100%; min-height: 160px; resize: vertical; font: 0.85rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 0.7rem; border: 1.5px solid var(--line-strong); border-radius: 12px; background: #fff; color: var(--ink); }
+        .import-sum { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0 0.4rem; }
+        .import-sum span { background: var(--tint); border: 1px solid var(--line); border-radius: 999px; padding: 0.22rem 0.65rem; font-size: 0.78rem; font-weight: 700; }
+        .import-list { max-height: 300px; overflow-y: auto; border-top: 1px solid var(--line); margin-bottom: 0.9rem; }
+        .import-row { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0.5rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--line); font-size: 0.84rem; }
+        .import-row .from { color: var(--muted); font-size: 0.78rem; }
+        .import-row .new { color: #b45309; font-weight: 700; font-size: 0.74rem; }
+        .import-row .dp { font-size: 0.72rem; font-weight: 800; color: var(--navy-800); white-space: nowrap; }
+        .import-tag { font-size: 0.68rem; font-weight: 800; padding: 0.08rem 0.4rem; border-radius: 999px; margin-left: 0.3rem; background: #fef3c7; color: #92400e; }
+        .import-tag.trainee { background: #ccfbf1; color: #0f766e; }
         .tracker-box { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-start; padding: 0.75rem 0.85rem; margin-bottom: 0.8rem; background: var(--tint); border: 1px solid var(--line); border-radius: 12px; }
         .tracker-line { font-size: 0.85rem; color: var(--ink); }
         .tracker-line.muted { color: var(--muted); font-size: 0.8rem; }
@@ -613,6 +630,17 @@
     </div>
 </div>
 
+<!-- Import a roster pasted from HotSchedules -->
+<div class="modal-overlay" id="importModal" onclick="if(event.target===this) closeImport()">
+    <div class="sheet">
+        <div class="sheet-head">
+            <h3>Paste a Roster</h3>
+            <button type="button" class="sheet-close" onclick="closeImport()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="sheet-body" id="importBody"></div>
+    </div>
+</div>
+
 <!-- Call offs -->
 <div class="modal-overlay" id="calloffModal" onclick="if(event.target===this) closeCallOffs()">
     <div class="sheet">
@@ -926,7 +954,8 @@ const DEFAULT_RULES = {
     sweepEvery: 240,
     rush1From: "11:30", rush1To: "13:30", rush2From: "17:00", rush2To: "19:00",
     open: "06:30", close: "22:00", insideClose: "21:00",
-    leadersInside: true
+    leadersInside: true,
+    storeName: "Utica, MI", storeLat: 42.6261, storeLon: -83.0335   // for the weather (auto outside rotation)
 };
 // Leaders stay off Cash / iPOS when someone else can go out (a strong preference, never leaves outside empty)
 let LEADERS_INSIDE = true;
@@ -1125,7 +1154,8 @@ function buildLineup(st, ratings, seed) {
     const closeTrain = [];   // trainings that run into closing: the trainee follows the trainer's closing jobs
     (st.trainings || []).forEach((tr, i) => {
         const closeJob = /^close(10)?:/.test(tr.pos || "");
-        if (!tr.trainee || !tr.trainer || (!POS_INFO[tr.pos] && !closeJob)) return;
+        if (!tr.trainee) return;
+        if (!tr.trainer || (!POS_INFO[tr.pos] && !closeJob)) { warnings.push(`${tr.trainee.trim()}'s training needs ${!tr.trainer && !tr.pos ? "a position and a trainer" : !tr.trainer ? "a trainer" : "a position"} (Training card).`); return; }
         let a = norm(tr.start), b = norm(tr.end);
         if (a === null || b === null) return;
         if (b <= a) b += 1440;
@@ -2256,8 +2286,9 @@ function newState(dp) {
         roster: [], defaultShift: { start: d.start, end: d.end },
         lemonade: dp === "AM" ? [DAYPART_SPLIT] : [], sweep: { on: true }, ice: { on: !!d.iceOn },
         caterings: [], trainings: [], moves: [], rules: loadRules(),
-        breakOverrides: {}, taskOverrides: {}, rotation: 0, lock: null, savedId: null,
-        closing: { on: true, prefs: {}, swaps: [] }
+        breakOverrides: {}, taskOverrides: {}, rotation: 0, rotationAuto: true, lock: null, savedId: null,
+        closing: { on: true, prefs: {}, swaps: [] },
+        leadersExtra: []   // the Leadership section of a pasted schedule
     };
 }
 
@@ -2273,7 +2304,7 @@ function draftKey(dp) { return `lineupDraft:${todayIso()}:${dp}`; }
 function upgradeState(st, dp) {
     const base = newState(dp);
     const out = Object.assign({}, base, st || {});
-    ["roster", "lemonade", "caterings", "trainings", "moves"].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
+    ["roster", "lemonade", "caterings", "trainings", "moves", "leadersExtra"].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
     ["breakOverrides", "taskOverrides"].forEach(k => { if (!out[k] || typeof out[k] !== "object") out[k] = {}; });
     out.sweep = Object.assign({}, base.sweep, out.sweep || {});
     out.ice = Object.assign({}, base.ice, out.ice || {});
@@ -2518,7 +2549,11 @@ async function findSaved(dp, dateIso) {
 // =====================================================================
 // "leader", "Shift Leader", "Manager", "Director"… all count as leaders
 function isLeaderRole(role) { return /lead|manag|director|supervis|owner|operator/i.test(String(role || "")); }
-function leaderNames() { return Object.keys(STAFF).filter(n => isLeaderRole(STAFF[n].role)); }
+function leaderNames() {
+    const fromStaff = Object.keys(STAFF).filter(n => isLeaderRole(STAFF[n].role));
+    const extra = (state && state.leadersExtra) || [];
+    return [...new Set([...fromStaff, ...extra])];
+}
 
 function startStaffLoad() {
     staffReady = false;
@@ -2563,6 +2598,7 @@ function setDaypart(dp, initial) {
     zoom = null;
     renderAll();
     checkSavedLineup();
+    if (!initial) refreshWeather();
 }
 
 const wideMQ = window.matchMedia ? window.matchMedia("(min-width: 1200px)") : { matches: false };
@@ -2653,6 +2689,7 @@ function renderRoster() {
                     </div>`}
                 </div>
                 <div class="row-actions">
+                    <button type="button" class="link-btn" onclick="openImport()">Paste from HotSchedules</button>
                     <button type="button" class="link-btn" onclick="sortRoster()">Sort by start time</button>
                     <button type="button" class="link-btn danger" onclick="clearRoster()">Clear roster</button>
                 </div>
@@ -2793,8 +2830,8 @@ function renderRoster() {
                 </div>
                 <div class="opt">
                     <div class="opt-label">Outside rotation</div>
-                    <div class="seg">${[[0, "Off"], [30, "30 min"], [60, "1 hr"], [120, "2 hr"]].map(([v, l]) => `<button type="button" class="${(+state.rotation || 0) === v ? "on" : ""}" onclick="setRotation(${v})">${l}</button>`).join("")}</div>
-                    <p class="opt-help">For hot or cold weather</p>
+                    <div class="seg"><button type="button" class="${state.rotationAuto ? "on" : ""}" onclick="setRotationAuto()">Auto</button>${[[0, "Off"], [30, "30 min"], [60, "1 hr"], [120, "2 hr"]].map(([v, l]) => `<button type="button" class="${!state.rotationAuto && (+state.rotation || 0) === v ? "on" : ""}" onclick="setRotation(${v})">${l}</button>`).join("")}</div>
+                    <p class="opt-help" id="weatherHelp">${weatherHelpHtml()}</p>
                 </div>
                 ${rulesHtml()}
             </div>
@@ -3048,6 +3085,323 @@ function resetClosingSwaps() {
     generate();
     updateHero();
     renderLineup();
+}
+
+// =====================================================================
+// PASTE A ROSTER (HotSchedules "schedule by day" report)
+// =====================================================================
+// Lines like "Akira   Hagler<tab>2:00 PM<tab>10:00 PM" under section headers
+// ("Front of House", "Leadership", "Training"; Back of House is skipped)
+function hsTime(t) {
+    const m = String(t).trim().match(/^(\d{1,2})(?::(\d{2}))?\s*([ap])\.?\s*m?\.?$/i);
+    if (!m) return null;
+    let h = +m[1] % 12; if (/p/i.test(m[3])) h += 12;
+    return `${String(h).padStart(2, "0")}:${m[2] || "00"}`;
+}
+function parseHotSchedules(text) {
+    const out = [];
+    let section = "foh";
+    const T = String.raw`\d{1,2}(?::\d{2})?\s*[AaPp]\.?\s*[Mm]?\.?`;
+    const lineRe = new RegExp(`^(.*?)\\s+(${T})\\s*(?:-|–|to)?\\s*(${T})\\s*$`);
+    String(text || "").split(/\r?\n/).forEach(raw => {
+        const line = raw.replace(/ /g, " ").trim();
+        if (!line) return;
+        const m = line.match(lineRe);
+        if (!m) {
+            const l = line.toLowerCase();
+            if (/back of house|\bboh\b|kitchen/.test(l)) section = "boh";
+            else if (/lead|manag|director|supervis/.test(l)) section = "lead";
+            else if (/train/.test(l)) section = "train";
+            else if (/front of house|\bfoh\b/.test(l)) section = "foh";
+            return;
+        }
+        const words = m[1].trim().split(/\s+/);
+        const start = hsTime(m[2]), end = hsTime(m[3]);
+        if (!words[0] || !start || !end) return;
+        out.push({ first: words[0], last: words.slice(1).join(" "), start, end, section, raw: `${words.join(" ")}` });
+    });
+    return out;
+}
+// "Akira Hagler" -> the staff list's "Akira H" (or "Akira Hagler", or just "Lamya"); null if no clear match
+function matchStaffName(first, last, staff) {
+    const F = first.toLowerCase();
+    const L = last.replace(/[,.]/g, " ").replace(/\b(jr|sr|ii|iii|iv)\b/gi, " ").trim().toLowerCase();
+    const one = list => list.length === 1 ? list[0] : null;
+    const split = n => { const w = n.toLowerCase().replace(/\./g, "").split(/\s+/); return [w[0], w.slice(1).join(" ")]; };
+    return one(staff.filter(n => n.toLowerCase() === `${first} ${last}`.toLowerCase()))
+        || one(staff.filter(n => { const [a, b] = split(n); return a === F && b && L && (L === b || L.startsWith(b) || L.split(/[\s-]+/).some(w => w.startsWith(b))); }))
+        || one(staff.filter(n => n.toLowerCase() === F));
+}
+function importPlan(text) {
+    const rows = parseHotSchedules(text).filter(r => r.section !== "boh");
+    const staff = staffNameList();
+    const used = new Set();
+    rows.forEach(r => {
+        let name = matchStaffName(r.first, r.last, staff);
+        r.known = !!name;
+        if (!name) {
+            // not on the staff list: "First L", with more of the last name if that's taken
+            const L = r.last.replace(/[^A-Za-z]/g, "");
+            name = L ? `${r.first} ${L[0].toUpperCase()}` : r.first;
+            for (let k = 2; used.has(name.toLowerCase()) && k <= L.length; k++) name = `${r.first} ${L[0].toUpperCase()}${L.slice(1, k).toLowerCase()}`;
+        }
+        if (used.has(name.toLowerCase())) name = `${r.first} ${r.last}`;
+        used.add(name.toLowerCase());
+        r.name = name;
+        const s = toMin(r.start), e0 = toMin(r.end), e = e0 <= s ? e0 + 1440 : e0, split = toMin(DAYPART_SPLIT);
+        r.am = s < split && e > toMin(STORE_HOURS.open);
+        r.pm = e > split;
+    });
+    return rows;
+}
+let importMode = "replace";
+function openImport() {
+    importMode = "replace";
+    document.getElementById("importBody").innerHTML = `
+        <p class="sheet-help" style="margin-top:0">In HotSchedules, open the day's schedule report, select the names and times, copy, and paste here. One paste fills both the AM and PM rosters.</p>
+        <textarea class="import-text" id="importText" placeholder="Front of House&#10;Akira   Hagler&#9;2:00 PM&#9;10:00 PM&#10;…" oninput="renderImportPreview()"></textarea>
+        <div id="importPreview"></div>`;
+    renderImportPreview();
+    document.getElementById("importModal").classList.add("active");
+    setTimeout(() => { const t = document.getElementById("importText"); if (t) t.focus(); }, 50);
+}
+function closeImport() { document.getElementById("importModal").classList.remove("active"); }
+function renderImportPreview() {
+    const box = document.getElementById("importPreview");
+    const ta = document.getElementById("importText");
+    if (!box || !ta) return;
+    const rows = importPlan(ta.value);
+    if (!rows.length) { box.innerHTML = ta.value.trim() ? `<p class="sheet-help" style="color:#b91c1c">No names with times found — paste lines like "Akira Hagler  2:00 PM  10:00 PM".</p>` : ""; return; }
+    const n = f => rows.filter(f).length;
+    const t12 = v => fmtClock(toMin(v));
+    box.innerHTML = `
+        <div class="import-sum">
+            <span>${n(r => r.section !== "train")} people</span>
+            <span>AM ${n(r => r.section !== "train" && r.am)}</span><span>PM ${n(r => r.section !== "train" && r.pm)}</span>
+            ${n(r => r.section === "lead") ? `<span>${n(r => r.section === "lead")} leaders</span>` : ""}
+            ${n(r => r.section === "train") ? `<span>${n(r => r.section === "train")} trainees</span>` : ""}
+            ${n(r => !r.known) ? `<span style="color:#b45309">${n(r => !r.known)} not on the staff list</span>` : ""}
+        </div>
+        <div class="import-list">${rows.map(r => `
+            <div class="import-row">
+                <div><b>${esc(r.name)}</b>${r.section === "lead" ? `<span class="import-tag">Leader</span>` : r.section === "train" ? `<span class="import-tag trainee">Trainee</span>` : ""}
+                    <div class="from">${esc(r.raw)}${r.known ? "" : ` · <span class="new">not on the staff list</span>`}</div></div>
+                <div>${t12(r.start)} – ${t12(r.end)}</div>
+                <div class="dp">${[r.am ? "AM" : "", r.pm ? "PM" : ""].filter(Boolean).join(" + ")}</div>
+            </div>`).join("")}</div>
+        <div class="seg" style="margin-bottom:0.8rem">
+            <button type="button" class="${importMode === "replace" ? "on" : ""}" onclick="importMode='replace'; renderImportPreview()">Replace today's rosters</button>
+            <button type="button" class="${importMode === "add" ? "on" : ""}" onclick="importMode='add'; renderImportPreview()">Add to them</button>
+        </div>
+        ${n(r => r.section === "train") ? `<p class="sheet-help" style="margin:0 0 0.8rem">Trainees go on the Training card — pick a position and a trainer for each.</p>` : ""}
+        <button type="button" class="btn-primary block" onclick="applyImport()">${ICON.users} Import ${rows.length} ${rows.length === 1 ? "person" : "people"}</button>`;
+}
+function applyImport() {
+    const ta = document.getElementById("importText");
+    const rows = importPlan(ta ? ta.value : "");
+    if (!rows.length) return;
+    const SPLIT = toMin(DAYPART_SPLIT);
+    const counts = {};
+    ["AM", "PM"].forEach(dp => {
+        // the open daypart is edited in place; the other one through its saved draft
+        let st = state;
+        if (dp !== state.daypart) {
+            let o = null;
+            try { o = JSON.parse(localStorage.getItem(draftKey(dp))); } catch (e) {}
+            st = upgradeState(o && o.state ? o.state : newState(dp), dp);
+        }
+        const inDp = r => dp === "AM" ? r.am : r.pm;
+        const people = rows.filter(r => r.section !== "train" && inDp(r));
+        const trainees = rows.filter(r => r.section === "train" && inDp(r));
+        const leaders = rows.filter(r => r.section === "lead" && inDp(r)).map(r => r.name);
+        const entry = r => {
+            const e = { name: r.name, start: r.start, end: r.end, floater: false };
+            if (dp === "PM" && toMin(r.start) <= SPLIT) { e.at2 = ""; e.brk = "auto"; }   // here at 2:00
+            return e;
+        };
+        const oldTr = st.trainings || [];
+        const trEntry = r => {
+            const was = oldTr.find(x => (x.trainee || "").toLowerCase() === r.name.toLowerCase());
+            return { trainee: r.name, pos: was ? was.pos : "", trainer: was ? was.trainer : "", start: r.start, end: r.end };
+        };
+        if (importMode === "replace") {
+            st.roster = people.map(entry);
+            st.trainings = trainees.map(trEntry);
+            st.leadersExtra = leaders;
+            st.moves = []; st.lock = null; st.breakOverrides = {}; st.taskOverrides = {}; st.savedId = null;
+            if (st.closing) { st.closing.swaps = []; delete st.closing.sent; }
+        } else {
+            people.forEach(r => {
+                const i = st.roster.findIndex(x => x.name.toLowerCase() === r.name.toLowerCase());
+                if (i >= 0) Object.assign(st.roster[i], { start: r.start, end: r.end, calledOff: false });
+                else st.roster.push(entry(r));
+            });
+            trainees.forEach(r => {
+                const i = st.trainings.findIndex(x => (x.trainee || "").toLowerCase() === r.name.toLowerCase());
+                if (i >= 0) Object.assign(st.trainings[i], { start: r.start, end: r.end });
+                else st.trainings.push(trEntry(r));
+            });
+            st.leadersExtra = [...new Set([...(st.leadersExtra || []), ...leaders])];
+        }
+        st.roster.sort((a, b) => (toMin(a.start) ?? 9999) - (toMin(b.start) ?? 9999) || a.name.localeCompare(b.name));
+        counts[dp] = st.roster.length;
+        if (st !== state) { try { localStorage.setItem(draftKey(dp), JSON.stringify({ state: st, result: null })); } catch (e) {} }
+    });
+    closeImport();
+    dirty = true;
+    markChanged();
+    renderRoster();
+    refreshPickers();
+    const nt = rows.filter(r => r.section === "train").length, nl = rows.filter(r => r.section === "lead").length;
+    showStatusMessage(`Imported — AM ${counts.AM} people, PM ${counts.PM}${nl ? `, ${nl} leaders` : ""}${nt ? `, ${nt} trainees (pick their position and trainer on the Training card)` : ""}.`, "success", 7000);
+}
+
+// =====================================================================
+// WEATHER → AUTO OUTSIDE ROTATION
+// =====================================================================
+// Cold: 45°F and under → every 2 hr, 32°F and under → every 30 min.
+// Hot: 90°F and up → every 2 hr, 100°F and up → every 30 min. Otherwise no rotation.
+// Uses the forecast for this lineup's hours (AM: open – 2:00, PM: 2:00 – close) from Open-Meteo (free, no key).
+function rotationForTemps(lo, hi) {
+    const cold = lo <= 32 ? 30 : lo <= 45 ? 120 : 0;
+    const hot = hi >= 100 ? 30 : hi >= 90 ? 120 : 0;
+    const picks = [cold, hot].filter(Boolean);
+    return picks.length ? Math.min(...picks) : 0;
+}
+const weatherCache = {};   // "lat,lon,date" -> { hours: [{min, temp}], at } | { error }
+let weatherLoading = null;
+function weatherKey(date) { const r = Object.assign({}, DEFAULT_RULES, state.rules || {}); return `${(+r.storeLat).toFixed(3)},${(+r.storeLon).toFixed(3)},${date}`; }
+async function fetchWeather(date, force) {
+    const r = Object.assign({}, DEFAULT_RULES, state.rules || {});
+    if (r.storeLat === "" || r.storeLat === null || isNaN(+r.storeLat)) return null;
+    const key = weatherKey(date);
+    const have = weatherCache[key];
+    if (!force && have && (have.hours ? Date.now() - have.at < 60 * 60 * 1000 : Date.now() - have.at < 2 * 60 * 1000)) return have;
+    try {
+        const cached = JSON.parse(localStorage.getItem("lineupWeather:" + key) || "null");
+        if (!force && cached && Date.now() - cached.at < 60 * 60 * 1000) { weatherCache[key] = cached; return cached; }
+    } catch (e) {}
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${(+r.storeLat).toFixed(4)}&longitude=${(+r.storeLon).toFixed(4)}&hourly=temperature_2m&temperature_unit=fahrenheit&timezone=auto&start_date=${date}&end_date=${date}`;
+    try {
+        const ctl = new AbortController(); const tid = setTimeout(() => ctl.abort(), 10000);
+        const res = await fetch(url, { signal: ctl.signal });
+        clearTimeout(tid);
+        if (!res.ok) throw new Error("bad");
+        const j = await res.json();
+        const times = (j.hourly && j.hourly.time) || [], temps = (j.hourly && j.hourly.temperature_2m) || [];
+        const hours = times.map((t, i) => ({ min: toMin(String(t).slice(11, 16)), temp: temps[i] })).filter(h => h.min !== null && typeof h.temp === "number");
+        if (!hours.length) throw new Error("empty");
+        const out = { hours, at: Date.now() };
+        weatherCache[key] = out;
+        try { localStorage.setItem("lineupWeather:" + key, JSON.stringify(out)); } catch (e) {}
+        return out;
+    } catch (e) {
+        weatherCache[key] = { error: true, at: Date.now() };
+        return weatherCache[key];
+    }
+}
+// The forecast for one daypart's hours → { lo, hi, rot, from, to } (or null when there's no forecast)
+function weatherFor(dp, date) {
+    const w = weatherCache[weatherKey(date)];
+    if (!w || !w.hours) return null;
+    const split = toMin(DAYPART_SPLIT), open = toMin(STORE_HOURS.open), close = toMin(STORE_HOURS.close);
+    const from = dp === "AM" ? open : split, to = dp === "AM" ? split : close;
+    const hrs = w.hours.filter(h => h.min + 60 > from && h.min < to);
+    if (!hrs.length) return null;
+    const lo = Math.round(Math.min(...hrs.map(h => h.temp))), hi = Math.round(Math.max(...hrs.map(h => h.temp)));
+    return { lo, hi, rot: rotationForTemps(lo, hi), from, to };
+}
+const rotLabel = v => !v ? "no rotation" : v >= 60 ? `every ${v / 60} hr` : `every ${v} min`;
+function weatherHelpHtml() {
+    if (!state || !state.rotationAuto) return "For hot or cold weather";
+    const r = Object.assign({}, DEFAULT_RULES, state.rules || {});
+    const w = weatherFor(state.daypart, state.date);
+    const where = esc(r.storeName || "the store");
+    if (w) return `<span class="weather-line">${where}: <b>${w.lo === w.hi ? w.lo + "°F" : `${w.lo}°–${w.hi}°F`}</b> ${fmtClock(w.from)} – ${fmtClock(w.to)} → <b>${rotLabel(w.rot)}</b></span>`;
+    const c = weatherCache[weatherKey(state.date)];
+    if (weatherLoading || !c) return `Checking the weather for ${where}…`;
+    return `Couldn't get the weather for ${where} — using ${rotLabel(+state.rotation || 0)}. <button type="button" class="link-btn" onclick="refreshWeather(true)">Try again</button>`;
+}
+// Fetch the day's weather and, in Auto, set the rotation from it (rebuilding the lineup if it changes and the shift hasn't started)
+async function refreshWeather(force) {
+    if (!state) return;
+    const date = state.date, dp = state.daypart;
+    weatherLoading = fetchWeather(date, force);
+    renderWeatherHelp();
+    await weatherLoading;
+    weatherLoading = null;
+    if (!state || state.date !== date || state.daypart !== dp) return;
+    applyAutoRotation(true);
+    renderWeatherHelp();
+}
+function applyAutoRotation(rebuild) {
+    if (!state || !state.rotationAuto) return false;
+    const w = weatherFor(state.daypart, state.date);
+    if (!w || w.rot === (+state.rotation || 0)) return false;
+    state.rotation = w.rot;
+    saveDraft();
+    // don't reshuffle a lineup that's already under way — say so instead
+    if (rebuild && result && state.roster.length && !rosterProblems()) {
+        if (liveNow() !== null && result.date === todayIso()) showStatusMessage(`The weather now calls for ${rotLabel(w.rot)} outside — tap Regenerate to use it.`, "info", 8000);
+        else { generate(); updateHero(); renderAll(); }
+    } else if (rebuild) renderRoster();
+    return true;
+}
+function renderWeatherHelp() { const el = document.getElementById("weatherHelp"); if (el) el.innerHTML = weatherHelpHtml(); }
+function setRotationAuto() {
+    state.rotationAuto = true;
+    markChanged();
+    applyAutoRotation(false);
+    if (state.roster.length && !rosterProblems()) generate();
+    updateHero();
+    if (isWide()) { renderRoster(); renderLineup(); } else renderRoster();
+    refreshWeather();
+}
+// Store location: search a city / ZIP (Open-Meteo geocoding) or use this device's location
+function openLocation() {
+    const box = document.getElementById("locPicker");
+    if (!box) return;
+    box.innerHTML = `<div class="loc-box">
+        <div class="loc-row"><input type="text" class="field" id="locQuery" placeholder="City or ZIP code" onkeydown="if(event.key==='Enter'){event.preventDefault();searchLocation();}">
+            <button type="button" class="btn-dark sm" onclick="searchLocation()">Find</button></div>
+        <button type="button" class="link-btn" style="align-self:flex-start" onclick="useDeviceLocation()">Use this device's location</button>
+        <div id="locHits"></div></div>`;
+    document.getElementById("locQuery").focus();
+}
+async function searchLocation() {
+    const q = (document.getElementById("locQuery") || {}).value || "";
+    const hits = document.getElementById("locHits");
+    if (!q.trim() || !hits) return;
+    hits.innerHTML = `<p class="opt-help">Searching…</p>`;
+    try {
+        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q.trim())}&count=6&language=en&format=json`);
+        const j = await res.json();
+        const list = (j && j.results) || [];
+        if (!list.length) { hits.innerHTML = `<p class="opt-help">No places found — try the city name.</p>`; return; }
+        window._locHits = list;
+        hits.innerHTML = list.map((x, i) => `<button type="button" class="loc-hit" onclick="pickLocation(${i})">${esc(x.name)}<small> · ${esc([x.admin1, x.country_code].filter(Boolean).join(", "))}</small></button>`).join("");
+    } catch (e) { hits.innerHTML = `<p class="opt-help">Couldn't search right now.</p>`; }
+}
+const US_STATE = { Michigan: "MI", Ohio: "OH", Indiana: "IN", Illinois: "IL", "New York": "NY", California: "CA", Texas: "TX", Florida: "FL", Pennsylvania: "PA", Wisconsin: "WI" };
+function pickLocation(i) {
+    const x = (window._locHits || [])[i];
+    if (!x) return;
+    const st = x.country_code === "US" ? (US_STATE[x.admin1] || x.admin1) : [x.admin1, x.country_code].filter(Boolean).join(", ");
+    setLocation(`${x.name}${st ? ", " + st : ""}`, x.latitude, x.longitude);
+}
+function useDeviceLocation() {
+    if (!navigator.geolocation) { showStatusMessage("This device can't share its location.", "warning"); return; }
+    navigator.geolocation.getCurrentPosition(p => setLocation("This device's location", p.coords.latitude, p.coords.longitude),
+        () => showStatusMessage("Location wasn't shared — search for the city instead.", "warning"), { timeout: 10000 });
+}
+function setLocation(name, lat, lon) {
+    state.rules = Object.assign({}, DEFAULT_RULES, state.rules || {}, { storeName: name, storeLat: +(+lat).toFixed(4), storeLon: +(+lon).toFixed(4) });
+    saveRules(state.rules);
+    rulesOpen = true;
+    markChanged();
+    renderRoster();
+    refreshWeather(true);
+    showStatusMessage(`Store location set to ${name}.`, "success", 3000);
 }
 
 function modeButtons() {
@@ -3460,7 +3814,8 @@ function renderTrainingList() {
                 <span class="mini-label">to</span>
                 <input type="time" class="time-input" step="900" value="${x.end}" onchange="state.trainings[${i}].end=this.value; markChanged()">
             </span>
-            ${x.trainer && !state.roster.some(r => r.name === x.trainer && !r.calledOff) ? `<span class="warn-tag">Add ${esc(x.trainer)} to the roster</span>` : ""}
+            ${!x.pos || !x.trainer ? `<span class="warn-tag">Pick ${!x.pos && !x.trainer ? "a position and trainer" : !x.pos ? "a position" : "a trainer"}</span>`
+                : !state.roster.some(r => r.name === x.trainer && !r.calledOff) ? `<span class="warn-tag">Add ${esc(x.trainer)} to the roster</span>` : ""}
         </div>`).join("");
 }
 
@@ -3526,7 +3881,7 @@ function setMode(m) {
 let rulesOpen = false;
 function rulesHtml() {
     const r = Object.assign({}, DEFAULT_RULES, state.rules || {});
-    const changed = Object.keys(DEFAULT_RULES).filter(k => String(r[k]) !== String(DEFAULT_RULES[k])).length;
+    const changed = Object.keys(DEFAULT_RULES).filter(k => !/^store/.test(k) && String(r[k]) !== String(DEFAULT_RULES[k])).length;
     const sel = (key, opts) => `<select class="time-input sel" onchange="setRule('${key}', +this.value)">${opts.map(([v, l]) => `<option value="${v}" ${+r[key] === v ? "selected" : ""}>${l}</option>`).join("")}</select>`;
     const time = key => `<input type="time" class="time-input" step="900" value="${r[key]}" onchange="setRule('${key}', this.value)">`;
     const hrs = v => (v / 60) % 1 ? `${Math.floor(v / 60)}½ hr` : `${v / 60} hr`;
@@ -3546,6 +3901,9 @@ function rulesHtml() {
                 <div class="rule"><span>Dinner rush</span><span class="rule-times">${time("rush2From")}<span class="mini-label">to</span>${time("rush2To")}</span></div>
                 <div class="rule"><span>Store hours</span><span class="rule-times">${time("open")}<span class="mini-label">to</span>${time("close")}</span></div>
                 <div class="rule"><span>Inside closes <small>(PM)</small></span>${time("insideClose")}</div>
+                <div class="rule"><span>Store location <small>(weather)</small></span>
+                    <span class="rule-times"><span class="loc-name">${esc(r.storeName || "Not set")}</span><button type="button" class="link-btn" onclick="openLocation()">Change</button></span></div>
+                <div id="locPicker"></div>
                 <div class="rule"><span>Keep leaders inside <small>(off Cash &amp; iPOS)</small></span>
                     <div class="seg">${[[true, "On"], [false, "Off"]].map(([v, l]) => `<button type="button" class="${(r.leadersInside !== false) === v ? "on" : ""}" onclick="setRule('leadersInside', ${v})">${l}</button>`).join("")}</div></div>
             </div>
@@ -3564,7 +3922,9 @@ function setRule(key, val) {
 }
 
 function resetRules() {
-    state.rules = Object.assign({}, DEFAULT_RULES);
+    const keep = {};
+    Object.keys(state.rules || {}).filter(k => /^store/.test(k)).forEach(k => { keep[k] = state.rules[k]; });
+    state.rules = Object.assign({}, DEFAULT_RULES, keep);
     saveRules(state.rules);
     rulesOpen = true;
     markChanged();
@@ -3575,6 +3935,7 @@ function resetRules() {
 
 function setRotation(v) {
     state.rotation = v;
+    state.rotationAuto = false;
     markChanged();
     if (state.roster.length && !rosterProblems()) generate();
     updateHero();
@@ -3610,6 +3971,7 @@ function amHandover() {
 
 function generate() {
     if (!state || !state.roster.length) { result = null; dirty = false; return; }
+    if (state.rotationAuto) { const w = weatherFor(state.daypart, state.date); if (w) state.rotation = w.rot; }
     // leaders come from the staff sheet's Role column (trainers are always treated as leaders)
     const leaders = leaderNames();
     result = buildLineup({ ...state, leaders }, RATINGS, state.daypart === "PM" ? amHandover() : null);
@@ -3640,6 +4002,7 @@ async function refreshEverything() {
     showStatusMessage("Refreshing staff and ratings...", "info", 3000);
     const ok = await startStaffLoad();
     await loadRedistribution();
+    await fetchWeather(state.date, true); applyAutoRotation(false);
     if (state && state.roster.length && !rosterProblems()) generate();
     renderAll();
     await checkSavedLineup();
@@ -3674,7 +4037,7 @@ function renderLineup() {
             <div class="card-head">
                 <div>
                     <div class="card-title">${result.daypart} Lineup</div>
-                    <div class="card-sub">${windowLabel(result)} · ${MODES[result.mode] ? MODES[result.mode].long : ""}${result.rotation ? ` · outside rotation every ${result.rotation >= 60 ? result.rotation / 60 + " hr" : result.rotation + " min"}` : ""}${result.date !== todayIso() ? " · " + shortDate(result.date) : ""}</div>
+                    <div class="card-sub">${windowLabel(result)} · ${MODES[result.mode] ? MODES[result.mode].long : ""}${result.rotation ? ` · outside rotation every ${result.rotation >= 60 ? result.rotation / 60 + " hr" : result.rotation + " min"}${state.rotationAuto ? " (weather)" : ""}` : ""}${result.date !== todayIso() ? " · " + shortDate(result.date) : ""}</div>
                 </div>
                 <div class="push head-actions"><button type="button" class="btn-secondary" onclick="openExport()">${ICON.share} Save / Share</button></div>
             </div>
@@ -5271,6 +5634,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!ok) showStatusMessage("Couldn't load the staff list — you can still type names in. Tap ↻ to try again.", "warning", 7000);
     });
     loadRedistribution().then(() => redistLoaded());
+    refreshWeather();
 });
 // The redistribution sheet arrived: rebuild a PM lineup made with other rules
 function redistLoaded() {
