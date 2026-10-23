@@ -110,6 +110,13 @@
         .bd-panel .card-head { position: sticky; top: 0; background: #fff; z-index: 2; border-radius: var(--radius) var(--radius) 0 0; padding-bottom: 0.7rem; }
         .bd-panel .bd-list { border: none; }
         .bd-panel .bd-block.now { background: var(--gold-soft); }
+        .import-leads { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem; margin-bottom: 0.8rem; }
+        .lead-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; justify-content: space-between; padding: 0.6rem 0.75rem; margin-bottom: 0.6rem; border: 1.5px solid var(--line, #e2e8f0); border-radius: 12px; background: var(--gold-soft, #fff8e6); }
+        .lead-line > span { display: grid; gap: 0.1rem; min-width: 0; flex: 1 1 200px; }
+        .lead-line small { color: var(--muted); font-size: 0.75rem; line-height: 1.25; }
+        .lead-line select { flex: 0 1 180px; min-width: 150px; }
+        .now-moves { margin: 0.4rem 0 0; padding-left: 1.3rem; display: grid; gap: 0.45rem; font-weight: 600; font-size: 1rem; }
+        .now-later { margin: 0.3rem 0 0; padding-left: 1.2rem; display: grid; gap: 0.3rem; color: var(--muted, #475569); font-size: 0.92rem; }
         .bd-panel .bd-block.now .bd-time::after { content: "now"; margin-left: 0.5rem; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #92400e; background: #fde68a; padding: 0.1rem 0.4rem; border-radius: 5px; vertical-align: 2px; }
         .bd-panel .bd-actions { padding: 0 1.3rem; margin-bottom: 0.6rem; }
 
@@ -239,6 +246,32 @@
         .task-icon.cater { background: #fce7f3; color: #be185d; }
         .task-icon.train { background: #ccfbf1; color: #0f766e; }
         .task-icon.close { background: #fce7f3; color: #9d174d; }
+        .notes-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+        @media (min-width: 1200px) { .notes-cols { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: start; } .notes-preview { position: sticky; top: 1rem; } }
+        .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.6rem 0.9rem; }
+        .note-field { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.8rem; font-weight: 700; color: var(--muted); }
+        .note-field .field, .note-area { background: #fff; }
+        .note-area { width: 100%; min-height: 70px; resize: vertical; font: inherit; font-size: 0.92rem; padding: 0.6rem 0.75rem; border: 1.5px solid var(--line-strong); border-radius: 12px; color: var(--ink); }
+        .note-src { font-size: 0.76rem; color: var(--muted); font-weight: 600; margin-top: 0.4rem; }
+        .note-src.auto { color: #15803d; margin-top: 0; }
+        .sos-table { display: grid; grid-template-columns: auto 1fr 1fr; gap: 0.45rem 0.6rem; align-items: center; }
+        .sos-table .h { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+        .note-line { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0; border-bottom: 1px solid var(--line); }
+        .note-line input:not([type=time]) { flex: 1; min-width: 0; border: 1px solid transparent; background: transparent; font: inherit; font-size: 0.92rem; padding: 0.3rem 0.4rem; border-radius: 8px; color: var(--ink); }
+        .note-line input:focus { border-color: var(--line-strong); background: #fff; outline: none; }
+        .note-tag { font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.1rem 0.4rem; border-radius: 999px; background: #dcfce7; color: #166534; white-space: nowrap; }
+        .note-add { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.55rem; }
+        .note-add .field, .note-add .sel { flex: 1; min-width: 7rem; }
+        .note-pre { white-space: pre-wrap; font: 0.86rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--tint); border: 1px solid var(--line); border-radius: 12px; padding: 0.9rem; max-height: 70vh; overflow-y: auto; color: var(--ink); }
+        .note-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+        .cater-queue { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; margin: 0 0 0.7rem; }
+        .cq-chip { background: var(--tint); border: 1px solid var(--line); border-radius: 999px; padding: 0.2rem 0.6rem; font-size: 0.8rem; }
+        .cq-chip b { color: #be185d; margin-right: 0.15rem; }
+        .cq-chip small { color: var(--muted); }
+        .cq-rank { font-size: 0.72rem; font-weight: 800; color: #be185d; }
+        .cq-rank.off { color: var(--muted); font-weight: 700; }
+        .cat-sug { margin-top: 0.7rem; border-top: 1px dashed var(--line-strong); padding-top: 0.5rem; }
+        .cat-sug-row { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0.4rem 0; border-bottom: 1px solid var(--line); }
         .loc-name { font-weight: 700; font-size: 0.86rem; margin-right: 0.3rem; }
         .loc-box { padding: 0.6rem 0 0.4rem; display: flex; flex-direction: column; gap: 0.45rem; }
         .loc-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
@@ -255,6 +288,7 @@
         .import-row .from { color: var(--muted); font-size: 0.78rem; }
         .import-row .new { color: #b45309; font-weight: 700; font-size: 0.74rem; }
         .import-row .dp { font-size: 0.72rem; font-weight: 800; color: var(--navy-800); white-space: nowrap; }
+        .hs-map { margin-top: 0.3rem; max-width: 100%; font-size: 0.8rem; padding: 0.25rem 0.4rem; }
         .import-tag { font-size: 0.68rem; font-weight: 800; padding: 0.08rem 0.4rem; border-radius: 999px; margin-left: 0.3rem; background: #fef3c7; color: #92400e; }
         .import-tag.trainee { background: #ccfbf1; color: #0f766e; }
         .tracker-box { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-start; padding: 0.75rem 0.85rem; margin-bottom: 0.8rem; background: var(--tint); border: 1px solid var(--line); border-radius: 12px; }
@@ -489,7 +523,7 @@
             .hero { padding: 1.3rem 1rem 4.25rem; }
             .hero h1 { font-size: 1.6rem; }
             .view-tabs { width: 100%; }
-            .nav-tab { flex: 1; justify-content: center; }
+            .nav-tab { flex: 1 1 0; min-width: 0; justify-content: center; padding: 0.6rem 0.5rem; gap: 0.35rem; white-space: nowrap; }
             .workspace { padding: 0 0.75rem 2rem; }
             .card-head { padding: 1rem 1rem 0.3rem; }
             .card-body { padding: 0.8rem 1rem 1.1rem; }
@@ -540,6 +574,7 @@
         <nav class="view-tabs">
             <button class="nav-tab active" data-view="roster" onclick="setView('roster')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.5A6.5 6.5 0 0 1 21.5 20"/></svg>Roster<span class="tab-count" id="tabCount"></span></button>
             <button class="nav-tab" data-view="lineup" onclick="setView('lineup')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="4.5" cy="12" r="2"/><path d="M6.5 12H10M10 6v12M10 6h4M10 12h4M10 18h4"/><circle cx="17" cy="6" r="2"/><circle cx="17" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg>Lineup</button>
+            <button class="nav-tab" data-view="notes" onclick="setView('notes')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg>Notes</button>
         </nav>
     </div>
 </section>
@@ -547,6 +582,7 @@
 <main class="workspace">
     <div id="rosterPanel"></div>
     <div id="lineupPanel" style="display:none;"></div>
+    <div id="notesPanel" style="display:none;"></div>
 </main>
 
 <!-- Save / Share -->
@@ -652,6 +688,28 @@
     </div>
 </div>
 
+<!-- Add someone mid-shift -->
+<div class="modal-overlay" id="addNowModal" onclick="if(event.target===this) closeAddNow()">
+    <div class="sheet">
+        <div class="sheet-head">
+            <h3>Add Someone</h3>
+            <button type="button" class="sheet-close" onclick="closeAddNow()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="sheet-body" id="addNowBody"></div>
+    </div>
+</div>
+
+<!-- What to do now after a mid-shift change -->
+<div class="modal-overlay" id="nowMovesModal" onclick="if(event.target===this) closeNowMoves()">
+    <div class="sheet">
+        <div class="sheet-head">
+            <h3 id="nowMovesTitle">Do This Now</h3>
+            <button type="button" class="sheet-close" onclick="closeNowMoves()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="sheet-body" id="nowMovesBody"></div>
+    </div>
+</div>
+
 <!-- Ratings -->
 <div class="modal-overlay" id="ratingsModal" onclick="if(event.target===this) closeRatings()">
     <div class="sheet wide-sheet">
@@ -700,6 +758,10 @@ const TRACKER = {
         entry930: "entry.949116749", entry1030: "entry.1340767126" }
 };
 
+// The Change Fund Portal's sheet ("Data" tab): A timestamp, B who, C–N the counts in dollars,
+// Y received, Z deposited, AA "modified of" (a corrected entry replaces the one it names)
+const CHANGE_FUND = { sheetId: "1wziv2JVhSkdABUvgbyOsujHL_cNCTZuvQziu7MX98F8", tab: "Data", countCols: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], receivedCol: 24, depositedCol: 25, modifiedOfCol: 26 };
+
 // priority = the order positions are added as people become available
 const POSITIONS = [
     { name: "Register 1",    group: "FC",      priority: 2,  skill: "Register" },
@@ -726,6 +788,10 @@ const FILL_ORDER = POSITIONS.map((p, i) => ({ ...p, i }))
     .map(p => p.name);
 
 const SKILLS = ["Register", "Bagging", "Drinks", "Window", "Desserts", "Dining Room", "Runner", "Cash", "iPOS"];
+// Headset is scored in the staff sheet right after the position ratings (then Catering).
+// It isn't a position — DT Drinks and DT Bagger 1 wear the headset until iPOS is outside.
+const RATED = SKILLS.concat(["Headset"]);
+const HEADSET_POS = ["DT Drinks", "DT Bagger 1"];
 const SKILL_ALIASES = {
     register: "Register", registers: "Register", reg: "Register", fc: "Register",
     bag: "Bagging", bags: "Bagging", bagging: "Bagging", bagger: "Bagging", baggers: "Bagging",
@@ -734,7 +800,8 @@ const SKILL_ALIASES = {
     dessert: "Desserts", desserts: "Desserts",
     diningroom: "Dining Room", dining: "Dining Room", dr: "Dining Room", lobby: "Dining Room",
     runner: "Runner", running: "Runner", runners: "Runner",
-    cash: "Cash", ipos: "iPOS", ipad: "iPOS", outside: "iPOS"
+    cash: "Cash", ipos: "iPOS", ipad: "iPOS", outside: "iPOS",
+    headset: "Headset", headsets: "Headset", hs: "Headset"
 };
 
 const GROUPS = {
@@ -955,7 +1022,8 @@ const DEFAULT_RULES = {
     rush1From: "11:30", rush1To: "13:30", rush2From: "17:00", rush2To: "19:00",
     open: "06:30", close: "22:00", insideClose: "21:00",
     leadersInside: true,
-    storeName: "Utica, MI", storeLat: 42.6261, storeLon: -83.0335   // for the weather (auto outside rotation)
+    storeName: "Utica, MI", storeLat: 42.6261, storeLon: -83.0335,  // for the weather (auto outside rotation)
+    cateringMode: "auto"   // auto = picked from the catering list; manual = you pick (with suggestions)
 };
 // Leaders stay off Cash / iPOS when someone else can go out (a strong preference, never leaves outside empty)
 let LEADERS_INSIDE = true;
@@ -980,9 +1048,41 @@ function applyRules(r) {
 function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 function toMin(hhmm) { if (!hhmm) return null; const m = String(hhmm).match(/^(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : null; }
 function hhmm(min) { min = ((min % 1440) + 1440) % 1440; return `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`; }
-function fmtT(min) { min = ((min % 1440) + 1440) % 1440; const h = Math.floor(min / 60), m = min % 60; const h12 = h % 12 || 12; return m ? `${h12}${String(m).padStart(2, "0")}` : `${h12}`; }
+// "9:30am", "10am", "12pm" — the times drawn on the lineup
+function fmtT(min) { min = ((min % 1440) + 1440) % 1440; const h = Math.floor(min / 60), m = min % 60; const h12 = h % 12 || 12; return `${h12}${m ? ":" + String(m).padStart(2, "0") : ""}${h < 12 ? "am" : "pm"}`; }
 function fmtClock(min) { min = ((min % 1440) + 1440) % 1440; const h = Math.floor(min / 60), m = min % 60; return `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; }
-function fmtRange(from, to, closeAt) { return `${fmtT(from)}-${to >= closeAt ? "" : fmtT(to)}`; }
+// "9:30am-10am"; on until the end of the lineup = "-2pm" (AM handover) or "-close" (PM)
+function fmtRange(from, to, closeAt) {
+    if (to < closeAt) return `${fmtT(from)}-${fmtT(to)}`;
+    const split = toMin(DAYPART_SPLIT);
+    if (closeAt <= split + 30) return from >= split ? `from ${fmtT(from)}` : `${fmtT(from)}-${fmtT(split)}`;   // AM: the 2:00 handover
+    return `${fmtT(from)}-close`;
+}
+// The lineup shows first names only — unless two people share the same first name (spelled the same)
+const shortCache = new WeakMap();
+function shortNamer(res) {
+    if (!res) return t => t;
+    if (shortCache.has(res)) return shortCache.get(res);
+    const all = new Set();
+    const add = n => { if (n && typeof n === "string") all.add(n.trim()); };
+    (res.people || []).forEach(p => add(p.name));
+    (res.sessions || []).forEach(x => { add(x.trainee); add(x.trainer); });
+    (res.breaks || []).forEach(b => { add(b.name); add(b.cover); add(b.backfill); if (typeof b.trainee === "string") add(b.trainee); });
+    (res.tasks || []).forEach(k => add(k.name));
+    (res.leaders || []).forEach(add);
+    if (res.closing) { (res.closing.block930 || []).concat(res.closing.block1030 || [], res.closing.spots || []).forEach(b => add(b.name)); add(res.closing.lead); }
+    const firstOf = n => n.split(/\s+/)[0];
+    const count = {};
+    all.forEach(n => { const f = firstOf(n); count[f] = (count[f] || 0) + 1; });
+    const map = [...all].filter(n => n.includes(" ") && count[firstOf(n)] === 1).map(n => [n, firstOf(n)])
+        .sort((a, b) => b[0].length - a[0].length);
+    const reEsc = x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = map.length ? new RegExp(`(?<![\\w])(${map.map(([n]) => reEsc(n)).join("|")})(?![\\w])`, "g") : null;
+    const lookup = Object.fromEntries(map);
+    const fn = t => (re && typeof t === "string") ? t.replace(re, m => lookup[m] || m) : t;
+    shortCache.set(res, fn);
+    return fn;
+}
 function round15(m) { return Math.round(m / STEP) * STEP; }
 function durLabel(min) { const h = min / 60; return `${Number.isInteger(h) ? h : h.toFixed(2).replace(/0$/, "")}h`; }
 function businessDate() { return new Date(Date.now() - 4 * 3600 * 1000); }
@@ -1019,6 +1119,7 @@ const ICON = {
     cap: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5M22 9v6"/></svg>',
     swap: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4L3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>',
     list: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>',
+    userplus: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M19 8v6M16 11h6"/></svg>',
     userx: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M17 8l4 4M21 8l-4 4"/></svg>',
     lock: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
     x: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
@@ -1093,12 +1194,16 @@ function buildLineup(st, ratings, seed) {
     const maxConc = runnerSetting === "auto" ? (peak >= 14 ? 2 : 1) : Math.max(1, +runnerSetting);
     const inLunch = (s, e) => [0, 1440].some(off => s < LUNCH_BLOCK[1] + off && e > LUNCH_BLOCK[0] + off);
     const rotEvery = Math.max(0, +st.rotation || 0);
+    // auto weather: the rotation for each hour (only hot/cold hours rotate); otherwise the one setting all day
+    const rotHours = st.rotationAuto && st.rotationHours && typeof st.rotationHours === "object" ? st.rotationHours : null;
+    const rotAt = t => { if (!rotHours) return rotEvery; const h = Math.floor(t / 60) * 60; const v = rotHours[h] ?? rotHours[String(h)]; return v === undefined ? rotEvery : Math.max(0, +v || 0); };
 
     // "Keep what already happened": everything before lock.until is copied from the earlier lineup
     const lock = st.lock && st.lock.until ? st.lock : null;
     const lockUntil = lock ? lock.until : -Infinity;
     const lockAt = (pos, t) => { const seg = ((lock && lock.positions && lock.positions[pos]) || []).find(x => x.from <= t && t < x.to); return seg ? seg.name : null; };
-    const lockedTask = key => lock ? (lock.tasks || []).find(k => k.key === key && k.start < lock.until) || null : null;
+    // keepFuture (adding someone mid-shift): later breaks and tasks stay as they were too, so as little as possible changes
+    const lockedTask = key => lock ? (lock.tasks || []).find(k => k.key === key && (k.start < lock.until || lock.keepFuture)) || null : null;
 
     const tasks = [];
     const busyIntervals = [];
@@ -1106,6 +1211,11 @@ function buildLineup(st, ratings, seed) {
     // fewest people in spots the store can run on: the drive-thru trio, Register 1, and outside once it's out
     const mustStaffAt = t => 4 + (isAM ? ["Cash", "iPOS 1", "iPOS 2"].filter(pos => OPEN_BY[pos] && t >= toMin(OPEN_BY[pos])).length : 3);
     const leaders = new Set(st.leaders || []);
+    // The shift lead: in a spot at open until the crew is there, then out of position. After that only a last
+    // resort, and only on Mobile Drinks, Register 2 or Runner — never a break runner.
+    const shiftLead = st.shiftLead && people.some(p => p.name === st.shiftLead) ? st.shiftLead : null;
+    if (shiftLead) leaders.add(shiftLead);
+    const LEAD_SPOTS = ["Mobile Drinks", "Register 2", "Runner"];
     const overlaps = (a0, a1, b0, b1) => a0 < b1 && b0 < a1;
     const fixedBusy = {};      // name -> [[start, end]] someone can't be on break during (catering, covering a trainer)
     const addFixed = (n, a, b) => { (fixedBusy[n] = fixedBusy[n] || []).push([a, b]); };
@@ -1114,9 +1224,32 @@ function buildLineup(st, ratings, seed) {
     const cateringPrep = [];   // split caterings: the supplies part gets a time later, once breaks are set
     // Catering — pickup: out of position for the prep time before it's due.
     //            delivery: prep before they leave, then gone for the delivery time (rounded up to the next 15 minutes).
-    (st.caterings || []).forEach((c, i) => {
+    // Auto caterings: the first person on the catering list (staff sheet) who's free for the whole job.
+    // Caterings with a name go first, so an auto pick never takes someone already doing one.
+    const caterRank = st.caterRank || {};
+    const caterPicks = {};
+    const rankOf = n => { const v = caterRank[n]; return typeof v === "number" ? v : Infinity; };
+    const trainerBusy = (n, a, b) => (st.trainings || []).some(tr => tr.trainer === n && (() => { let x = norm(tr.start), y = norm(tr.end); if (x === null || y === null) return false; if (y <= x) y += 1440; return overlaps(a, b, x, y); })());
+    const caterOrder = (st.caterings || []).map((c, i) => [c, i]).sort((x, y) => (!!x[0].auto - !!y[0].auto) || x[1] - y[1]);
+    caterOrder.forEach(([c0, i]) => {
+        let c = c0;
         const due = norm(c.due);
-        if (!c.name || due === null) return;
+        if (due === null) return;
+        if (c.auto) {
+            const dl = c.type === "delivery";
+            const pm = c.split ? (+c.food || 0) : (+c.mins || (dl ? 0 : 30));
+            const pr = dl || c.split ? Math.max(0, Math.ceil(pm / STEP) * STEP) : Math.max(STEP, Math.ceil(pm / STEP) * STEP);
+            const a0 = due - pr - (c.split ? Math.ceil((+c.supplies || 0) / STEP) * STEP : 0), b0 = due + (dl ? Math.max(STEP, Math.ceil((+c.gone || 40) / STEP) * STEP) : 0);
+            const free = people.filter(x => x.start <= a0 && b0 <= x.end && !ownBusy(x.name, a0, b0) && !trainerBusy(x.name, a0, b0)
+                && !(trainBusy[x.name.toLowerCase()] || []).some(([s0, e0]) => overlaps(a0, b0, s0, e0)));
+            free.sort((x, y) => rankOf(x.name) - rankOf(y.name) || x.name.localeCompare(y.name));
+            const pick = free.find(x => rankOf(x.name) < Infinity) || free[0];
+            if (!pick) { warnings.push(`Nobody is free for the whole ${dl ? `delivery leaving ${fmtClock(due)}` : `catering due ${fmtClock(due)}`} — pick someone on the Catering card.`); return; }
+            if (rankOf(pick.name) === Infinity && Object.keys(caterRank).length) warnings.push(`Nobody on the catering list is free for the ${fmtClock(due)} ${dl ? "delivery" : "catering"}, so ${pick.name} has it.`);
+            caterPicks[i] = pick.name;
+            c = { ...c, name: pick.name };
+        }
+        if (!c.name) return;
         const delivery = c.type === "delivery";
         // Split prep: supplies (boxes, paper goods) any time earlier + food right before. Otherwise one prep time.
         const prepMins = c.split ? (+c.food || 0) : (+c.mins || (delivery ? 0 : 30));
@@ -1238,7 +1371,7 @@ function buildLineup(st, ratings, seed) {
         const trainsAt9 = n => !!(tjob[n] || tjob10[n]);
         // Lead is the first extra: only when there's someone left after the required spots and 5 checklists
         let lead = null;
-        const ldrs = here.filter(p => leaders.has(p.name) && !trainsAt9(p.name)).sort((a, b) => isTen(b) - isTen(a) || b.shiftEnd - a.shiftEnd || a.name.localeCompare(b.name));
+        const ldrs = here.filter(p => leaders.has(p.name) && !trainsAt9(p.name)).sort((a, b) => (b.name === shiftLead) - (a.name === shiftLead) || isTen(b) - isTen(a) || b.shiftEnd - a.shiftEnd || a.name.localeCompare(b.name));
         if (ldrs.length && here.length > CLOSE_POSITIONS.length + 5) lead = ldrs[0].name;
         const pool = here.filter(p => p.name !== lead);
         // the required 9-10 spots come first
@@ -1252,6 +1385,7 @@ function buildLineup(st, ratings, seed) {
             pool.forEach(p => {
                 if (used.has(p.name)) return;
                 if (p.prefer === "inside" && !dt) return;
+                if (ratings && ratings[p.name] && ratings[p.name][POS_INFO[pos].skill] === 1 && tjob[p.name] !== "pos:" + pos) return;   // a 1 never closes there
                 const pr = pref(p.name);
                 let sc = 0;
                 if (tjob[p.name]) sc += tjob[p.name] === "pos:" + pos ? 100 : -100;   // training this spot / training something else
@@ -1338,7 +1472,7 @@ function buildLineup(st, ratings, seed) {
         });
         CLOSE_POSITIONS.concat(CLOSE_EXTRA_POSITIONS).forEach(pos => {
             if (at9[pos] || !extras.length) return;
-            const i = extras.findIndex(n => { const x = pool.find(p => p.name === n); return !(x && x.prefer === "inside" && POS_INFO[pos].group === "Outside"); });
+            const i = extras.findIndex(n => { const x = pool.find(p => p.name === n); return !(x && x.prefer === "inside" && POS_INFO[pos].group === "Outside") && !(ratings && ratings[n] && ratings[n][POS_INFO[pos].skill] === 1); });
             if (i >= 0) at9[pos] = extras.splice(i, 1)[0];
         });
         // turn it into the lineup: spots are pinned 9-10, checklists are tasks, nobody breaks 9-10
@@ -1360,7 +1494,7 @@ function buildLineup(st, ratings, seed) {
             if (end < CLOSE) {
                 const who = pool.find(x => x.name === n) || {};
                 const free = CLOSE_POSITIONS.concat(CLOSE_EXTRA_POSITIONS).filter(pos => !at9[pos] && !late930[pos]
-                    && !(POS_INFO[pos].group === "Outside" && who.prefer === "inside"));
+                    && !(POS_INFO[pos].group === "Outside" && who.prefer === "inside") && !(ratings && ratings[n] && ratings[n][POS_INFO[pos].skill] === 1));
                 // 10:30 people to the drive-thru, 10:00 people outside, when there's a choice
                 const open = free.find(pos => (POS_INFO[pos].group === "DT") === isTen(who)) || free[0];
                 if (open) { late930[open] = n; moves.push({ name: n, pos: open, start: end, end: CLOSE, closing: true }); spots.push({ pos: open, name: n, from: end }); }
@@ -1454,7 +1588,7 @@ function buildLineup(st, ratings, seed) {
             if (ideal + BREAK_LEN > breakEnd) { warnings.push(isAM ? `${p.name}'s break would fall after close.` : `${p.name} can't get a break in before ${fmtClock(toMin(INSIDE_CLOSE))} (no breaks during closing).`); return; }
             const latest = Math.max(ideal, Math.min(p.shiftEnd - 90, breakEnd - BREAK_LEN));
             let chosen = null, override = false;
-            const lb = lock && (lock.breaks || []).find(b => b.name === p.name && b.start < lock.until);
+            const lb = lock && (lock.breaks || []).find(b => b.name === p.name && (b.start < lock.until || lock.keepFuture));
             if (lb) { chosen = lb.start; override = true; }
             const ov = st.breakOverrides && st.breakOverrides[p.name];
             if (chosen === null && ov) {
@@ -1774,10 +1908,25 @@ function buildLineup(st, ratings, seed) {
     // Outside (Cash, iPOS 1, iPOS 2) is out by 10:30 AM and then never goes empty again (iPOS 3 can):
     // once open, those spots stay right behind the drive-thru trio and Register 1 — all night too
     const KEEP_OUT = ["Cash", "iPOS 1", "iPOS 2"];
+    // once there's a bagger on each side (FC and DT), neither side drops back to no bagger
+    const keptOpen = new Set();
+    const dueAt = t => {
+        if (insideClosed(t) && closing) return [];
+        const base = insideClosed(t) ? FILL_ORDER.filter(pos => POS_INFO[pos].group !== "FC") : FILL_ORDER;
+        const due = base.filter(pos => (openBy[pos] !== undefined && t >= openBy[pos]) || (!isAM && KEEP_OUT.includes(pos)));
+        // the kept bagger comes after the outside spots: when there aren't enough people, iPOS wins over the second-side bagger
+        return due.concat(base.filter(pos => keptOpen.has(pos) && !due.includes(pos)));
+    };
+    // spots that have to be open right now: the four main ones plus anything due (open-by times, outside, baggers)
+    const essentialAt = t => {
+        if (insideClosed(t) && closing) return CLOSE_POSITIONS.slice();
+        const due = new Set(dueAt(t));
+        return orderAt(t).filter(pos => POS_INFO[pos].priority <= 2 || due.has(pos));
+    };
     const orderAt = t => {
         if (insideClosed(t) && closing) return CLOSE_POSITIONS.concat(CLOSE_EXTRA_POSITIONS);
         const base = insideClosed(t) ? FILL_ORDER.filter(pos => POS_INFO[pos].group !== "FC") : FILL_ORDER;
-        const due = base.filter(pos => (openBy[pos] !== undefined && t >= openBy[pos]) || (!isAM && KEEP_OUT.includes(pos)));
+        const due = dueAt(t);
         if (!due.length) return base;
         const top = base.filter(pos => POS_INFO[pos].priority <= 2 && !due.includes(pos));
         const rest = base.filter(pos => POS_INFO[pos].priority > 2 && !due.includes(pos));
@@ -1797,26 +1946,54 @@ function buildLineup(st, ratings, seed) {
     // Spots that come in sets: two DT baggers, two FC baggers, Register 1 & 2, Window 1 & 2, the iPOS spots
     const SIBLINGS = {};
     POSITIONS.forEach(p => { SIBLINGS[p.name] = POSITIONS.filter(q => q.name !== p.name && q.skill === p.skill && q.group === p.group).map(q => q.name); });
-    const PRACTICE = { 2: 5, 3: 4.5, 4: 3, 5: 2 };   // who gets the reps: 2s and 3s first, then 4s, then 5s
-    // How good a fit someone is for a spot in the current mode (higher = better). ctx = who's in which spot right now.
+    // Where a spot sits in its set: 0 = primary (Register 1, Bagger 1, Window 1, iPOS 1), 1+ = secondary
+    // (Register 2, Bagger 2, Window 2, iPOS 2/3), -1 = stand-alone (Desserts, Cash, drinks, Dining Room, Runner)
+    const SET_RANK = {};
+    POSITIONS.forEach(p => {
+        const set = [p.name, ...SIBLINGS[p.name]].sort((a, b) => POS_INFO[a].priority - POS_INFO[b].priority || a.localeCompare(b));
+        SET_RANK[p.name] = SIBLINGS[p.name].length ? set.indexOf(p.name) : -1;
+    });
+    // How good a fit someone is for a spot in the current mode (higher = better). A blank rating counts as 3;
+    // a 1 never gets here (canWork keeps them off that spot entirely).
+    //   Aces: 5s, then 4s (3s and 2s only if needed)
+    //   Balanced: 3, 4 and 5 are all the same; a 2 only if there's nobody else
+    //   Training: primary spots get 4s and 5s, secondary spots get 2s (then 3s), stand-alone spots take 2–5 alike
+    // Until iPOS is outside, DT Drinks and DT Bagger 1 wear the headset: their rating there is the average of the
+    // spot and Headset (a 1 in either = 1). Set each slot once we know whether iPOS 1 is out.
+    let headsetNow = false;
+    const ratingAt = (n, pos) => {
+        const r = rating(n, POS_INFO[pos].skill);
+        if (!headsetNow || !HEADSET_POS.includes(pos)) return r;
+        const h = rating(n, "Headset");
+        return r === 1 || h === 1 ? 1 : (r + h) / 2;   // 3 + 5 = 4; 2 + 3 = 2.5 (halfway between a 2 and a 3)
+    };
     const modeScore = (name, pos, ctx) => {
-        const r = rating(name, POS_INFO[pos].skill);
-        if (r <= 1) return 0;                                   // 1s only when there's nobody else, in every mode
-        if (mode === "aces") return r;                          // 5s, then 4s
-        if (mode === "training") return PRACTICE[r];            // 2s and 3s
-        // Balanced: in a set, pair a strong person with a weaker one; a single spot has no preference
-        const sib = SIBLINGS[pos] || [];
-        if (!sib.length) return 3;
-        const partner = ctx && sib.map(q => ctx[q]).find(n => n && n !== name);
-        if (!partner) return r;
-        return rating(partner, POS_INFO[pos].skill) >= 4 ? PRACTICE[r] : r;
+        const r = ratingAt(name, pos);
+        if (r !== Math.floor(r)) return (modeScoreOf(Math.floor(r), pos) + modeScoreOf(Math.ceil(r), pos)) / 2;
+        return modeScoreOf(r, pos);
+    };
+    const modeScoreOf = (r, pos) => {
+        if (mode === "aces") return { 5: 5, 4: 4, 3: 2, 2: 1 }[r] || 0;
+        if (mode === "training") {
+            const k = SET_RANK[pos];
+            if (k === -1) return r >= 2 ? 3 : 0;
+            if (k === 0) return { 5: 5, 4: 5, 3: 3, 2: 1 }[r] || 0;
+            return { 2: 5, 3: 4, 4: 2, 5: 1.5 }[r] || 0;
+        }
+        return r >= 3 ? 3 : r === 2 ? 1 : 0;
     };
     // People moved just for the length of a break/task cover: name -> the spot they're temporarily in
     const tempAt = {};
     // Preferred area: "FC" / "DT" / "Outside" / a position (a strong nudge), or "inside" = never outside (a hard rule)
     const personOf = n => people.find(x => x.name === n);
     const insideOnly = n => { const x = personOf(n); return !!x && x.prefer === "inside"; };
-    const canWork = (n, pos) => !(insideOnly(n) && POS_INFO[pos] && POS_INFO[pos].group === "Outside");
+    // A 1 in the staff sheet means never put them on that spot (a hard rule, like "Not outside")
+    const ratedOne = (n, pos) => !!POS_INFO[pos] && ratingAt(n, pos) === 1;
+    // the store's first stretch: the lead works a spot until there are 4 other people to run the main spots
+    const openingPhase = t => isAM && t < OPEN + 120 && people.filter(p => p.name !== shiftLead && onShift(p, t) && !isBusy(p.name, t)).length < 4;
+    const leadLimited = t => !!shiftLead && !openingPhase(t) && !(insideClosed(t) && closing);
+    const canWork = (n, pos) => !(insideOnly(n) && POS_INFO[pos] && POS_INFO[pos].group === "Outside") && !ratedOne(n, pos)
+        && !(n === shiftLead && leadLimited(simT) && !LEAD_SPOTS.includes(pos));
     // a preference can be a whole area (FC / DT / Outside), a job ("skill:Bagging" = any bagger spot) or one spot
     const prefersPos = (n, pos) => { const x = personOf(n); return !!x && !!x.prefer && x.prefer !== "inside" && !!POS_INFO[pos]
         && (x.prefer === pos || POS_INFO[pos].group === x.prefer || x.prefer === "skill:" + POS_INFO[pos].skill); };
@@ -1826,6 +2003,7 @@ function buildLineup(st, ratings, seed) {
         if (simT < IN_CLOSE && closeNear[p.name] && closeNear[p.name].includes(pos)) s += 2;
         if (home[p.name] === pos) s += 2;   // go back to your own spot
         if (p.floater) s -= 100;            // floaters only fill in when needed
+        if (p.name === shiftLead && leadLimited(simT)) s -= 200;   // the lead is the very last resort
         if (runnerSet.has(p.name)) s -= 50; // this stretch's break runner stays a runner
         if (LEADERS_INSIDE && leaders.has(p.name) && POS_INFO[pos] && POS_INFO[pos].group === "Outside") s -= 40;   // leaders stay inside
         return s;
@@ -1850,7 +2028,7 @@ function buildLineup(st, ratings, seed) {
         Object.keys(assign).filter(pos => OUTSIDE.has(pos) && !noTouch.has(pos)).forEach(opos => {
             const P = assign[opos];
             if (homeOwner[opos] && homeOwner[opos] !== P) return;     // just covering someone's break
-            if (outStart[P] === undefined || t - outStart[P] < rotEvery) return;
+            if (outStart[P] === undefined || t - outStart[P] < rotAt(t)) return;
             let Q = pairOf[P];
             const partnerStillHere = Q && pairOf[Q] === P && on.some(x => x.name === Q);
             if (partnerStillHere && !canSwapIn(Q)) return;            // partner is on break or covering: wait for them
@@ -1900,6 +2078,7 @@ function buildLineup(st, ratings, seed) {
     POSITIONS.forEach(p => { shownTimeline[p.name] = []; });
     const runnerLog = {};
     const swapLog = [];
+    const leadSlots = [], headsetSlots = [];
     let handover = null;
 
     let simT = 0;
@@ -1948,7 +2127,7 @@ function buildLineup(st, ratings, seed) {
             if (!who) {
                 const recent = p => busy[p.name].some(x => x.end <= t && x.end > t - 60) ? 5000 : 0;
                 const ord = orderAt(t);
-                const order = p => recent(p) + (prevPosOf[p.name] ? 1000 - ord.indexOf(prevPosOf[p.name]) : (p.floater ? 0 : 1));
+                const order = p => (p.name === shiftLead ? 20000 : 0) + recent(p) + (prevPosOf[p.name] ? 1000 - ord.indexOf(prevPosOf[p.name]) : (p.floater ? 0 : 1));
                 cands.sort((a, b) => order(a) - order(b) || a.name.localeCompare(b.name));
                 who = cands[0];
             }
@@ -1971,14 +2150,17 @@ function buildLineup(st, ratings, seed) {
         } else {
             const w = windowAt(t);
             if (w !== curWindow) { curWindow = w; activeRunners = 0; runnerSet.clear(); }
-            // Runners are only held for breaks/tasks happening now or starting in the next 15 minutes,
+            // Runners are only held while a break/task is actually happening (nobody leaves their spot early),
             // and only as many as today's headcount calls for — otherwise they're working a spot
             const cap = runnerSetting === "0" ? 0 : runnerSetting !== "auto" ? +runnerSetting : (on.length >= 14 ? 2 : on.length >= 7 ? 1 : 0);
-            const busyAt = tt => on.filter(p => p.start <= tt && tt < p.end && isBusy(p.name, tt)).length;
-            activeRunners = w ? Math.min(cap, Math.max(busyAt(t), busyAt(t + STEP))) : 0;
+            // (only people who leave a spot behind need a runner — someone with no spot going on break doesn't)
+            const busyAt = tt => on.filter(p => p.start <= tt && tt < p.end && isBusy(p.name, tt) && home[p.name]).length;
+            activeRunners = w ? Math.min(cap, busyAt(t)) : 0;
             const floaterCount = on.filter(p => p.floater).length;
             const R = Math.max(activeRunners, floaterCount);
-            const K = Math.max(0, Math.min(FILL_ORDER.length, on.length - R, free.length));
+            // the lead (once the store's open) isn't counted as a body for the spots — only a last resort
+            const leadOff = leadLimited(t) && freeNames.has(shiftLead) ? 1 : 0;
+            const K = Math.max(0, Math.min(FILL_ORDER.length, on.length - R - leadOff, free.length - leadOff));
             const pinned = {}, forcedFront = [], needsLeader = {};
             sessions.filter(x => x.start <= t && t < x.end).forEach(x => {
                 if (freeNames.has(x.trainer)) pinned[x.pos] = x.trainer;
@@ -1992,9 +2174,28 @@ function buildLineup(st, ratings, seed) {
                 if (pinned[m.pos] || forcedFront.includes(m.pos) || Object.values(pinned).includes(m.name)) return;
                 pinned[m.pos] = m.name;
             });
+            let order = orderAt(t).filter(pos => !pinned[pos] && !forcedFront.includes(pos));
+            const room = Math.max(0, K - Object.keys(pinned).filter(pos => pinned[pos] !== shiftLead).length);
+            // (the kept FC bagger doesn't count here — it's the first to give way, before iPOS or the lead)
+            const needed = () => forcedFront.length + essentialAt(t).filter(pos => order.includes(pos) && !(keptOpen.has(pos) && POS_INFO[pos].priority > 2)).length;
+            // too few for the spots that have to be open: the lead steps onto Register 2 (the front counter register)
+            const leadCanStep = () => leadOff && order.includes("Register 1") && !pinned["Register 2"] && !Object.values(pinned).includes(shiftLead);
+            const leadSteps = () => {
+                pinned["Register 2"] = shiftLead;
+                order = order.filter(pos => pos !== "Register 1" && pos !== "Register 2");
+                leadSlots.push(t);
+            };
+            if (room < needed() && leadCanStep() && room + 1 >= needed()) leadSteps();
+            // still too few even with the lead: iPOS comes inside and the drive-thru takes orders on headset
+            if (room < needed() && order.some(pos => pos.startsWith("iPOS")) && essentialAt(t).some(pos => pos.startsWith("iPOS"))) {
+                order = order.filter(pos => !pos.startsWith("iPOS"));
+                headsetSlots.push(t);
+                if (room < needed() && leadCanStep()) leadSteps();
+            }
             noTouch = new Set([...Object.keys(pinned), ...forcedFront]);
-            const S = [...forcedFront, ...orderAt(t).filter(pos => !pinned[pos] && !forcedFront.includes(pos))].slice(0, Math.max(0, K - Object.keys(pinned).length));
+            const S = [...forcedFront, ...order].slice(0, room);
             const Sset = new Set([...S, ...Object.keys(pinned)]);
+            headsetNow = !Sset.has("iPOS 1");
             Object.entries(pinned).forEach(([pos, n]) => { assign[pos] = n; used.add(n); });
 
             // 1) everyone stays put if their spot is still open
@@ -2002,7 +2203,7 @@ function buildLineup(st, ratings, seed) {
                 && free.some(q => q.name !== n && !leaders.has(q.name) && !q.floater && !runnerSet.has(q.name) && !used.has(q.name) && canWork(q.name, pos)
                     && !Object.values(prev).includes(q.name));
             Object.entries(prev).forEach(([pos, n]) => {
-                if (Sset.has(pos) && freeNames.has(n) && !assign[pos] && !used.has(n) && !leaderOut(pos, n)) { assign[pos] = n; used.add(n); }
+                if (Sset.has(pos) && freeNames.has(n) && !assign[pos] && !used.has(n) && !leaderOut(pos, n) && canWork(n, pos)) { assign[pos] = n; used.add(n); }
             });
             // 2) people back from a break/task take their own spot back — and whoever moved over to cover
             //    for them goes back to their own spot too (repeat until nothing changes)
@@ -2010,7 +2211,7 @@ function buildLineup(st, ratings, seed) {
                 changed = false;
                 free.forEach(p => {
                     const h = home[p.name];
-                    if (!h || !Sset.has(h) || homeOwner[h] !== p.name || assign[h] === p.name || pinned[h]) return;
+                    if (!h || !Sset.has(h) || homeOwner[h] !== p.name || assign[h] === p.name || pinned[h] || !canWork(p.name, h)) return;
                     const returning = isBusy(p.name, t - STEP) || (tempAt[p.name] && !used.has(p.name));
                     if (!returning || used.has(p.name)) return;
                     if (assign[h]) used.delete(assign[h]);
@@ -2027,14 +2228,29 @@ function buildLineup(st, ratings, seed) {
                 if (needsLeader[pos] !== undefined) {
                     // a leader has to break this trainer: take one who's free, or move one over from their spot
                     const wanted = needsLeader[pos];
-                    const L = pool.find(p => p.name === wanted) || pool.find(p => leaders.has(p.name) && !sessionOf(p.name, t));
+                    const L = pool.find(p => p.name === wanted && canWork(p.name, pos)) || pool.find(p => leaders.has(p.name) && !sessionOf(p.name, t) && canWork(p.name, pos));
                     if (L) { pool = pool.filter(x => x !== L); assign[pos] = L.name; used.add(L.name); tempAt[L.name] = pos; continue; }
-                    const held = Object.entries(assign).filter(([y, n]) => leaders.has(n) && !noTouch.has(y) && !sessionOf(n, t))
+                    const held = Object.entries(assign).filter(([y, n]) => leaders.has(n) && !noTouch.has(y) && !sessionOf(n, t) && canWork(n, pos))
                         .sort((a, b) => (b[1] === wanted) - (a[1] === wanted) || POS_INFO[b[0]].priority - POS_INFO[a[0]].priority)[0];
                     if (held) { const [y, n] = held; delete assign[y]; assign[pos] = n; tempAt[n] = pos; continue; }
                 }
                 const elig = pool.filter(p => canWork(p.name, pos));
-                if (!elig.length) continue;
+                if (!elig.length) {
+                    // everyone left is rated 1 here (or can't go outside): someone placed who can moves over, and a free person takes their spot
+                    // (the runner counts — covering breaks is their job)
+                    const trade = Object.entries(assign).filter(([q, m]) => !pinned[q] && !noTouch.has(q) && !sessionOf(m, t) && canWork(m, pos)
+                        && pool.some(x => canWork(x.name, q)))
+                        .sort((a, b) => modeScore(b[1], pos, assign) - modeScore(a[1], pos, assign) || POS_INFO[b[0]].priority - POS_INFO[a[0]].priority)[0];
+                    if (!trade) continue;
+                    const [q, m] = trade;
+                    const x = pool.filter(y => canWork(y.name, q)).sort((a, b) => scoreFor(b, q, assign) - scoreFor(a, q, assign))[0];
+                    assign[pos] = m; assign[q] = x.name; used.add(x.name);
+                    // only while it's needed: both go back to their own spots after (like any break cover)
+                    if (homeOwner[q] === m) tempAt[m] = pos;
+                    tempAt[x.name] = q;
+                    pool = pool.filter(y => y !== x);
+                    continue;
+                }
                 // On a tie, save the person who's the better fit for a spot still to be filled (keep specialists for their spot)
                 const later = S.filter(q => q !== pos && !assign[q]);
                 const alt = p => later.reduce((m, q) => Math.max(m, modeScore(p.name, q, assign)), 0);
@@ -2065,7 +2281,7 @@ function buildLineup(st, ratings, seed) {
                 assign[pos] = rep.name;
             });
             // 5) hot/cold weather rotation for the outside spots
-            if (rotEvery > 0) rotateOutside(assign, on, t);
+            if (rotAt(t) > 0) rotateOutside(assign, on, t);
             // 6) a break/task just started: if someone in another spot is clearly better for the open spot
             //    (by Aces/Balanced/Training), they move over to cover and the original cover takes their spot
             // (only for covers of 30+ minutes — not worth moving two people for the 15-minute ice bin)
@@ -2102,7 +2318,7 @@ function buildLineup(st, ratings, seed) {
             // whoever is left over while runners are active is this stretch's runner
             if (activeRunners > 0) {
                 const placedNow = new Set(Object.values(assign));
-                free.filter(p => !p.floater && !placedNow.has(p.name)).slice(0, activeRunners).forEach(p => {
+                free.filter(p => !p.floater && !placedNow.has(p.name) && p.name !== shiftLead).slice(0, activeRunners).forEach(p => {
                     runnerSet.add(p.name);
                     // a runner's old spot is closed while they run breaks, so it's no longer "theirs"
                     const h = home[p.name];
@@ -2130,7 +2346,8 @@ function buildLineup(st, ratings, seed) {
 
         // How long each person has been outside
         const outsideNow = new Set(Object.entries(assign).filter(([pos]) => OUTSIDE.has(pos)).map(([, n]) => n));
-        outsideNow.forEach(n => { if (outStart[n] === undefined) outStart[n] = t; });
+        // the clock only runs while it's hot/cold enough to rotate
+        outsideNow.forEach(n => { if (outStart[n] === undefined || !rotAt(t)) outStart[n] = t; });
         Object.keys(outStart).forEach(n => { if (!outsideNow.has(n)) delete outStart[n]; });
 
         // Who covered whom
@@ -2153,14 +2370,17 @@ function buildLineup(st, ratings, seed) {
         // Covers: someone holding a spot whose owner is on break/task (or is covering elsewhere for a moment)
         const coverOf = {};
         Object.entries(assign).forEach(([pos, n]) => { if (homeOwner[pos] && homeOwner[pos] !== n) coverOf[n] = pos; });
+        // Only a break keeps the owner drawn on their spot (the break tree lists who covers). Someone off doing a
+        // task or covering another spot isn't shown in their own spot — it shows who's really there (or closed).
+        const onBreak = n => breaks.some(b => b.name === n && b.start <= t && t < b.end);
         POSITIONS.forEach(p => {
             const owner = homeOwner[p.name];
             let shown = assign[p.name] || null;
-            if (owner && on.some(x => x.name === owner) && (isBusy(owner, t) || coverOf[owner])) shown = owner;
+            if (owner && on.some(x => x.name === owner) && onBreak(owner) && !Object.values(assign).includes(owner)) shown = owner;
             shownTimeline[p.name].push(shown);
         });
         // Break runners: free people who are floating or covering someone else's spot
-        free.forEach(p => { if (!placed.has(p.name) || coverOf[p.name]) (runnerLog[p.name] = runnerLog[p.name] || []).push(t); });
+        free.forEach(p => { if (p.name !== shiftLead && (!placed.has(p.name) || coverOf[p.name])) (runnerLog[p.name] = runnerLog[p.name] || []).push(t); });
         if (isAM && t === SPLIT) handover = { ...assign };
         if (on.length && FILL_ORDER.slice(0, 3).some(pos => !assign[pos])) shortSlots.push(t);
         // Open-by spots that are due but empty (ignoring a quick break cover gap)
@@ -2170,6 +2390,9 @@ function buildLineup(st, ratings, seed) {
                 lateOpen[pos].push(t);
             }
         });
+        if (!insideClosed(t) && ["FC Bagger 1", "FC Bagger 2"].some(pos => assign[pos]) && ["DT Bagger 1", "DT Bagger 2"].some(pos => assign[pos])) {
+            keptOpen.add("FC Bagger 1");   // DT Bagger 1 is already a main spot
+        }
         prev = assign;
     }
 
@@ -2209,6 +2432,10 @@ function buildLineup(st, ratings, seed) {
             (firstOpen < 0 ? ` — there's no one left to put there.`
                 : ts.includes(openBy[pos]) ? ` — it opens at ${fmtClock(slots[firstOpen])}.` : ` (it's empty at times after that).`));
     });
+    // stretches of time, as "2:00 PM – 2:30 PM"
+    const stretches = list => { const out = []; [...new Set(list)].sort((a, b) => a - b).forEach(t => { const l = out[out.length - 1]; if (l && l.to === t) l.to = t + STEP; else out.push({ from: t, to: t + STEP }); }); return out.map(x => `${fmtClock(x.from)} – ${fmtClock(x.to)}`); };
+    if (headsetSlots.length) warnings.push(`Too few people to keep iPOS outside${shiftLead ? " even with the lead in a spot" : ""} ${stretches(headsetSlots).join(", ")} — iPOS comes inside and DT Drinks and DT Bagger 1 take orders on headset.`);
+    if (leadSlots.length) warnings.push(`${shiftLead} (lead) has to work Register 2 ${stretches(leadSlots).join(", ")} — nobody else is free.`);
     if (rotationShort.size) warnings.push(`Not enough inside people to rotate ${[...rotationShort].join(", ")} on schedule, so they stay outside longer.`);
     shortRanges.forEach(([a, b]) => warnings.push(`Not enough people for DT Bagger 1, DT Drinks and Window 1 from ${fmtClock(a)} to ${fmtClock(b)}.`));
     // Outside stays open once it's out: say so when there just aren't enough people to keep it that way
@@ -2229,7 +2456,7 @@ function buildLineup(st, ratings, seed) {
     });
 
     return {
-        date: st.date, daypart: st.daypart, mode, rotation: rotEvery,
+        date: st.date, daypart: st.daypart, mode, rotation: rotEvery, caterPicks, shiftLead,
         window: [W0, W1],
         lockedUntil: lock ? lock.until : null,
         actual, handover, deferBreaks,
@@ -2448,7 +2675,7 @@ function submitToGoogleForm(formId, formDataObj) {
 function normalizeSkillHeader(text) {
     const key = String(text || "").toLowerCase().replace(/[^a-z]/g, "");
     if (!key) return null;
-    return SKILL_ALIASES[key] || SKILLS.find(s => s.toLowerCase().replace(/[^a-z]/g, "") === key) || null;
+    return SKILL_ALIASES[key] || RATED.find(s => s.toLowerCase().replace(/[^a-z]/g, "") === key) || null;
 }
 
 // Column ids of a sheet, without any row data
@@ -2471,6 +2698,61 @@ async function gvizCols(sheetId, timeoutMs = 10000) {
     }
 }
 
+// A staff sheet name: "Ariane Braggs (Ari)" -> { raw, first: "Ariane", last: "Braggs", nick: "Ari" }
+function parseStaffName(raw) {
+    let t = String(raw || "").trim(), nick = "";
+    const m = t.match(/\(([^)]*)\)/);
+    if (m) { nick = m[1].trim(); t = t.replace(m[0], " "); }
+    const w = t.replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
+    return { raw: String(raw || "").trim(), first: w[0] || nick, last: w.slice(1).join(" "), nick };
+}
+// What everyone is called in the app: nickname (or first name) + last initial, with more letters of the
+// last name until two people don't look the same ("Ari Br" / "Ari Bo"); truly identical names get a number
+function staffDisplayNames(raws) {
+    const ps = raws.map(parseStaffName);
+    const letters = p => p.last.replace(/[^A-Za-z]/g, "");
+    const k = ps.map(() => 1);
+    const make = i => { const L = letters(ps[i]); const base = ps[i].nick || ps[i].first; return L ? `${base} ${L[0].toUpperCase()}${L.slice(1, k[i]).toLowerCase()}` : base; };
+    for (let guard = 0; guard < 30; guard++) {
+        const by = {};
+        ps.forEach((p, i) => { const d = make(i).toLowerCase(); (by[d] = by[d] || []).push(i); });
+        let grew = false;
+        Object.values(by).filter(g => g.length > 1).forEach(g => g.forEach(i => { if (k[i] < letters(ps[i]).length) { k[i]++; grew = true; } }));
+        if (!grew) break;
+    }
+    // the very same name twice: back to the initial, then a number ("Emma R", "Emma R 2")
+    const by = {};
+    ps.forEach((p, i) => { const d = make(i).toLowerCase(); (by[d] = by[d] || []).push(i); });
+    Object.values(by).filter(g => g.length > 1).forEach(g => g.forEach(i => { k[i] = 1; }));
+    const out = ps.map((p, i) => make(i));
+    const seen = {};
+    return out.map(d => { const l = d.toLowerCase(); seen[l] = (seen[l] || 0) + 1; return seen[l] > 1 ? `${d} ${seen[l]}` : d; });
+}
+// Every other way a staff member might be written (old saved rosters, HotSchedules): full name, first + initial, nickname…
+function staffAliases(d) {
+    const p = STAFF[d];
+    if (!p || !p.first) return [d.toLowerCase()];
+    const L = p.last.replace(/[^A-Za-z]/g, "");
+    const out = [d, p.raw, `${p.first} ${p.last}`, L ? `${p.first} ${L[0]}` : p.first];
+    if (p.nick) out.push(`${p.nick} ${p.last}`, L ? `${p.nick} ${L[0]}` : p.nick);
+    return [...new Set(out.map(x => x.replace(/\s+/g, " ").trim().toLowerCase()).filter(Boolean))];
+}
+// Match a first + last name (HotSchedules) against staff by their real names, then by how they're shown
+function matchStaffByFull(first, last, names) {
+    const fulls = names.map(d => STAFF[d] && STAFF[d].first ? `${STAFF[d].first} ${STAFF[d].last}`.trim() : d);
+    let hit = matchStaffName(first, last, fulls);
+    if (hit) return names[fulls.indexOf(hit)];
+    const nicks = names.map(d => STAFF[d] && STAFF[d].nick ? `${STAFF[d].nick} ${STAFF[d].last}`.trim() : null);
+    hit = matchStaffName(first, last, nicks.filter(Boolean));
+    if (hit) return names[nicks.indexOf(hit)];
+    return matchStaffName(first, last, names);
+}
+function closeStaffByFull(first, lastInitial, names) {
+    const fulls = names.map(d => STAFF[d] && STAFF[d].first ? `${STAFF[d].first} ${STAFF[d].last}`.trim() : d);
+    const hit = closeStaffName(first, lastInitial, fulls);
+    return hit ? names[fulls.indexOf(hit)] : closeStaffName(first, lastInitial, names);
+}
+
 // Staff sheet columns: A Name, B PIN (never downloaded here), C Role, D House, E+ ratings
 async function loadStaff() {
     const ids = await gvizCols(STAFF_SHEET_ID);
@@ -2483,32 +2765,55 @@ async function loadStaff() {
 
     let start = 0;
     let colSkill = {};
+    let caterCol = -1;   // the catering list: 1 = first choice, 2 = next… (any length; blank = not on it)
     const first = rows[0].c || [];
     if (/^name/i.test(cellText(first[at("A")]))) {
         start = 1;
-        ratingCols.forEach(id => { const sk = normalizeSkillHeader(cellText(first[at(id)])); if (sk) colSkill[at(id)] = sk; });
+        ratingCols.forEach(id => {
+            const h = cellText(first[at(id)]);
+            if (/cater/i.test(h)) { caterCol = at(id); return; }
+            const sk = normalizeSkillHeader(h); if (sk) colSkill[at(id)] = sk;
+        });
     }
     if (!Object.keys(colSkill).length) {
-        SKILLS.forEach((sk, i) => { if (ratingCols[i]) colSkill[at(ratingCols[i])] = sk; });
-        ratingSource = "Columns E–M (no rating headers found)";
+        RATED.forEach((sk, i) => { if (ratingCols[i]) colSkill[at(ratingCols[i])] = sk; });   // E–M positions, N headset
+        if (caterCol < 0 && ratingCols[RATED.length]) caterCol = at(ratingCols[RATED.length]);   // O: the column right after headset
+        ratingSource = "Columns E–M (no rating headers found), Headset in N" + (caterCol >= 0 ? ", catering list in O" : "");
     } else {
-        ratingSource = "Header row: " + Object.values(colSkill).join(", ");
+        const lastRating = () => Math.max(...Object.keys(colSkill).map(Number));
+        if (!Object.values(colSkill).includes("Headset")) {   // no "Headset" header: the first column after the ratings
+            const nextId = keep.find(id => at(id) > lastRating() && !colSkill[at(id)] && at(id) !== caterCol);
+            if (nextId && (caterCol < 0 || at(nextId) < caterCol)) colSkill[at(nextId)] = "Headset";
+        }
+        if (caterCol < 0) {   // no "Catering" header: the first column after headset
+            const nextId = keep.find(id => at(id) > lastRating() && !colSkill[at(id)]);
+            if (nextId) caterCol = at(nextId);
+        }
+        ratingSource = "Header row: " + Object.values(colSkill).join(", ") + (caterCol >= 0 ? ", Catering" : "");
     }
 
     const staff = {}, ratings = {};
+    // "Ariane Braggs (Ari)" shows as "Ari B"; without a nickname "Ariane B" (more letters when two would match)
+    const rawRows = [];
     for (let r = start; r < rows.length; r++) {
         const c = rows[r].c || [];
-        const name = cellRaw(c[at("A")]);
-        if (!name) continue;
+        const raw = cellRaw(c[at("A")]);
+        if (raw) rawRows.push({ raw, c });
+    }
+    const shown = staffDisplayNames(rawRows.map(x => x.raw));
+    for (let r = 0; r < rawRows.length; r++) {
+        const c = rawRows[r].c;
+        const name = shown[r];
         const role = (cellRaw(c[at("C")]) || "member").toLowerCase();
         const house = (cellRaw(c[at("D")]) || "foh").toLowerCase();
-        staff[name] = { role, house };
+        staff[name] = Object.assign({ role, house }, parseStaffName(rawRows[r].raw));
         const rr = {};
         Object.entries(colSkill).forEach(([i, sk]) => {
             const v = parseFloat(cellRaw(c[i]));
             if (!isNaN(v) && v >= 1 && v <= 5) rr[sk] = Math.round(v);
         });
         ratings[name] = rr;
+        if (caterCol >= 0) { const v = parseFloat(cellRaw(c[caterCol])); if (!isNaN(v) && v > 0) staff[name].cater = v; }
     }
     if (!Object.keys(staff).length) return false;
     STAFF = staff;
@@ -2549,8 +2854,34 @@ async function findSaved(dp, dateIso) {
 // =====================================================================
 // "leader", "Shift Leader", "Manager", "Director"… all count as leaders
 function isLeaderRole(role) { return /lead|manag|director|supervis|owner|operator/i.test(String(role || "")); }
+// The staff-sheet name for a roster name: exact, the import's remembered match, or a clear close spelling
+function staffNameFor(n) {
+    if (STAFF[n]) return n;
+    const staff = staffNameList();
+    const low = String(n).replace(/\s+/g, " ").trim().toLowerCase();
+    const exact = staff.find(x => x.toLowerCase() === low);
+    if (exact) return exact;
+    const alias = staff.filter(x => staffAliases(x).includes(low));
+    if (alias.length === 1) return alias[0];
+    const [first, ...rest] = n.split(/\s+/);
+    return matchStaffByFull(first, rest.join(" "), staff) || closeStaffByFull(first, (rest.join("")[0] || ""), staff);
+}
+// Ratings keyed by the roster's names (so a "Kadashya C" on the roster gets "Kadaysha C"'s ratings)
+function rosterRatings() {
+    const out = Object.assign({}, RATINGS);
+    (state ? state.roster : []).forEach(r => { if (!RATINGS[r.name]) { const s = staffNameFor(r.name); if (s && RATINGS[s]) out[r.name] = RATINGS[s]; } });
+    return out;
+}
+// Catering list from the staff sheet: name -> place in line (1 = first choice)
+function caterRankMap() {
+    const out = {};
+    Object.keys(STAFF).forEach(n => { if (typeof STAFF[n].cater === "number") out[n] = STAFF[n].cater; });
+    (state ? state.roster : []).forEach(r => { if (out[r.name] === undefined) { const s = staffNameFor(r.name); if (s && typeof STAFF[s].cater === "number") out[r.name] = STAFF[s].cater; } });
+    return out;
+}
 function leaderNames() {
     const fromStaff = Object.keys(STAFF).filter(n => isLeaderRole(STAFF[n].role));
+    (state ? state.roster : []).forEach(r => { if (!STAFF[r.name]) { const s = staffNameFor(r.name); if (s && isLeaderRole(STAFF[s].role)) fromStaff.push(r.name); } });
     const extra = (state && state.leadersExtra) || [];
     return [...new Set([...fromStaff, ...extra])];
 }
@@ -2608,6 +2939,7 @@ function applyPanelVisibility() {
     document.body.classList.toggle("wide", isWide());
     document.getElementById("rosterPanel").style.display = view === "roster" ? "block" : "none";
     document.getElementById("lineupPanel").style.display = view === "lineup" ? "block" : "none";
+    document.getElementById("notesPanel").style.display = view === "notes" ? "block" : "none";
 }
 
 function onLayoutChange() { applyPanelVisibility(); renderAll(); }
@@ -2618,7 +2950,7 @@ function setView(v) {
     view = v;
     document.querySelectorAll(".nav-tab").forEach(b => b.classList.toggle("active", b.dataset.view === v));
     applyPanelVisibility();
-    if (v === "lineup") renderLineup(); else renderRoster();
+    if (v === "lineup") renderLineup(); else if (v === "notes") renderNotes(); else renderRoster();
     window.scrollTo({ top: 0 });
 }
 
@@ -2628,6 +2960,7 @@ function renderAll() {
     applyPanelVisibility();
     updateHero();
     if (view === "lineup") renderLineup();
+    else if (view === "notes") renderNotes();
     else renderRoster();
 }
 
@@ -2739,8 +3072,11 @@ function renderRoster() {
             <div class="card-head">
                 <span class="step">3</span>
                 <div><div class="card-title">Catering</div><div class="card-sub">Pickups and deliveries</div></div>
+                <div class="seg push">${[["auto", "Auto"], ["manual", "Manual"]].map(([v, l]) => `<button type="button" class="${cateringMode() === v ? "on" : ""}" onclick="setCateringMode('${v}')">${l}</button>`).join("")}</div>
             </div>
             <div class="card-body">
+                <p class="opt-help" style="margin:0 0 0.6rem">${cateringMode() === "auto" ? "Auto: the first person on the catering list who's free for it." : "Manual: you pick who — with suggested plans from the catering list."}</p>
+                <div id="caterQueue"></div>
                 <div class="task">
                     <span class="task-icon cater">${ICON.box}</span>
                     <div class="task-main">
@@ -2751,10 +3087,10 @@ function renderRoster() {
                                 <button type="button" class="${catType === "delivery" ? "on" : ""}" onclick="setCatType('delivery')">Delivery</button>
                             </div>
                             <div class="add-row">
-                                <select class="time-input sel" id="catName" onchange="document.getElementById('catOther').style.display = this.value === '__other__' ? '' : 'none'; if (this.value === '__other__') document.getElementById('catOther').focus()">${rosterOptions("Who", null, true)}</select>
+                                <select class="time-input sel" id="catName" onchange="document.getElementById('catOther').style.display = this.value === '__other__' ? '' : 'none'; if (this.value === '__other__') document.getElementById('catOther').focus()">${catWhoOptions()}</select>
                                 <input type="text" class="time-input grow" id="catOther" placeholder="Name (catering only)" autocomplete="off" style="display:none">
                                 <span class="mini-label">${catType === "delivery" ? "leaves" : "due"}</span>
-                                <input type="time" class="time-input" step="900" id="catDue" value="${state.daypart === "AM" ? "11:00" : "17:00"}">
+                                <input type="time" class="time-input" step="900" id="catDue" value="${state.daypart === "AM" ? "11:00" : "17:00"}" onchange="queueCatSuggest()">
                             </div>
                             <label class="check-line"><input type="checkbox" id="catSplit" ${catSplit ? "checked" : ""} onchange="setCatSplit(this.checked)"> Split prep (supplies and food)</label>
                             <div class="add-row">
@@ -2762,12 +3098,13 @@ function renderRoster() {
                                     ? `<span class="mini-label">supplies</span><input type="number" class="time-input num" id="catSupplies" min="5" step="5" value="20"><span class="mini-label">min</span>
                                        <span class="mini-label">food</span><input type="number" class="time-input num" id="catFood" min="0" step="5" value="10"><span class="mini-label">min</span>`
                                     : `<span class="mini-label">prep</span>
-                                <select class="time-input sel" id="catMins">${durationOptions(30, catType === "delivery")}</select>`}
+                                <select class="time-input sel" id="catMins" onchange="queueCatSuggest()">${durationOptions(30, catType === "delivery")}</select>`}
                                 ${catType === "delivery" ? `<span class="mini-label">gone</span>
                                 <input type="number" class="time-input num" id="catGone" min="5" step="5" value="40"><span class="mini-label">min</span>` : ""}
                                 <button type="button" class="btn-dark sm" onclick="addCatering()">Add</button>
                             </div>
                             <div class="form-error" id="catErr" style="display:none"></div>
+                            <div id="catSuggest"></div>
                         </div>
                     </div>
                 </div>
@@ -2846,6 +3183,8 @@ function renderRoster() {
     renderCateringList();
     renderTrainingList();
     renderClosingList();
+    renderCaterQueue();
+    queueCatSuggest();
     renderLemonList();
     renderSweepTimes();
     renderRosterMeta();
@@ -2887,7 +3226,8 @@ function renderClosingList() {
     if (!cl.length) { box.innerHTML = `<p class="opt-help" style="margin:0">Inside closes at ${inClose}. Add people working until close and they'll show up here.</p>`; return; }
     // a quick look at how the close will run with this crew
     const L = new Set(leaderNames());
-    const tens = cl.filter(x => x.ten), ldr = cl.filter(x => L.has(x.name)).sort((a, b) => b.ten - a.ten)[0];
+    if (state.shiftLead) L.add(state.shiftLead);
+    const tens = cl.filter(x => x.ten), ldr = cl.filter(x => L.has(x.name)).sort((a, b) => (b.name === state.shiftLead) - (a.name === state.shiftLead) || b.ten - a.ten)[0];
     const lead = ldr && cl.length > CLOSE_POSITIONS.length + 5 ? ldr.name : null;
     const pool = cl.length - (lead ? 1 : 0);
     const n930 = Math.max(0, Math.min(5, pool - CLOSE_POSITIONS.length));
@@ -2953,7 +3293,8 @@ function renderClosingCard() {
 // ---------- Send tonight's closing to the Checklist Tracker ----------
 let trackerSending = false;
 // The tracker splits "Name - Area, Name - Area" on commas and the first dash
-const trackerName = n => String(n || "").replace(/[-,{}@]/g, " ").replace(/\s+/g, " ").trim();
+// the Checklist Tracker knows people by their staff sheet name ("Ariane Braggs (Ari)")
+const trackerName = n => { const d = n ? staffNameFor(n) : null; return String((d && STAFF[d].raw) || n || "").replace(/[-,{}@]/g, " ").replace(/\s+/g, " ").trim(); };
 function trackerPairs(res) {
     const c = res && res.closing;
     if (!c) return null;
@@ -3067,6 +3408,7 @@ function setClosingSwap(key, name) {
     state.closing.swaps = (state.closing.swaps || []).filter(sw => sw.key !== key);
     state.closing.swaps.push({ key, name });
     const live = liveNow();
+    const before = result;
     if (live !== null) state.lock = lockAt(live);
     dirty = true;
     saveDraft();
@@ -3076,7 +3418,8 @@ function setClosingSwap(key, name) {
     const k = key.slice(key.indexOf(":") + 1);
     const what = key.startsWith("pos:") ? k : key.startsWith("930:") ? (CLOSE930[k] || {}).label
         : CLOSE1030[k] ? `${CLOSE1030[k].label} (10:30)` : smallLabel([k.replace(/^L/, "")]) + " (10:00)";
-    showStatusMessage(`${name} moved to ${what || k}.`, "success", 2500);
+    if (live !== null && before && result) showNowMoves(before, result, live, `${name} moved to ${what || k}`);
+    else showStatusMessage(`${name} moved to ${what || k}.`, "success", 2500);
 }
 function resetClosingSwaps() {
     if (state.closing) state.closing.swaps = [];
@@ -3123,6 +3466,28 @@ function parseHotSchedules(text) {
     return out;
 }
 // "Akira Hagler" -> the staff list's "Akira H" (or "Akira Hagler", or just "Lamya"); null if no clear match
+// Typo distance (letters swapped count as one): "Kadashya"/"Kadaysha" = 2, "Sharron"/"Sharon" = 1
+function nameDistance(a, b) {
+    a = a.toLowerCase(); b = b.toLowerCase();
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) {
+        d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[a.length][b.length];
+}
+// A staff name that's clearly the same person spelled a little differently (same last initial, first name 1-2 typos off)
+function closeStaffName(first, lastInitial, staff) {
+    const F = first.toLowerCase(), L0 = (lastInitial || "").toLowerCase();
+    if (F.length < 4) return null;
+    const hits = staff.filter(n => {
+        const [a, b = ""] = n.toLowerCase().replace(/\./g, "").split(/\s+/);
+        if (!a || a === F || (L0 && b && b[0] !== L0)) return false;
+        return nameDistance(a, F) <= (F.length >= 6 ? 2 : 1);
+    });
+    return hits.length === 1 ? hits[0] : null;
+}
 function matchStaffName(first, last, staff) {
     const F = first.toLowerCase();
     const L = last.replace(/[,.]/g, " ").replace(/\b(jr|sr|ii|iii|iv)\b/gi, " ").trim().toLowerCase();
@@ -3132,31 +3497,97 @@ function matchStaffName(first, last, staff) {
         || one(staff.filter(n => { const [a, b] = split(n); return a === F && b && L && (L === b || L.startsWith(b) || L.split(/[\s-]+/).some(w => w.startsWith(b))); }))
         || one(staff.filter(n => n.toLowerCase() === F));
 }
+// HotSchedules names you matched to someone on the staff list (remembered on this device)
+function hsNameMap() { try { return JSON.parse(localStorage.getItem("hsNameMap") || "{}") || {}; } catch (e) { return {}; } }
+function setHsName(raw, staffName) {
+    const m = hsNameMap(), k = String(raw).toLowerCase();
+    if (staffName) m[k] = staffName; else delete m[k];
+    try { localStorage.setItem("hsNameMap", JSON.stringify(m)); } catch (e) {}
+    renderImportPreview();
+}
+// Back-of-house people on the staff list (House column = BOH) are hidden from the lineup for now
+function bohStaffNames() { return Object.keys(STAFF).filter(n => STAFF[n].house === "boh"); }
+function isBohName(n) {
+    if (!n) return false;
+    if (STAFF[n]) return STAFF[n].house === "boh";
+    const boh = bohStaffNames();
+    if (!boh.length) return false;
+    const w = String(n).trim().split(/\s+/);
+    if (staffNameFor(n)) return false;   // matches someone front of house
+    const low = String(n).replace(/\s+/g, " ").trim().toLowerCase();
+    return boh.some(d => staffAliases(d).includes(low)) || !!matchStaffByFull(w[0], w.slice(1).join(" "), boh);
+}
 function importPlan(text) {
-    const rows = parseHotSchedules(text).filter(r => r.section !== "boh");
+    const all = parseHotSchedules(text).filter(r => r.section !== "boh");
     const staff = staffNameList();
+    const map = hsNameMap();
     const used = new Set();
+    // someone the staff list says is back of house (e.g. a BOH leader under Leadership) is skipped
+    const boh = bohStaffNames();
+    const skipped = [];
+    const rows = all.filter(r => {
+        if (map[r.raw.toLowerCase()] && map[r.raw.toLowerCase()] !== "__new__") return true;   // you matched them to someone
+        if (matchStaffByFull(r.first, r.last, staff)) return true;
+        const b = boh.length ? matchStaffByFull(r.first, r.last, boh) : null;
+        if (b) { skipped.push(b); return false; }
+        return true;
+    });
+    rows.bohSkipped = skipped;
     rows.forEach(r => {
-        let name = matchStaffName(r.first, r.last, staff);
+        // a match you picked before wins; then the automatic match
+        const m0 = map[r.raw.toLowerCase()];
+        // a match saved before the sheet had full names ("Ariane B") still points to that person ("Ari B")
+        const mapped = m0 && m0 !== "__new__" && !staff.includes(m0) ? (staff.find(d => staffAliases(d).includes(m0.toLowerCase())) || m0) : m0;
+        r.mapped = !!(mapped && staff.includes(mapped));
+        const forcedNew = mapped === "__new__";   // you said a close match isn't them
+        let name = r.mapped ? mapped : matchStaffByFull(r.first, r.last, staff);
+        if (!name && !forcedNew) { const near = closeStaffByFull(r.first, r.last.replace(/[^A-Za-z]/g, "")[0], staff); if (near) { name = near; r.close = true; } }
         r.known = !!name;
-        if (!name) {
-            // not on the staff list: "First L", with more of the last name if that's taken
-            const L = r.last.replace(/[^A-Za-z]/g, "");
-            name = L ? `${r.first} ${L[0].toUpperCase()}` : r.first;
-            for (let k = 2; used.has(name.toLowerCase()) && k <= L.length; k++) name = `${r.first} ${L[0].toUpperCase()}${L.slice(1, k).toLowerCase()}`;
-        }
-        if (used.has(name.toLowerCase())) name = `${r.first} ${r.last}`;
+        // the name they'd get as someone new: "First L", with more of the last name if that's taken
+        const L = r.last.replace(/[^A-Za-z]/g, "");
+        let fresh = L ? `${r.first} ${L[0].toUpperCase()}` : r.first;
+        for (let k = 2; used.has(fresh.toLowerCase()) && k <= L.length; k++) fresh = `${r.first} ${L[0].toUpperCase()}${L.slice(1, k).toLowerCase()}`;
+        r.newName = fresh;
+        if (!name) name = fresh;
+        if (used.has(name.toLowerCase())) { r.dupe = true; name = `${r.first} ${r.last}`; }
         used.add(name.toLowerCase());
         r.name = name;
         const s = toMin(r.start), e0 = toMin(r.end), e = e0 <= s ? e0 + 1440 : e0, split = toMin(DAYPART_SPLIT);
-        r.am = s < split && e > toMin(STORE_HOURS.open);
+        r.am = s <= split && e > toMin(STORE_HOURS.open);   // 2:00 starters too: the AM lineup shows who takes over at 2
         r.pm = e > split;
     });
     return rows;
 }
+// Staff names to match an unknown HotSchedules name to — likely ones (same first name / last initial) first
+function hsMapOptions(r) {
+    const staff = staffNameList();
+    const F = r.first.toLowerCase(), L0 = (r.last.replace(/[^A-Za-z]/g, "")[0] || "").toLowerCase();
+    const score = n => {
+        const p = STAFF[n] || {}, w = n.toLowerCase().split(/\s+/);
+        const a = (p.first || w[0] || "").toLowerCase(), b = (p.last || w[1] || "").toLowerCase();
+        return (a === F || (p.nick || "").toLowerCase() === F ? 2 : 0) + (b[0] === L0 ? 1 : 0) + (a[0] === F[0] ? 0.5 : 0);
+    };
+    const likely = staff.filter(n => score(n) >= 2).sort((a, b) => score(b) - score(a) || a.localeCompare(b));
+    const cur = r.mapped || r.close ? r.name : "";
+    const opt = (v, l) => `<option value="${esc(v)}" ${v === cur ? "selected" : ""}>${esc(l)}</option>`;
+    if (r.close && !likely.includes(r.name)) likely.unshift(r.name);
+    return opt(r.close ? "__new__" : "", `Add as new: ${r.newName}`)
+        + (likely.length ? `<optgroup label="Likely">${likely.map(n => opt(n, n)).join("")}</optgroup>` : "")
+        + `<optgroup label="Staff list">${staff.filter(n => !likely.includes(n)).map(n => opt(n, n)).join("")}</optgroup>`;
+}
 let importMode = "replace";
+let importLead = {};   // daypart -> the shift lead picked in the import (null = the suggestion)
+// Suggested lead: AM = the leader who opens (earliest start), PM = the leader who closes (latest end)
+function importLeadFor(rows, dp) {
+    const ld = rows.filter(r => r.section === "lead" && (dp === "AM" ? r.am : r.pm));
+    if (importLead[dp] !== undefined && importLead[dp] !== null) return ld.some(r => r.name === importLead[dp]) ? importLead[dp] : "";
+    const end = r => { const s = toMin(r.start), e = toMin(r.end); return e <= s ? e + 1440 : e; };
+    ld.sort((a, b) => dp === "AM" ? toMin(a.start) - toMin(b.start) || end(b) - end(a) : end(b) - end(a) || toMin(a.start) - toMin(b.start));
+    return ld.length ? ld[0].name : "";
+}
 function openImport() {
     importMode = "replace";
+    importLead = {};
     document.getElementById("importBody").innerHTML = `
         <p class="sheet-help" style="margin-top:0">In HotSchedules, open the day's schedule report, select the names and times, copy, and paste here. One paste fills both the AM and PM rosters.</p>
         <textarea class="import-text" id="importText" placeholder="Front of House&#10;Akira   Hagler&#9;2:00 PM&#9;10:00 PM&#10;…" oninput="renderImportPreview()"></textarea>
@@ -3181,11 +3612,13 @@ function renderImportPreview() {
             ${n(r => r.section === "lead") ? `<span>${n(r => r.section === "lead")} leaders</span>` : ""}
             ${n(r => r.section === "train") ? `<span>${n(r => r.section === "train")} trainees</span>` : ""}
             ${n(r => !r.known) ? `<span style="color:#b45309">${n(r => !r.known)} not on the staff list</span>` : ""}
+            ${rows.bohSkipped.length ? `<span title="Back of house on the staff list — hidden for now">Skipped back of house: ${esc(rows.bohSkipped.join(", "))}</span>` : ""}
         </div>
         <div class="import-list">${rows.map(r => `
             <div class="import-row">
                 <div><b>${esc(r.name)}</b>${r.section === "lead" ? `<span class="import-tag">Leader</span>` : r.section === "train" ? `<span class="import-tag trainee">Trainee</span>` : ""}
-                    <div class="from">${esc(r.raw)}${r.known ? "" : ` · <span class="new">not on the staff list</span>`}</div></div>
+                    <div class="from">${esc(r.raw)}${r.known && !r.mapped && !r.close ? "" : r.mapped ? ` · matched by you` : r.close ? ` · <span class="new">close match — check</span>` : ` · <span class="new">not on the staff list</span>`}${r.dupe ? ` · <span class="new">already used by someone above</span>` : ""}</div>
+                    ${!r.known || r.mapped || r.close ? `<select class="time-input sel hs-map" data-raw="${esc(r.raw)}" onchange="setHsName(this.dataset.raw, this.value)">${hsMapOptions(r)}</select>` : ""}</div>
                 <div>${t12(r.start)} – ${t12(r.end)}</div>
                 <div class="dp">${[r.am ? "AM" : "", r.pm ? "PM" : ""].filter(Boolean).join(" + ")}</div>
             </div>`).join("")}</div>
@@ -3193,6 +3626,13 @@ function renderImportPreview() {
             <button type="button" class="${importMode === "replace" ? "on" : ""}" onclick="importMode='replace'; renderImportPreview()">Replace today's rosters</button>
             <button type="button" class="${importMode === "add" ? "on" : ""}" onclick="importMode='add'; renderImportPreview()">Add to them</button>
         </div>
+        ${n(r => r.section === "lead") ? `<div class="import-leads">${["AM", "PM"].map(dp => {
+            const ld = rows.filter(r => r.section === "lead" && (dp === "AM" ? r.am : r.pm));
+            if (!ld.length) return "";
+            const cur = importLeadFor(rows, dp);
+            return `<label class="move-field"><span>${dp} shift lead</span><select class="time-input sel" onchange="importLead['${dp}']=this.value; renderImportPreview()">
+                <option value="" ${cur ? "" : "selected"}>No lead set</option>${ld.map(r => `<option value="${esc(r.name)}" ${r.name === cur ? "selected" : ""}>${esc(r.name)} · ${t12(r.start)} – ${t12(r.end)}</option>`).join("")}</select></label>`;
+        }).join("")}</div>` : ""}
         ${n(r => r.section === "train") ? `<p class="sheet-help" style="margin:0 0 0.8rem">Trainees go on the Training card — pick a position and a trainer for each.</p>` : ""}
         <button type="button" class="btn-primary block" onclick="applyImport()">${ICON.users} Import ${rows.length} ${rows.length === 1 ? "person" : "people"}</button>`;
 }
@@ -3224,6 +3664,8 @@ function applyImport() {
             const was = oldTr.find(x => (x.trainee || "").toLowerCase() === r.name.toLowerCase());
             return { trainee: r.name, pos: was ? was.pos : "", trainer: was ? was.trainer : "", start: r.start, end: r.end };
         };
+        const lead = importLeadFor(rows, dp);
+        if (importMode === "replace" || lead) st.shiftLead = lead;
         if (importMode === "replace") {
             st.roster = people.map(entry);
             st.trainings = trainees.map(trEntry);
@@ -3309,7 +3751,19 @@ function weatherFor(dp, date) {
     const hrs = w.hours.filter(h => h.min + 60 > from && h.min < to);
     if (!hrs.length) return null;
     const lo = Math.round(Math.min(...hrs.map(h => h.temp))), hi = Math.round(Math.max(...hrs.map(h => h.temp)));
-    return { lo, hi, rot: rotationForTemps(lo, hi), from, to };
+    // hour by hour: only the hours that are actually hot/cold rotate
+    const hours = {};
+    hrs.forEach(h => { const t = Math.round(h.temp); hours[h.min] = rotationForTemps(t, t); });
+    const rots = Object.values(hours).filter(Boolean);
+    // runs of the same rotation, for the summary line
+    const runs = [];
+    hrs.forEach(h => {
+        const r = hours[h.min], last = runs[runs.length - 1];
+        const a = Math.max(h.min, from), b = Math.min(h.min + 60, to);
+        if (last && last.rot === r) { last.to = b; last.lo = Math.min(last.lo, h.temp); last.hi = Math.max(last.hi, h.temp); }
+        else runs.push({ rot: r, from: a, to: b, lo: h.temp, hi: h.temp });
+    });
+    return { lo, hi, rot: rots.length ? Math.min(...rots) : 0, hours, runs, from, to };
 }
 const rotLabel = v => !v ? "no rotation" : v >= 60 ? `every ${v / 60} hr` : `every ${v} min`;
 function weatherHelpHtml() {
@@ -3317,6 +3771,10 @@ function weatherHelpHtml() {
     const r = Object.assign({}, DEFAULT_RULES, state.rules || {});
     const w = weatherFor(state.daypart, state.date);
     const where = esc(r.storeName || "the store");
+    if (w && w.runs && w.runs.length > 1) {
+        const deg = r => Math.round(r.lo) === Math.round(r.hi) ? `${Math.round(r.lo)}°` : `${Math.round(r.lo)}°–${Math.round(r.hi)}°`;
+        return `<span class="weather-line">${where}, hour by hour: ${w.runs.map(r => `${fmtT(r.from)}–${fmtT(r.to)} ${deg(r)} → <b>${rotLabel(r.rot)}</b>`).join(" · ")}</span>`;
+    }
     if (w) return `<span class="weather-line">${where}: <b>${w.lo === w.hi ? w.lo + "°F" : `${w.lo}°–${w.hi}°F`}</b> ${fmtClock(w.from)} – ${fmtClock(w.to)} → <b>${rotLabel(w.rot)}</b></span>`;
     const c = weatherCache[weatherKey(state.date)];
     if (weatherLoading || !c) return `Checking the weather for ${where}…`;
@@ -3337,8 +3795,10 @@ async function refreshWeather(force) {
 function applyAutoRotation(rebuild) {
     if (!state || !state.rotationAuto) return false;
     const w = weatherFor(state.daypart, state.date);
-    if (!w || w.rot === (+state.rotation || 0)) return false;
+    const sameHours = JSON.stringify(w && w.hours) === JSON.stringify(state.rotationHours || null);
+    if (!w || (w.rot === (+state.rotation || 0) && sameHours)) return false;
     state.rotation = w.rot;
+    state.rotationHours = w.hours;
     saveDraft();
     // don't reshuffle a lineup that's already under way — say so instead
     if (rebuild && result && state.roster.length && !rosterProblems()) {
@@ -3404,6 +3864,320 @@ function setLocation(name, lat, lon) {
     showStatusMessage(`Store location set to ${name}.`, "success", 3000);
 }
 
+// =====================================================================
+// SHIFT NOTES (AM / PM) — change fund from the Change Fund Log, call offs and training from the lineup,
+// the rest typed in. Saved on this device per day + daypart; copy, download or share as text.
+// =====================================================================
+const NOTE_SOS = { AM: ["Breakfast", "Lunch"], PM: ["Afternoon", "Dinner"] };
+const NOTE_EXTRAS = [["recap", "Recap"], ["labor", "Labor"], ["carcount", "Car count"], ["cleaning", "Cleaning"], ["stocking", "Stocking"]];
+const ATT_KINDS = [["late", "Late"], ["calloff", "Called off"], ["early", "Left early"], ["ncns", "No call / no show"], ["swap", "Swapped shifts"], ["stayed", "Stayed late"], ["other", "Other"]];
+let cfData = null;      // rows from the Change Fund Log (null = not loaded yet, false = couldn't load)
+let cfLoading = false;
+function noteKey(date, dp) { return `shiftNote:${date}:${dp}`; }
+function blankNote() {
+    return { cf: null, cf2: null, eod: "", sos: {}, attendance: [], training: [], dismissed: [], uniform: "In compliance", shortages: "", transfers: "", caterings: null, fyi: "", extras: {}, extrasOn: [] };
+}
+function loadNote(date, dp) {
+    try { const o = JSON.parse(localStorage.getItem(noteKey(date, dp))); if (o) return Object.assign(blankNote(), o); } catch (e) {}
+    return blankNote();
+}
+let curNote = null, curNoteFor = "";
+let noteSaveTimer = null;
+function saveNote() {
+    clearTimeout(noteSaveTimer);
+    const n = curNote, k = curNoteFor;
+    noteSaveTimer = setTimeout(() => {
+        try { localStorage.setItem(k, JSON.stringify(n)); } catch (e) {}
+        const el = document.getElementById("noteSaved"); if (el) el.textContent = "Saved on this device";
+    }, 300);
+}
+function noteNow() {
+    const k = noteKey(state.date, state.daypart);
+    if (curNoteFor !== k) { curNote = loadNote(state.date, state.daypart); curNoteFor = k; }
+    return curNote;
+}
+// The lineup this note is about (the open one, or the other daypart's saved draft)
+function lineupStateFor(dp) {
+    if (state && state.daypart === dp) return state;
+    try { const o = JSON.parse(localStorage.getItem(draftKey(dp))); return o && o.state ? upgradeState(o.state, dp) : null; } catch (e) { return null; }
+}
+function noteTrainLabel(v) {
+    if (/^close10?:/.test(v || "")) return "closing " + trainPosLabel(v).replace(/^Close /, "").replace(/ \(10:30\)$/, "");
+    return v || "?";
+}
+// Lines that come from the lineup: call offs, training
+function autoNoteLines(dp) {
+    const st = lineupStateFor(dp);
+    if (!st) return { attendance: [], training: [] };
+    return {
+        attendance: (st.roster || []).filter(r => r.calledOff).map(r => ({ key: "co:" + r.name, text: `${r.name} called off` })),
+        training: (st.trainings || []).filter(t => t.trainee && t.trainer).map(t => ({ key: "tr:" + t.trainee + ":" + t.pos, text: `${t.trainer} trained ${t.trainee} on ${noteTrainLabel(t.pos)}` }))
+    };
+}
+// Keep the lineup's lines current: untouched ones follow the lineup, edited/added ones stay as typed
+function mergeAuto(list, auto, dismissed) {
+    const keys = new Set(auto.map(a => a.key));
+    const out = list.filter(x => !x.auto || keys.has(x.key));
+    auto.forEach(a => {
+        if (dismissed.includes(a.key)) return;
+        const have = out.find(x => x.key === a.key);
+        if (have) { if (have.auto) have.text = a.text; }
+        else out.push({ key: a.key, text: a.text, auto: true });
+    });
+    return out;
+}
+// ---------- Change Fund Log ----------
+async function loadChangeFund(force) {
+    if (cfLoading || (cfData && !force)) return;
+    cfLoading = true;
+    if (view === "notes" && force) renderNotes();
+    const rows = await gvizRows(CHANGE_FUND.sheetId, "SELECT *", 12000, `&sheet=${encodeURIComponent(CHANGE_FUND.tab)}`);
+    cfLoading = false;
+    if (!rows) { cfData = false; if (view === "notes") renderNotes(); return; }
+    const C = CHANGE_FUND;
+    const num = cell => { const v = parseFloat(cell && cell.v !== undefined && cell.v !== null ? cell.v : ""); return isNaN(v) ? 0 : v; };
+    const when = cell => {
+        const v = cell && cell.v !== undefined && cell.v !== null ? String(cell.v) : "";
+        if (v.startsWith("Date(")) { const q = v.match(/\d+/g).map(Number); return new Date(q[0], q[1], q[2], q[3] || 0, q[4] || 0, q[5] || 0); }
+        const d = new Date(v); return isNaN(d) ? null : d;
+    };
+    const list = rows.map(r => {
+        const c = r.c || [];
+        const at = when(c[0]);
+        if (!at) return null;
+        const mod = cellText(c[C.modifiedOfCol]);
+        return { at, key: String(at.getTime()), by: cellText(c[1]), total: C.countCols.reduce((a, i) => a + num(c[i]), 0),
+            received: num(c[C.receivedCol]), deposited: num(c[C.depositedCol]), modOf: mod && mod.toLowerCase() !== "none" ? mod : null };
+    }).filter(Boolean);
+    const replaced = new Set(list.map(x => x.modOf).filter(Boolean));
+    cfData = list.filter(x => !replaced.has(x.key)).sort((a, b) => a.at - b.at);
+    if (view === "notes") renderNotes();
+}
+// A day's entries for a daypart (the business day runs until 4 AM): the last count, and any received / deposited
+function cfFor(date, dp) {
+    if (!cfData) return null;
+    const split = toMin(DAYPART_SPLIT);
+    const mine = cfData.filter(x => {
+        const b = new Date(x.at.getTime() - 4 * 3600 * 1000);
+        const iso = `${b.getFullYear()}-${String(b.getMonth() + 1).padStart(2, "0")}-${String(b.getDate()).padStart(2, "0")}`;
+        if (iso !== date) return false;
+        const m = x.at.getHours() * 60 + x.at.getMinutes();
+        return dp === "AM" ? (m >= 4 * 60 && m < split) : (m >= split || m < 4 * 60);
+    });
+    if (!mine.length) return { none: true };
+    const last = mine[mine.length - 1];
+    const recv = mine.filter(x => x.received).pop(), dep = mine.filter(x => x.deposited).pop();
+    return { total: last.total, by: last.by, at: last.at, received: recv ? recv.received : null, deposited: dep ? dep.deposited : null };
+}
+const money = v => v === null || v === undefined ? "" : (Math.round(v * 100) % 100 ? (+v).toFixed(2) : String(Math.round(v)));
+// ---------- SOS times: "4:46", "4 46", "4m46s", "4 mins 46s" → "4m 46s" ----------
+function sosText(v) {
+    const t = String(v || "").trim();
+    if (!t) return "";
+    if (/^\d+$/.test(t)) return `${+t}m 0s`;
+    const m = t.match(/^(\d+)\s*(?:m(?:in(?:ute)?s?)?[.,]?|:|\s)\s*(\d{1,2})?\s*(?:s(?:ec(?:ond)?s?)?)?\.?$/i);
+    return m ? `${+m[1]}m ${+(m[2] || 0)}s` : t;
+}
+// ---------- caterings (customer, pickup/delivery, time) ----------
+function noteCateringsDefault(dp) {
+    // AM: the rest of today's caterings (from the PM lineup). PM: tomorrow's — typed in.
+    if (dp !== "AM") return [];
+    const pm = lineupStateFor("PM");
+    return ((pm && pm.caterings) || []).map(c => ({ who: "", type: c.type === "delivery" ? "Delivery" : "Pickup", time: c.due || "" }));
+}
+const shortClock = v => { const m = toMin(v); if (m === null) return v || ""; const h = Math.floor(m / 60) % 24, mm = m % 60; return `${h % 12 || 12}${mm ? ":" + String(mm).padStart(2, "0") : ""}${h < 12 ? "am" : "pm"}`; };
+// ---------- the note as text (the same layout as the store's notes) ----------
+function noteText() {
+    const n = noteNow(), dp = state.daypart;
+    const [, mo, d] = state.date.split("-").map(Number);
+    const cf = cfFor(state.date, dp) || {};
+    const val = (typed, auto, empty) => typed !== null && typed !== undefined && typed !== "" ? typed : auto !== null && auto !== undefined && auto !== "" ? auto : empty;
+    const L = [`${mo}/${d} ${dp}`, ""];
+    const hr = "-------------------------------";
+    if (dp === "AM") L.push(`CF: ${val(n.cf, money(cf.total), "-")}`, `Changefund received: ${val(n.cf2, money(cf.received), "NA")}`);
+    else L.push(`Closing CF: ${val(n.cf, money(cf.total), "-")}`, `Changefund deposited: ${val(n.cf2, money(cf.deposited), "-")}`, `EOD: ${n.eod || "-"}`);
+    const [p1, p2] = NOTE_SOS[dp];
+    L.push("", hr, "", "FC SOS:", `${p1}: ${sosText(n.sos.fc1)}`, `${p2}: ${sosText(n.sos.fc2)}`, "", "DT SOS", `${p1}: ${sosText(n.sos.dt1)}`, `${p2}: ${sosText(n.sos.dt2)}`, "", hr, "");
+    const list = (title, items, none = "None") => { L.push(title + ":"); (items.length ? items : [none]).forEach(x => L.push(x)); L.push(""); };
+    const lines = arr => arr.map(x => x.text).filter(t => t && t.trim());
+    const text = v => String(v || "").split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+    list("Attendance", lines(n.attendance), "No call offs or tardies");
+    list("Training", lines(n.training), "None scheduled");
+    list(dp === "AM" ? "Uniform compliance" : "Uniform check", text(n.uniform), "In compliance");
+    list("Product shortages", text(n.shortages));
+    if (text(n.transfers).length) list("Product transfers", text(n.transfers));
+    const cats = (n.caterings || []).filter(c => c.who || c.time).map(c => `${c.who || "?"} ${c.type} > ${shortClock(c.time)}`);
+    list(dp === "AM" ? "Caterings" : "Caterings (tomorrow)", cats);
+    if (text(n.fyi).length) list("FYI", text(n.fyi));
+    NOTE_EXTRAS.forEach(([k, l]) => { if (n.extrasOn.includes(k) && text(n.extras[k]).length) list(l, text(n.extras[k])); });
+    return L.join("\n").replace(/\n{3,}/g, "\n\n").trim() + "\n";
+}
+// ---------- the Notes tab ----------
+function renderNotes() {
+    const el = document.getElementById("notesPanel");
+    if (!el || !state) return;
+    if (cfData === null && !cfLoading) loadChangeFund();
+    const n = noteNow(), dp = state.daypart;
+    const auto = autoNoteLines(dp);
+    n.attendance = mergeAuto(n.attendance, auto.attendance, n.dismissed);
+    n.training = mergeAuto(n.training, auto.training, n.dismissed);
+    if (n.caterings === null) n.caterings = noteCateringsDefault(dp);
+    const cf = cfFor(state.date, dp);
+    const cfSrc = cfLoading || cfData === null ? "Checking the Change Fund Log…" : cfData === false ? "Couldn't reach the Change Fund Log — type the numbers in."
+        : cf.none ? `Nothing in the Change Fund Log for the ${dp} yet.` : `From the Change Fund Log — ${esc(cf.by || "")}, ${fmtClock(cf.at.getHours() * 60 + cf.at.getMinutes())}`;
+    const has = v => v !== null && v !== undefined && v !== "";
+    const cfIn = (field, autoVal, label, empty) => `
+        <label class="note-field">${label}
+            <input class="field" value="${esc(has(n[field]) ? n[field] : "")}" placeholder="${esc(has(autoVal) ? autoVal : empty)}" oninput="curNote.${field}=this.value===''?null:this.value; saveNote(); renderNotePreview()">
+            ${has(n[field]) && has(autoVal) ? `<button type="button" class="link-btn" style="align-self:flex-start" onclick="curNote.${field}=null; saveNote(); renderNotes()">Use the log's ${esc(autoVal)}</button>` : has(autoVal) ? `<span class="note-src auto">From the log</span>` : ""}
+        </label>`;
+    const roster = ((lineupStateFor(dp) || {}).roster || []).map(r => r.name);
+    const lineList = kind => n[kind].map((x, i) => `
+        <div class="note-line">
+            <input value="${esc(x.text)}" oninput="noteEditLine('${kind}', ${i}, this.value)">
+            ${x.auto ? `<span class="note-tag">From lineup</span>` : ""}
+            <button type="button" class="icon-x" title="Remove" onclick="noteRemoveLine('${kind}', ${i})">${ICON.x}</button>
+        </div>`).join("") || `<p class="opt-help" style="margin:0.2rem 0">Nothing yet.</p>`;
+    const area = (field, ph, rows = 3) => `<textarea class="note-area" rows="${rows}" placeholder="${esc(ph)}" oninput="curNote.${field}=this.value; saveNote(); renderNotePreview()">${esc(n[field] || "")}</textarea>`;
+    const [p1, p2] = NOTE_SOS[dp];
+    const sosIn = k => `<input class="field" value="${esc(n.sos[k] || "")}" placeholder="m:ss" oninput="curNote.sos['${k}']=this.value; saveNote(); renderNotePreview()">`;
+    el.innerHTML = `
+        <div class="notes-cols"><div>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">${dp} Shift Note</div><div class="card-sub">${prettyDate(state.date)} · <span id="noteSaved">Saves on this device as you type</span></div></div>
+                <button type="button" class="link-btn danger push" onclick="clearNote()">Start over</button></div>
+            <div class="card-body">
+                <div class="note-grid">
+                    ${dp === "AM" ? cfIn("cf", money(cf && cf.total), "CF", "-") + cfIn("cf2", money(cf && cf.received), "Changefund received", "NA")
+                        : cfIn("cf", money(cf && cf.total), "Closing CF", "-") + cfIn("cf2", money(cf && cf.deposited), "Changefund deposited", "-")
+                          + `<label class="note-field">EOD <input class="field" value="${esc(n.eod || "")}" placeholder="e.g. -6.36" oninput="curNote.eod=this.value; saveNote(); renderNotePreview()"></label>`}
+                </div>
+                <div class="note-src">${cfSrc} <button type="button" class="link-btn" onclick="loadChangeFund(true)">Refresh</button></div>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">Speed of service</div><div class="card-sub">Type 4:46 or 4 46</div></div></div>
+            <div class="card-body"><div class="sos-table">
+                <span></span><span class="h">${p1}</span><span class="h">${p2}</span>
+                <b>FC</b>${sosIn("fc1")}${sosIn("fc2")}
+                <b>DT</b>${sosIn("dt1")}${sosIn("dt2")}
+            </div></div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">Attendance</div><div class="card-sub">Call offs come from the lineup — check them, then add tardies, swaps…</div></div></div>
+            <div class="card-body">
+                ${lineList("attendance")}
+                <div class="note-add">
+                    <select class="time-input sel" id="attName"><option value="">Who</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
+                    <select class="time-input sel" id="attKind">${ATT_KINDS.map(([v, l]) => `<option value="${v}">${l}</option>`).join("")}</select>
+                    <input class="field" id="attDetail" placeholder="Details (15 mins, with Joel, sick note…)" onkeydown="if(event.key==='Enter') addAttendance()">
+                    <button type="button" class="btn-dark sm" onclick="addAttendance()">Add</button>
+                </div>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">Training</div><div class="card-sub">From the lineup's Training card — edit or add</div></div></div>
+            <div class="card-body">
+                ${lineList("training")}
+                <div class="note-add">
+                    <select class="time-input sel" id="trnBy"><option value="">Trainer</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
+                    <input class="field" id="trnWho" placeholder="Trainee">
+                    <input class="field" id="trnWhat" placeholder="On what (register, closing FC…)" onkeydown="if(event.key==='Enter') addTrainingLine()">
+                    <button type="button" class="btn-dark sm" onclick="addTrainingLine()">Add</button>
+                </div>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">Uniforms &amp; product</div></div></div>
+            <div class="card-body note-grid" style="grid-template-columns:1fr">
+                <label class="note-field">${dp === "AM" ? "Uniform compliance" : "Uniform check"} ${area("uniform", "In compliance", 2)}</label>
+                <label class="note-field">Product shortages ${area("shortages", "No white milk, apple juice, cones…", 2)}</label>
+                <label class="note-field">Product transfers (received from / sent to another store) ${area("transfers", "Sent 2 cases of cups to another store…", 2)}</label>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">${dp === "AM" ? "Caterings later today" : "Tomorrow's caterings"}</div><div class="card-sub">${dp === "AM" ? "Filled in from the PM lineup — add the customer names" : "Customer, pickup or delivery, and time"}</div></div></div>
+            <div class="card-body">
+                ${(n.caterings || []).map((c, i) => `
+                <div class="note-line">
+                    <input value="${esc(c.who)}" placeholder="Customer" oninput="curNote.caterings[${i}].who=this.value; saveNote(); renderNotePreview()">
+                    <select class="time-input sel" style="flex:0 0 auto" onchange="curNote.caterings[${i}].type=this.value; saveNote(); renderNotePreview()">${["Pickup", "Delivery"].map(t => `<option ${t === c.type ? "selected" : ""}>${t}</option>`).join("")}</select>
+                    <input type="time" class="time-input" step="900" value="${esc(c.time)}" style="flex:0 0 auto" onchange="curNote.caterings[${i}].time=this.value; saveNote(); renderNotePreview()">
+                    <button type="button" class="icon-x" title="Remove" onclick="curNote.caterings.splice(${i},1); saveNote(); renderNotes()">${ICON.x}</button>
+                </div>`).join("") || `<p class="opt-help" style="margin:0.2rem 0">None.</p>`}
+                <button type="button" class="link-btn" style="margin-top:0.5rem" onclick="curNote.caterings.push({who:'',type:'Pickup',time:''}); saveNote(); renderNotes()">+ Add a catering</button>
+            </div>
+        </section>
+        <section class="card">
+            <div class="card-head"><div><div class="card-title">FYI</div><div class="card-sub">Anything the next leader should know</div></div></div>
+            <div class="card-body">
+                ${area("fyi", "Short between 3:30 and 4:30. Calm night…", 4)}
+                ${NOTE_EXTRAS.filter(([k]) => n.extrasOn.includes(k)).map(([k, l]) => `
+                    <div class="note-field" style="margin-top:0.7rem">${l} <button type="button" class="link-btn" style="align-self:flex-start" onclick="toggleNoteExtra('${k}')">Remove</button>
+                    <textarea class="note-area" rows="3" oninput="curNote.extras['${k}']=this.value; saveNote(); renderNotePreview()">${esc(n.extras[k] || "")}</textarea></div>`).join("")}
+                <div class="note-add">${NOTE_EXTRAS.filter(([k]) => !n.extrasOn.includes(k)).map(([k, l]) => `<button type="button" class="mini-toggle" onclick="toggleNoteExtra('${k}')">+ ${l}</button>`).join("")}</div>
+            </div>
+        </section>
+        </div>
+        <aside class="card notes-preview">
+            <div class="card-head"><div><div class="card-title">Preview</div><div class="card-sub">What gets copied</div></div></div>
+            <div class="card-body">
+                <div class="note-actions">
+                    <button type="button" class="btn-dark sm" onclick="copyNote()">Copy</button>
+                    <button type="button" class="btn-secondary" onclick="downloadNote()">Download .txt</button>
+                    ${navigator.share ? `<button type="button" class="btn-secondary" onclick="shareNote()">${ICON.share} Share</button>` : ""}
+                </div>
+                <div class="note-pre" id="notePre"></div>
+            </div>
+        </aside>
+        </div>`;
+    saveNote();
+    renderNotePreview();
+}
+function renderNotePreview() { const el = document.getElementById("notePre"); if (el) el.textContent = noteText(); }
+function noteEditLine(kind, i, v) { const x = curNote[kind][i]; if (!x) return; x.text = v; x.auto = false; saveNote(); renderNotePreview(); }
+function noteRemoveLine(kind, i) {
+    const x = curNote[kind][i];
+    if (!x) return;
+    if (x.key && !curNote.dismissed.includes(x.key)) curNote.dismissed.push(x.key);   // a lineup line you removed stays removed
+    curNote[kind].splice(i, 1);
+    saveNote(); renderNotes();
+}
+function addAttendance() {
+    const who = document.getElementById("attName").value, kind = document.getElementById("attKind").value, d = document.getElementById("attDetail").value.trim();
+    if (!who) { showStatusMessage("Pick who.", "warning"); return; }
+    const t = { late: `${who} ${d ? d + " " : ""}late`, calloff: `${who} called off${d ? " — " + d : ""}`, early: `${who} left early${d ? " (" + d + ")" : ""}`,
+        ncns: `${who} no call / no show${d ? " — " + d : ""}`, swap: `${who} swapped shifts${d ? " with " + d : ""}`, stayed: `${who} stayed late${d ? " (" + d + ")" : ""}`, other: `${who}${d ? " — " + d : ""}` }[kind];
+    curNote.attendance.push({ text: t });
+    saveNote(); renderNotes();
+}
+function addTrainingLine() {
+    const by = document.getElementById("trnBy").value, who = document.getElementById("trnWho").value.trim(), what = document.getElementById("trnWhat").value.trim();
+    if (!who && !what) return;
+    curNote.training.push({ text: `${by || "?"} trained ${who || "?"}${what ? " on " + what : ""}` });
+    saveNote(); renderNotes();
+}
+function toggleNoteExtra(k) {
+    curNote.extrasOn = curNote.extrasOn.includes(k) ? curNote.extrasOn.filter(x => x !== k) : [...curNote.extrasOn, k];
+    saveNote(); renderNotes();
+}
+function clearNote() {
+    if (!confirm(`Start the ${state.daypart} note for ${shortDate(state.date)} over? What you typed will be cleared.`)) return;
+    curNote = blankNote();
+    saveNote(); renderNotes();
+}
+async function copyNote() {
+    const text = noteText();
+    try { await navigator.clipboard.writeText(text); }
+    catch (e) { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (err) {} ta.remove(); }
+    showStatusMessage("Shift note copied.", "success", 2500);
+}
+function downloadNote() { downloadBlob(new Blob([noteText()], { type: "text/plain" }), `shift-note-${state.date}-${state.daypart}.txt`); }
+async function shareNote() {
+    try { await navigator.share({ title: `${state.daypart} shift note`, text: noteText() }); }
+    catch (e) { if (!e || e.name !== "AbortError") copyNote(); }
+}
+
 function modeButtons() {
     return Object.keys(MODES).map(m => `<button type="button" class="${state.mode === m ? "on" : ""}" onclick="setMode('${m}')">${MODES[m].label}</button>`).join("");
 }
@@ -3413,7 +4187,9 @@ function shiftMetaHtml(r) {
     if (!r.start || !r.end) return "Needs a time";
     const len = shiftMinutes(r);
     const brk = r.brk === "yes" || (r.brk !== "no" && len > BREAK_MIN_SHIFT);
-    return durLabel(len) + (brk ? ' · <span class="brk">break</span>' : "");
+    const unknown = staffReady && Object.keys(STAFF).length && !staffNameFor(r.name);
+    return durLabel(len) + (brk ? ' · <span class="brk">break</span>' : "")
+        + (unknown ? ` · <span class="warn-tag" title="Not on the staff list, so no ratings (counts as 3 everywhere), leader role or catering place. Fix the spelling, or match the name when you paste from HotSchedules.">no ratings</span>` : "");
 }
 
 // The Who / Trainer dropdowns follow the roster and the staff list as they change
@@ -3426,13 +4202,14 @@ function refreshPickers() {
         el.innerHTML = html;
         if ([...el.options].some(o => o.value === v)) el.value = v;
     };
-    fill("catName", rosterOptions("Who", null, true));
+    fill("catName", catWhoOptions());
     fill("trTrainer", leaderOptions("Trainer"));
     const rows = document.getElementById("trainingList");
     if (rows && !rows.contains(document.activeElement)) renderTrainingList();
 }
 
 function renderRosterList() {
+    dropBoh();
     setTimeout(refreshPickers, 0);
     setTimeout(renderClosingList, 0);
     const box = document.getElementById("rosterList");
@@ -3478,14 +4255,30 @@ function renderRosterList() {
                 </label>
             </div>`;
     };
-    if (state.daypart !== "PM") { box.innerHTML = state.roster.map(rowHtml).join(""); return; }
+    const lead = leadPickerHtml();
+    if (state.daypart !== "PM") { box.innerHTML = lead + state.roster.map(rowHtml).join(""); return; }
     const idx = state.roster.map((r, i) => i);
     const now = idx.filter(i => isHereAt2(state.roster[i])), later = idx.filter(i => !isHereAt2(state.roster[i]));
-    box.innerHTML = `
+    box.innerHTML = lead + `
         <div class="roster-sec">Here at 2:00 <small>${now.length} · where they are now</small></div>
         ${now.map(i => rowHtml(state.roster[i], i)).join("") || `<div class="roster-sec-empty">Nobody yet — switch the add box to “Here at 2:00”.</div>`}
         <div class="roster-sec">Coming in later <small>${later.length} · placed by the lineup</small></div>
         ${later.map(i => rowHtml(state.roster[i], i)).join("") || `<div class="roster-sec-empty">Nobody yet.</div>`}`;
+}
+// The shift lead: works a spot at open, then stays out of position (last resort: Mobile Drinks, Register 2, Runner)
+function leadPickerHtml() {
+    const L = new Set(leaderNames());
+    const names = state.roster.filter(r => !r.calledOff).map(r => r.name);
+    const lead = names.includes(state.shiftLead) ? state.shiftLead : "";
+    const opt = (v, l) => `<option value="${esc(v)}" ${v === lead ? "selected" : ""}>${esc(l)}</option>`;
+    const ld = names.filter(n => L.has(n)), rest = names.filter(n => !L.has(n));
+    return `<label class="lead-line"><span><b>Shift lead</b><small>In a spot at open, then out of position — last resort only (Mobile Drinks, Register 2, Runner)</small></span>
+        <select class="time-input sel pref ${lead ? "set" : ""}" onchange="setShiftLead(this.value)">${opt("", "No lead set")}${ld.length ? `<optgroup label="Leaders">${ld.map(n => opt(n, n)).join("")}</optgroup>` : ""}${rest.length ? `<optgroup label="Everyone else">${rest.map(n => opt(n, n)).join("")}</optgroup>` : ""}</select></label>`;
+}
+function setShiftLead(v) {
+    state.shiftLead = v || "";
+    markChanged();
+    renderRosterList();
 }
 // PM: anyone starting at 2:00 or earlier is already here (or walking in at 2) and is placed by hand
 function isHereAt2(r) { return state.daypart === "PM" && r.start && (toMin(r.start) ?? 9999) <= toMin(DAYPART_SPLIT); }
@@ -3680,6 +4473,101 @@ function rosterOptions(placeholder, selected, withOther) {
     return `<option value="">${esc(placeholder)}</option>` + names.map(n => `<option ${n === selected ? "selected" : ""}>${esc(n)}</option>`).join("")
         + (withOther ? `<option value="__other__">Someone not on the roster…</option>` : "");
 }
+// ---------- Catering: auto / manual, the catering list, suggested plans ----------
+function cateringMode() { return (state && state.rules && state.rules.cateringMode) || DEFAULT_RULES.cateringMode; }
+function setCateringMode(v) {
+    state.rules = Object.assign({}, DEFAULT_RULES, state.rules || {}, { cateringMode: v });
+    saveRules(state.rules);
+    renderRoster();
+}
+// "Who" choices: Auto (catering list) in auto mode, roster names (catering list first, with their place), someone off the roster
+function catWhoOptions(selected, forRow) {
+    const rank = caterRankMap();
+    const names = state.roster.filter(r => !r.calledOff).map(r => r.name)
+        .sort((a, b) => (rank[a] ?? Infinity) - (rank[b] ?? Infinity) || a.localeCompare(b));
+    if (selected && selected !== "__auto__" && !names.includes(selected)) names.push(selected);
+    const sel = selected ?? (cateringMode() === "auto" ? "__auto__" : "");
+    const opt = (v, l) => `<option value="${esc(v)}" ${v === sel ? "selected" : ""}>${esc(l)}</option>`;
+    return (forRow ? "" : opt("", "Who"))
+        + opt("__auto__", "Auto — catering list")
+        + names.map(n => opt(n, rank[n] !== undefined ? `${n} (#${rank[n]})` : n)).join("")
+        + (forRow ? "" : `<option value="__other__">Someone not on the roster…</option>`);
+}
+function setCatWho(i, v) {
+    const c = state.caterings[i];
+    if (!c) return;
+    if (v === "__auto__") { c.auto = true; c.name = ""; } else { c.auto = false; c.name = v; }
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderCateringList();
+}
+// Who's on today's roster from the catering list, in order
+function renderCaterQueue() {
+    const box = document.getElementById("caterQueue");
+    if (!box) return;
+    const rank = caterRankMap();
+    const on = state.roster.filter(r => !r.calledOff && rank[r.name] !== undefined).sort((a, b) => rank[a.name] - rank[b.name]);
+    box.innerHTML = !Object.keys(rank).length
+        ? `<p class="opt-help" style="margin:0 0 0.6rem">${staffReady ? "No catering list yet — add a Catering column to the staff sheet (1 = first choice)." : ""}</p>`
+        : on.length ? `<div class="cater-queue"><span class="mini-label">Catering list today</span>${on.map(r => `<span class="cq-chip"><b>${rank[r.name]}</b> ${esc(r.name)} <small>${fmtT(toMin(r.start))}–${fmtT(toMin(r.end))}</small></span>`).join("")}</div>`
+        : `<p class="opt-help" style="margin:0 0 0.6rem">Nobody on today's roster is on the catering list.</p>`;
+}
+// Manual: suggested plans for the catering being entered — the list's next free people, each tried in the lineup
+let catSuggestTimer = null;
+function queueCatSuggest() { clearTimeout(catSuggestTimer); catSuggestTimer = setTimeout(renderCatSuggest, 250); }
+function draftCatering() {
+    const due = (document.getElementById("catDue") || {}).value;
+    if (!due) return null;
+    const minsEl = document.getElementById("catMins");
+    const base = catType === "delivery" ? { type: "delivery", due, mins: minsEl ? +minsEl.value : 0, gone: Math.max(5, +((document.getElementById("catGone") || {}).value) || 40) } : { type: "pickup", due, mins: (minsEl ? +minsEl.value : 0) || 30 };
+    if (catSplit) Object.assign(base, { split: true, supplies: Math.max(5, +((document.getElementById("catSupplies") || {}).value) || 20), food: Math.max(0, +((document.getElementById("catFood") || {}).value) || 0) });
+    return base;
+}
+function catSuggestions(cat, howMany = 3) {
+    if (!cat || !state.roster.length || rosterProblems()) return [];
+    const rank = caterRankMap();
+    const leaders = leaderNames();
+    const n = state.caterings.length;
+    const seed = state.daypart === "PM" ? amHandover() : null;
+    const due = toMin(cat.due), dl = cat.type === "delivery";
+    const pre = cat.split ? (+cat.food || 0) + (+cat.supplies || 0) : dl ? (+cat.mins || 0) : (+cat.mins || 30);
+    const need0 = due - pre, need1 = due + (dl ? (+cat.gone || 40) : 0);
+    const here = r => { const s0 = toMin(r.start); let e0 = toMin(r.end); if (e0 <= s0) e0 += 1440; return s0 <= need0 && need1 <= e0; };
+    const cands = state.roster.filter(r => !r.calledOff && here(r)).map(r => r.name)
+        .sort((a, b) => (rank[a] ?? Infinity) - (rank[b] ?? Infinity) || a.localeCompare(b));
+    const out = [];
+    for (const name of cands) {
+        if (out.length >= howMany) break;
+        const trial = buildLineup({ ...state, leaders, caterRank: rank, caterings: [...state.caterings, { ...cat, name }] }, RATINGS, seed);
+        const k = trial.tasks.find(x => x.key === `catering#${n}`);
+        if (!k || k.name !== name) continue;
+        if (trial.warnings.some(w => w.startsWith(`${name} isn't here for all`))) continue;
+        const prep = trial.tasks.find(x => x.key === `catprep#${n}`);
+        const from = k.pos ? (k.cover ? `from ${k.pos} — ${k.cover} covers` : `from ${k.pos} — it closes`) : "free then — nothing to cover";
+        out.push({ name, rank: rank[name], start: k.start, end: k.type === "delivery" ? k.back : k.end, prep, from, onList: rank[name] !== undefined });
+    }
+    return out;
+}
+function renderCatSuggest() {
+    const box = document.getElementById("catSuggest");
+    if (!box) return;
+    if (cateringMode() !== "manual") { box.innerHTML = ""; return; }
+    const sug = catSuggestions(draftCatering());
+    if (!sug.length) { box.innerHTML = state.roster.length ? `<p class="opt-help">Nobody on the roster is free for the whole thing at that time.</p>` : ""; return; }
+    box.innerHTML = `<div class="cat-sug"><div class="mini-label">Suggested</div>${sug.map(x => `
+        <div class="cat-sug-row">
+            <div><b>${esc(x.name)}</b>${x.onList ? ` <span class="cq-rank">#${x.rank}</span>` : ` <span class="cq-rank off">not on the list</span>`}
+                <div class="break-sub">${fmtClock(x.start)} – ${fmtClock(x.end)}${x.prep ? ` · supplies ${fmtClock(x.prep.start)}` : ""} · ${esc(x.from)}</div></div>
+            <button type="button" class="link-btn" data-n="${esc(x.name)}" onclick="useCatSuggestion(this.dataset.n)">Use</button>
+        </div>`).join("")}</div>`;
+}
+function useCatSuggestion(name) {
+    const sel = document.getElementById("catName");
+    if (!sel) return;
+    sel.value = name;
+    document.getElementById("catOther").style.display = "none";
+    addCatering();
+}
 function durationOptions(sel, allowNone) {
     return (allowNone ? [0] : []).concat([15, 30, 45, 60, 90, 120]).map(m => `<option value="${m}" ${m === +sel ? "selected" : ""}>${m === 0 ? "No prep" : m < 60 ? m + " min" : (m / 60) + " hr"}</option>`).join("");
 }
@@ -3693,6 +4581,7 @@ function keepCatForm(fn) {
     document.getElementById("catOther").value = keep.other;
     document.getElementById("catOther").style.display = keep.name === "__other__" ? "" : "none";
     document.getElementById("catDue").value = keep.due;
+    queueCatSuggest();
 }
 function setCatSplit(v) { keepCatForm(() => { catSplit = v; }); }
 function flashLast(listId) {
@@ -3737,6 +4626,8 @@ function leaderOptions(placeholder, selected) {
 function renderCateringList() {
     const box = document.getElementById("cateringList");
     if (!box) return;
+    // auto caterings show who the lineup picked, so keep it current
+    if (state.caterings.some(c => c.auto) && (dirty || !result) && state.roster.length && !rosterProblems()) generate();
     box.innerHTML = state.caterings.map((c, i) => {
         const delivery = c.type === "delivery";
         const due = toMin(c.due);
@@ -3744,9 +4635,11 @@ function renderCateringList() {
         const span = due === null ? "" : delivery
             ? `Out ${fmtClock(due - prep)} – back ~${fmtClock(due + (+c.gone || 40))}`
             : `Out ${fmtClock(due - prep)} – ${fmtClock(due)}`;
+        const picked = c.auto ? (result && result.caterPicks ? result.caterPicks[i] : null) : c.name;
         return `
         <div class="item-row cat-row">
-            <span class="hc-chip"><span class="chip-avatar">${esc(initials(c.name))}</span><span class="chip-name">${esc(c.name)}</span><span class="hc-chip-x" title="Remove" onclick="state.caterings.splice(${i},1); markChanged(); renderCateringList()">${ICON.x}</span></span>
+            <span class="hc-chip"><span class="chip-avatar">${esc(initials(picked || "?"))}</span><span class="chip-name">${esc(picked || "Nobody yet")}</span><span class="hc-chip-x" title="Remove" onclick="state.caterings.splice(${i},1); markChanged(); renderCateringList()">${ICON.x}</span></span>
+            ${c.offRoster ? "" : `<select class="time-input sel" title="Who handles it" onchange="setCatWho(${i}, this.value)">${catWhoOptions(c.auto ? "__auto__" : c.name, true)}</select>`}
             <span class="type-tag ${delivery ? "deliv" : ""}">${delivery ? "Delivery" : "Pickup"}</span>
             ${c.offRoster ? `<span class="type-tag extra" title="Comes in just for this — not counted as a body">Catering only</span>` : ""}
             <span class="mini-label">${delivery ? "leaves" : "due"}</span>
@@ -3773,7 +4666,8 @@ function toggleCatSplit(i) {
 
 function addCatering() {
     let name = document.getElementById("catName").value;
-    let offRoster = false;
+    let offRoster = false, auto = false;
+    if (name === "__auto__") { auto = true; name = ""; }
     if (name === "__other__") {
         name = document.getElementById("catOther").value.trim();
         if (!name) { formError("catErr", "Type the name of the person coming in for it."); return; }
@@ -3786,16 +4680,19 @@ function addCatering() {
     const split = catSplit ? { split: true, supplies: Math.max(5, +document.getElementById("catSupplies").value || 20), food: Math.max(0, +document.getElementById("catFood").value || 0) } : {};
     const goneEl = document.getElementById("catGone");
     const gone = goneEl ? Math.max(5, +goneEl.value || 40) : 0;
-    if (!name) { formError("catErr", state.roster.length ? `Pick who's ${catType === "delivery" ? "taking the delivery" : "making the catering"}.` : "Add people to the roster first, or pick \"Someone not on the roster\"."); return; }
+    if (!name && !auto) { formError("catErr", state.roster.length ? `Pick who's ${catType === "delivery" ? "taking the delivery" : "making the catering"}.` : "Add people to the roster first, or pick \"Someone not on the roster\"."); return; }
     if (!due) { formError("catErr", catType === "delivery" ? "Add the time they leave." : "Add the time the catering is due."); return; }
     formError("catErr", "");
     if (!Array.isArray(state.caterings)) state.caterings = [];
-    state.caterings.push(Object.assign(catType === "delivery" ? { type: "delivery", name, due, mins, gone } : { type: "pickup", name, due, mins: mins || 30 }, split, offRoster ? { offRoster: true } : {}));
+    state.caterings.push(Object.assign(catType === "delivery" ? { type: "delivery", name, due, mins, gone } : { type: "pickup", name, due, mins: mins || 30 }, split, offRoster ? { offRoster: true } : {}, auto ? { auto: true } : {}));
     markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
     renderCateringList();
     flashLast("cateringList");
-    showStatusMessage(`Added ${name}'s ${catType === "delivery" ? "delivery" : "catering"}.`, "success", 2500);
-    document.getElementById("catName").value = "";
+    const who = auto ? (result && result.caterPicks && result.caterPicks[state.caterings.length - 1]) : name;
+    showStatusMessage(auto ? (who ? `Added — ${who} has the ${catType === "delivery" ? "delivery" : "catering"} (catering list).` : `Added — nobody on the roster is free for it yet.`) : `Added ${name}'s ${catType === "delivery" ? "delivery" : "catering"}.`, auto && !who ? "warning" : "success", 3500);
+    document.getElementById("catName").value = cateringMode() === "auto" ? "__auto__" : "";
+    queueCatSuggest();
     document.getElementById("catOther").value = "";
     document.getElementById("catOther").style.display = "none";
 }
@@ -3881,7 +4778,7 @@ function setMode(m) {
 let rulesOpen = false;
 function rulesHtml() {
     const r = Object.assign({}, DEFAULT_RULES, state.rules || {});
-    const changed = Object.keys(DEFAULT_RULES).filter(k => !/^store/.test(k) && String(r[k]) !== String(DEFAULT_RULES[k])).length;
+    const changed = Object.keys(DEFAULT_RULES).filter(k => !/^(store|catering)/.test(k) && String(r[k]) !== String(DEFAULT_RULES[k])).length;
     const sel = (key, opts) => `<select class="time-input sel" onchange="setRule('${key}', +this.value)">${opts.map(([v, l]) => `<option value="${v}" ${+r[key] === v ? "selected" : ""}>${l}</option>`).join("")}</select>`;
     const time = key => `<input type="time" class="time-input" step="900" value="${r[key]}" onchange="setRule('${key}', this.value)">`;
     const hrs = v => (v / 60) % 1 ? `${Math.floor(v / 60)}½ hr` : `${v / 60} hr`;
@@ -3923,7 +4820,7 @@ function setRule(key, val) {
 
 function resetRules() {
     const keep = {};
-    Object.keys(state.rules || {}).filter(k => /^store/.test(k)).forEach(k => { keep[k] = state.rules[k]; });
+    Object.keys(state.rules || {}).filter(k => /^(store|catering)/.test(k)).forEach(k => { keep[k] = state.rules[k]; });
     state.rules = Object.assign({}, DEFAULT_RULES, keep);
     saveRules(state.rules);
     rulesOpen = true;
@@ -3935,6 +4832,7 @@ function resetRules() {
 
 function setRotation(v) {
     state.rotation = v;
+    state.rotationHours = null;
     state.rotationAuto = false;
     markChanged();
     if (state.roster.length && !rosterProblems()) generate();
@@ -3969,12 +4867,55 @@ function amHandover() {
     return sheetAmHandover;
 }
 
+// Saved rosters from before the staff sheet had full names ("Ariane B") switch to how the sheet shows them now ("Ari B")
+function renameDeep(obj, from, to) {
+    if (Array.isArray(obj)) return obj.map(x => renameDeep(x, from, to));
+    if (obj && typeof obj === "object") {
+        const out = {};
+        Object.entries(obj).forEach(([k, v]) => { out[k === from ? to : k] = renameDeep(v, from, to); });
+        return out;
+    }
+    return obj === from ? to : obj;
+}
+function migrateNames() {
+    if (!state || !Object.keys(STAFF).length) return;
+    const all = Object.keys(STAFF);
+    const taken = new Set(state.roster.map(r => r.name));
+    const renames = [];
+    state.roster.forEach(r => {
+        if (STAFF[r.name]) return;
+        const low = r.name.replace(/\s+/g, " ").trim().toLowerCase();
+        const hits = all.filter(d => staffAliases(d).includes(low));
+        if (hits.length === 1 && !taken.has(hits[0])) { renames.push([r.name, hits[0]]); taken.add(hits[0]); }
+    });
+    if (!renames.length) return;
+    let st = state;
+    renames.forEach(([a, b]) => { st = renameDeep(st, a, b); });
+    Object.keys(state).forEach(k => delete state[k]);
+    Object.assign(state, st);
+    if (result) { let r = result; renames.forEach(([a, b]) => { r = renameDeep(r, a, b); }); result = r; }
+    saveDraft();
+}
+// Take confirmed back-of-house people off the roster (hidden from the lineup for now)
+function dropBoh() {
+    migrateNames();
+    if (!state || !Object.keys(STAFF).length) return;
+    const gone = state.roster.filter(r => isBohName(r.name)).map(r => r.name);
+    if (!gone.length) return;
+    state.roster = state.roster.filter(r => !gone.includes(r.name));
+    state.leadersExtra = (state.leadersExtra || []).filter(n => !gone.includes(n));
+    if (gone.includes(state.shiftLead)) state.shiftLead = "";
+    saveDraft();
+    showStatusMessage(`Took ${gone.join(", ")} off the roster — back of house is hidden for now.`, "info", 5000);
+}
 function generate() {
+    dropBoh();
     if (!state || !state.roster.length) { result = null; dirty = false; return; }
-    if (state.rotationAuto) { const w = weatherFor(state.daypart, state.date); if (w) state.rotation = w.rot; }
+    if (state.rotationAuto) { const w = weatherFor(state.daypart, state.date); if (w) { state.rotation = w.rot; state.rotationHours = w.hours; } }
+    else state.rotationHours = null;
     // leaders come from the staff sheet's Role column (trainers are always treated as leaders)
     const leaders = leaderNames();
-    result = buildLineup({ ...state, leaders }, RATINGS, state.daypart === "PM" ? amHandover() : null);
+    result = buildLineup({ ...state, leaders, caterRank: caterRankMap() }, rosterRatings(), state.daypart === "PM" ? amHandover() : null);
     dirty = false;
     saveDraft();
     renderSweepTimes();
@@ -4045,6 +4986,7 @@ function renderLineup() {
                 <button type="button" class="btn-dark" onclick="regenerate()">${ICON.refresh} Regenerate</button>
                 <button type="button" class="btn-secondary" id="breakdownBtn" onclick="openBreakdown()">${ICON.list} Breakdown</button>
                 <button type="button" class="btn-secondary" id="moveBtn" onclick="openMove()">${ICON.swap} Move${(state.moves || []).length ? ` (${state.moves.length})` : ""}</button>
+                <button type="button" class="btn-secondary" id="addNowBtn" onclick="openAddNow()">${ICON.userplus} Add someone</button>
                 <button type="button" class="btn-secondary" id="callOffBtn" onclick="openCallOffs()">${ICON.userx} Call offs${result.calledOff && result.calledOff.length ? ` (${result.calledOff.length})` : ""}</button>
                 <div class="seg">${modeButtons()}</div>
                 <button type="button" class="btn-secondary ${showNow ? "on" : ""}" onclick="showNow=!showNow; renderLineup()" title="Highlight who should be where right now">${ICON.clock} Now</button>
@@ -4228,13 +5170,14 @@ function applyMove() {
         result.tasks.forEach(k => { if (k.name === name) cands.add(k.end); });
         let best = null;
         [...cands].filter(t => t >= from && t < person.end && t <= from + 180).sort((a, b) => a - b).forEach(t => {
-            const trial = buildLineup({ ...state, leaders, lock, moves: [...others, { name, pos, from: hhmm(t) }] }, RATINGS, state.daypart === "PM" ? amHandover() : null);
+            const trial = buildLineup({ ...state, leaders, caterRank: caterRankMap(), lock, moves: [...others, { name, pos, from: hhmm(t) }] }, rosterRatings(), state.daypart === "PM" ? amHandover() : null);
             if (!trial) return;
             const cost = disruption(result, trial, live) + (t - from) / STEP * 1.5;
             if (!best || cost < best.cost) best = { t, cost };
         });
         if (best) from = best.t;
     }
+    const before = result;
     state.lock = lock;
     state.moves = [...others, { name, pos, from: hhmm(from), when: live !== null ? when : "whole" }];
     closeMove();
@@ -4242,7 +5185,8 @@ function applyMove() {
     generate();
     updateHero();
     renderAll();
-    showStatusMessage(`${name} moves to ${pos}${live !== null ? ` at ${fmtClock(from)}` : ""}.`, "success", 3500);
+    if (live !== null) showNowMoves(before, result, from, `${name} moves to ${pos}`);
+    else showStatusMessage(`${name} moves to ${pos}.`, "success", 3500);
 }
 
 function removeMove(i) {
@@ -4250,13 +5194,15 @@ function removeMove(i) {
     if (!m) return;
     state.moves.splice(i, 1);
     const live = liveNow();
+    const before = result;
     if (live !== null) state.lock = lockAt(live);
     markChanged();
     generate();
     updateHero();
     renderAll();
     renderMove();
-    showStatusMessage(`Undid ${m.name}'s move.`, "success", 2500);
+    if (live !== null) { closeMove(); showNowMoves(before, result, live, `Undid ${m.name}'s move`); }
+    else showStatusMessage(`Undid ${m.name}'s move.`, "success", 2500);
 }
 
 // =====================================================================
@@ -4314,11 +5260,14 @@ function toggleCallOffDraft(i) {
 
 function applyCallOffs() {
     const lockAt = calloffLockPoint();
+    const before = result;
+    const newOffs = state.roster.filter(r => !r.calledOff && calloffDraft.has(r.name)).map(r => r.name);
     if (lockAt !== null && calloffKeep && result) {
+        // everyone else keeps their breaks and tasks, so only what has to change does
         state.lock = {
-            until: lockAt,
+            until: lockAt, keepFuture: true,
             positions: result.actual || result.positions,
-            breaks: result.breaks.map(b => ({ name: b.name, start: b.start })),
+            breaks: result.breaks.filter(b => !b.trainee).map(b => ({ name: b.name, start: b.start })),
             tasks: result.tasks.map(k => ({ key: k.key, start: k.start, name: k.name }))
         };
     } else if (!calloffKeep) {
@@ -4333,7 +5282,136 @@ function applyCallOffs() {
     if (isWide()) { renderRoster(); renderLineup(); }
     else renderLineup();
     const n = calloffDraft.size;
-    showStatusMessage(p ? p : `Lineup rebuilt${n ? ` without ${n} call off${n === 1 ? "" : "s"}` : ""}.`, p ? "error" : "success", 3500);
+    if (!p && lockAt !== null && calloffKeep && before && result) showNowMoves(before, result, lockAt, newOffs.length ? `${newOffs.join(", ")} called off` : "Call offs updated");
+    else showStatusMessage(p ? p : `Lineup rebuilt${n ? ` without ${n} call off${n === 1 ? "" : "s"}` : ""}.`, p ? "error" : "success", 3500);
+}
+
+// =====================================================================
+// ADD SOMEONE MID-SHIFT  +  "DO THIS NOW"
+// =====================================================================
+// Someone shows up who wasn't scheduled: put them in with as few changes as possible —
+// everything before they start stays, and everyone else's breaks and tasks stay where they were.
+let addNowDraft = { name: "", end: "", start: "" };
+function openAddNow() {
+    if (!result) return;
+    const live = liveNow();
+    const t0 = live !== null ? live : result.window[0];
+    addNowDraft = { name: "", end: state.defaultShift.end, start: hhmm(t0) };
+    renderAddNow();
+    document.getElementById("addNowModal").classList.add("active");
+    setTimeout(() => { const el = document.getElementById("addNowName"); if (el) el.focus(); }, 50);
+}
+function closeAddNow() { document.getElementById("addNowModal").classList.remove("active"); }
+function renderAddNow() {
+    const live = liveNow();
+    const onRoster = new Set(state.roster.filter(r => !r.calledOff).map(r => r.name.toLowerCase()));
+    const names = staffNameList().filter(n => !onRoster.has(n.toLowerCase())).sort((a, b) => a.localeCompare(b));
+    const back = state.roster.filter(r => r.calledOff).map(r => r.name);
+    document.getElementById("addNowBody").innerHTML = `
+        <div class="move-form">
+            <label class="move-field"><span>Who</span>
+                <input type="text" class="field" id="addNowName" list="addNowNames" placeholder="Name" value="${esc(addNowDraft.name)}" oninput="addNowDraft.name=this.value" autocomplete="off">
+                <datalist id="addNowNames">${back.concat(names).map(n => `<option value="${esc(n)}">`).join("")}</datalist>
+            </label>
+            ${live !== null ? `<p class="sheet-help" style="margin:0">Starts now (${fmtClock(live)}). Everything before stays the same, and everyone else keeps their breaks.</p>`
+                : `<label class="move-field"><span>Starts</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.start)}" onchange="addNowDraft.start=this.value"></label>`}
+            <label class="move-field"><span>Here until</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.end)}" onchange="addNowDraft.end=this.value"></label>
+            <button type="button" class="btn-primary block" onclick="applyAddNow()">${ICON.userplus} Add and place them</button>
+        </div>`;
+}
+function applyAddNow() {
+    const raw = String(addNowDraft.name || "").trim();
+    if (!raw) { showStatusMessage("Type who's here.", "warning"); return; }
+    if (!addNowDraft.end) { showStatusMessage("Set when they leave.", "warning"); return; }
+    const name = staffNameList().find(n => n.toLowerCase() === raw.toLowerCase()) || raw;
+    const live = liveNow();
+    const from = live !== null ? live : round15(toMin(addNowDraft.start) ?? result.window[0]);
+    const was = state.roster.find(r => r.name.toLowerCase() === name.toLowerCase());
+    if (was && !was.calledOff) { showStatusMessage(`${name} is already on the lineup.`, "warning"); return; }
+    const before = result;
+    state.lock = Object.assign(lockAt(from), { keepFuture: true });
+    const entry = { name: was ? was.name : name, start: hhmm(from), end: addNowDraft.end, floater: false };
+    if (state.daypart === "PM" && from <= toMin(DAYPART_SPLIT)) { entry.at2 = ""; entry.brk = "auto"; }
+    if (was) Object.assign(was, entry, { calledOff: false }); else state.roster.push(entry);
+    closeAddNow();
+    markChanged();
+    generate();
+    updateHero();
+    renderAll();
+    showNowMoves(before, result, from, `${entry.name} added`);
+}
+
+// Where someone is at time t, and what they're doing if they're not in a spot
+function spotOf(res, n, t) {
+    for (const [pos, segs] of Object.entries(res.actual || res.positions)) if (segs.some(s => s.name === n && s.from <= t && t < s.to)) return pos;
+    return null;
+}
+function awayOf(res, n, t) {
+    const b = res.breaks.find(b => b.name === n && b.start <= t && t < b.end);
+    if (b) return `on break until ${fmtT(b.end)}`;
+    const k = res.tasks.find(k => k.name === n && k.start <= t && t < k.end);
+    if (k) return `${k.label.toLowerCase()} until ${fmtT(k.end)}`;
+    const x = (res.sessions || []).find(x => x.trainee === n && x.start <= t && t < x.end);
+    if (x) return `training on ${x.pos}`;
+    if (n === res.shiftLead) return "out of position (leading)";
+    return "float / run breaks";
+}
+// The changes to make at time t to go from the old lineup to the new one, in plain English
+function nowMovesList(oldRes, newRes, t) {
+    const short = shortNamer(newRes.people.length >= oldRes.people.length ? newRes : oldRes);
+    const here = (res, n) => res.people.some(p => p.name === n && p.start <= t && t < p.end);
+    const names = [...new Set([...oldRes.people, ...newRes.people].map(p => p.name))];
+    const now = [], arrive = [];
+    names.forEach(n => {
+        const inOld = here(oldRes, n), inNew = here(newRes, n);
+        if (!inOld && !inNew) return;
+        const a = inOld ? spotOf(oldRes, n, t) : null, b = inNew ? spotOf(newRes, n, t) : null;
+        const da = inOld && !a ? awayOf(oldRes, n, t) : null, dbb = inNew && !b ? awayOf(newRes, n, t) : null;
+        if (a === b && da === dbb) return;
+        if (!inOld) { arrive.push(b ? `${n} starts on ${b}.` : `${n} starts — ${dbb}.`); return; }
+        if (!inNew) { now.push(a ? `${n} is out — off ${a}.` : `${n} is out.`); return; }
+        if (a && b) now.push(`${n}: move from ${a} to ${b}.`);
+        else if (b) now.push(`${n}: go to ${b}${da && da !== "float / run breaks" ? ` (instead of ${da.replace(/ until .*/, "")})` : ""}.`);
+        else if (a) now.push(`${n}: leave ${a} — ${dbb}.`);
+        else if (da !== dbb) now.push(`${n}: ${dbb} (instead of ${da}).`);
+    });
+    // spots that open or close at this moment
+    const filled = (res, pos) => (res.actual || res.positions)[pos] && (res.actual || res.positions)[pos].some(s => s.from <= t && t < s.to);
+    const closes = POSITIONS.filter(p => filled(oldRes, p.name) && !filled(newRes, p.name)).map(p => `${p.name} closes.`);
+    // what changes later on: break times and who covers them
+    const later = [];
+    newRes.breaks.filter(b => b.end > t && b.trainee !== true).sort((a, b) => a.start - b.start).forEach(b => {
+        const o = oldRes.breaks.find(x => x.name === b.name && x.trainee !== true);
+        if (!o) { if (here(newRes, b.name) || b.start >= t) later.push(`${b.name} breaks at ${fmtT(b.start)}${b.cover ? ` — ${b.cover} covers` : ""}.`); return; }
+        if (o.start !== b.start) later.push(`${b.name}'s break moves to ${fmtT(b.start)} (was ${fmtT(o.start)}).`);
+        else if ((o.cover || "") !== (b.cover || "") && b.start >= t) later.push(`${fmtT(b.start)}: ${b.cover ? `${b.cover} covers ${b.name}'s break` : `${b.pos || "their spot"} closes for ${b.name}'s break`} (${o.cover ? `was ${o.cover}` : "before, the spot closed"}).`);
+    });
+    oldRes.breaks.filter(o => o.end > t && o.trainee !== true && !newRes.breaks.some(b => b.name === o.name && b.trainee !== true) && newRes.people.some(p => p.name === o.name))
+        .forEach(o => later.push(`${o.name} no longer breaks at ${fmtT(o.start)}.`));
+    const sh = l => l.map(short);
+    return { now: sh(arrive.concat(now, closes)), later: sh(later.slice(0, 8)), moreLater: Math.max(0, later.length - 8) };
+}
+let nowMovesText = "";
+function showNowMoves(oldRes, newRes, t, title) {
+    if (!oldRes || !newRes || t === null || t === undefined) return;
+    const m = nowMovesList(oldRes, newRes, t);
+    const live = liveNow();
+    const when = live !== null && t <= live ? "Do this now" : `At ${fmtT(t)}`;
+    nowMovesText = `${title} — ${when.toLowerCase()}:\n` + (m.now.length ? m.now.map(x => "• " + x).join("\n") : "• Nobody has to move.")
+        + (m.later.length ? `\n\nLater:\n${m.later.map(x => "• " + x).join("\n")}` : "");
+    document.getElementById("nowMovesTitle").textContent = when;
+    document.getElementById("nowMovesBody").innerHTML = `
+        <p class="sheet-help" style="margin-top:0">${esc(title)}. The lineup is updated — here's what changes on the floor.</p>
+        <ol class="now-moves">${m.now.length ? m.now.map(x => `<li>${esc(x)}</li>`).join("") : `<li>Nobody has to move.</li>`}</ol>
+        ${m.later.length ? `<div class="export-title" style="margin-top:1rem">Later</div><ul class="now-later">${m.later.map(x => `<li>${esc(x)}</li>`).join("")}${m.moreLater ? `<li>…and ${m.moreLater} more — see the breakdown.</li>` : ""}</ul>` : ""}
+        <div class="row-actions" style="margin-top:1rem"><button type="button" class="btn-secondary" onclick="copyNowMoves()">Copy</button><button type="button" class="btn-primary" onclick="closeNowMoves()">Got it</button></div>`;
+    document.getElementById("nowMovesModal").classList.add("active");
+}
+function closeNowMoves() { document.getElementById("nowMovesModal").classList.remove("active"); }
+async function copyNowMoves() {
+    try { await navigator.clipboard.writeText(nowMovesText); }
+    catch (e) { const ta = document.createElement("textarea"); ta.value = nowMovesText; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (err) {} ta.remove(); }
+    showStatusMessage("Copied.", "success", 2000);
 }
 
 function unlockLineup() {
@@ -4429,38 +5507,71 @@ function breakCover(b) {
 function mapGroups(res) {
     const W1 = res.window[1];
     const groups = [];
+    const sessions = res.sessions || [];
+    const shownSessions = new Set();
+    // a trainer's stretch on a spot is split where training starts/ends, so the branch reads "Emma & Cheri 11am-2pm"
+    const splitByTraining = (pos, s) => {
+        const mine = sessions.filter(x => x.pos === pos && x.trainer === s.name && x.start < s.to && s.from < x.end).sort((a, b) => a.start - b.start);
+        if (!mine.length) return [{ ...s }];
+        const out = [];
+        let at = s.from;
+        mine.forEach(x => {
+            const a = Math.max(at, x.start), b = Math.min(s.to, x.end);
+            if (a > at) out.push({ ...s, from: at, to: a });
+            if (b > a) { out.push({ ...s, from: a, to: b, trainee: x.trainee }); shownSessions.add(x); }
+            at = Math.max(at, b);
+        });
+        if (at < s.to) out.push({ ...s, from: at, to: s.to });
+        return out;
+    };
+    // why someone left their spot for a while: a task, or covering somewhere else
+    const awayWhy = (n, t, pos) => {
+        if (!n) return "";
+        const k = (res.tasks || []).find(k => k.name === n && k.start <= t && t < k.end);
+        if (k) return ` · ${n}: ${k.label}`;
+        const b = (res.breaks || []).find(b => b.name === n && b.start <= t && t < b.end);
+        if (b) return ` · ${n} on break`;
+        const there = Object.entries(res.actual || {}).find(([q, segs]) => q !== pos && segs.some(x => x.name === n && x.from <= t && t < x.to));
+        return there ? ` · ${n} covering ${there[0]}` : "";
+    };
     ["FC", "DT", "Outside"].forEach(g => {
         const rows = POSITIONS.filter(p => p.group === g && (res.positions[p.name] || []).length).map(p => ({
             label: p.name,
-            chain: res.positions[p.name].slice().sort((a, b) => a.from - b.from).flatMap((s, i, arr) => {
-                const seg = { text: `${s.name} ${fmtRange(s.from, s.to, W1)}`, name: s.name, from: s.from, to: s.to };
+            chain: res.positions[p.name].slice().sort((a, b) => a.from - b.from).flatMap(s => splitByTraining(p.name, s)).flatMap((s, i, arr) => {
+                const who = s.trainee ? `${s.name} & ${s.trainee}` : s.name;
+                const seg = { text: `${who} ${fmtRange(s.from, s.to, W1)}`, name: s.name, from: s.from, to: s.to };
                 const nx = arr[i + 1];
-                // empty for a while before the next person: say so instead of leaving a silent hole
-                return nx && nx.from > s.to ? [seg, { text: `closed ${fmtT(s.to)}-${fmtT(nx.from)}`, info: true, from: s.to, to: nx.from }] : [seg];
+                // empty for a while before the next person: say so (and why) instead of leaving a silent hole
+                return nx && nx.from > s.to ? [seg, { text: `closed ${fmtT(s.to)}-${fmtT(nx.from)}${awayWhy(s.name, s.to, p.name)}`, info: true, from: s.to, to: nx.from }] : [seg];
             })
         }));
         if (rows.length) groups.push({ key: g, rows });
     });
     if (res.breaks.length) {
+        // a trainer and trainee going together are one row ("Emma & Cheri"); otherwise just the person going
+        const list = res.breaks.filter(b => !(b.trainee === true && b.kind === "joint"
+            && res.breaks.some(o => o.name === b.trainer && o.kind === "joint" && o.start === b.start)));
         groups.push({
             key: "Breaks",
             branched: true,
-            rows: res.breaks.slice().sort((a, b) => a.start - b.start || a.name.localeCompare(b.name)).map(b => ({
+            rows: list.slice().sort((a, b) => a.start - b.start || a.name.localeCompare(b.name)).map(b => ({
                 branch: fmtT(b.start), branchFrom: b.start, branchTo: b.end,
-                label: b.name, labelName: b.name, from: b.start, to: b.end,
+                label: b.kind === "joint" && typeof b.trainee === "string" ? `${b.name} & ${b.trainee}` : b.name, labelName: b.name, from: b.start, to: b.end,
                 chain: [breakCover(b)]
                     .concat(b.backfill ? [{ text: `${b.backfillPos}: ${b.backfill}`, name: b.backfill, info: true, from: b.start, to: b.end }] : [])
                     .concat(b.kind === "merge" ? [{ text: `${b.trainee} trains with ${b.mergeWith}`, info: true, from: b.start, to: b.end }] : [])
-                    .concat(b.kind === "leader" && b.trainee ? [{ text: `leader, with ${b.trainee}`, info: true, from: b.start, to: b.end }] : [])
+                    .concat(b.kind === "leader" && b.trainee ? [{ text: b.leaderCover ? `${b.leaderCover} (leader) stays with ${b.trainee}` : `a leader stays with ${b.trainee}`, info: true, from: b.start, to: b.end }] : [])
             }))
         });
     }
-    if ((res.sessions || []).length) {
+    // training that couldn't be drawn on a spot's branch (the trainer wasn't on it) still gets listed
+    const unshown = sessions.filter(x => !shownSessions.has(x));
+    if (unshown.length) {
         groups.push({
             key: "Training",
-            rows: [...new Set(res.sessions.map(x => x.trainee))].map(tn => ({
+            rows: [...new Set(unshown.map(x => x.trainee))].map(tn => ({
                 label: tn, labelName: tn,
-                chain: res.sessions.filter(x => x.trainee === tn).sort((a, b) => a.start - b.start)
+                chain: unshown.filter(x => x.trainee === tn).sort((a, b) => a.start - b.start)
                     .map(x => ({ text: `${x.pos} with ${x.trainer} ${fmtT(x.start)}-${fmtT(x.end)}`, name: x.trainer, from: x.start, to: x.end }))
             }))
         });
@@ -4492,6 +5603,8 @@ function mapGroups(res) {
         const rows10 = c.block1030.map(b => ({ label: b.area, chain: [{ text: `${b.name || "Nobody"} ${fmtT(b.start)}-${fmtT(b.end)}`, name: b.name }].concat(also(b)) }));
         if (rows10.length) groups.push({ key: "Close1030", rows: rows10 });
     }
+    const short = shortNamer(res);
+    groups.forEach(g => g.rows.forEach(r => { r.label = short(r.label); r.chain.forEach(c => { c.text = short(c.text); }); }));
     return groups;
 }
 
@@ -4746,6 +5859,7 @@ function applyFocus() {
         <span class="focus-actions">
             ${result.people.some(x => x.name === focusName) ? `<button type="button" class="focus-bd" onclick="openMove(focusName)">Move</button>` : ""}
             <button type="button" class="focus-bd narrow-only" onclick="openBreakdown(focusName)">Breakdown for ${esc(focusName.split(" ")[0])}</button>
+            ${[...new Set((result.sessions || []).filter(x => x.trainer === focusName).map(x => x.trainee))].map(tn => `<button type="button" class="focus-bd" data-n="${esc(tn)}" onclick="openBreakdown(this.dataset.n)">Trainee: ${esc(shortNamer(result)(tn))}</button>`).join("")}
             <button type="button" onclick="focusPerson(focusName)">Clear</button>
         </span>`;
     bar.classList.add("active");
@@ -5074,7 +6188,7 @@ function lineupText(res) {
     if (res.breaks.length) {
         lines.push("BREAKS");
         res.breaks.slice().sort((a, b) => a.start - b.start || a.name.localeCompare(b.name)).forEach(b => {
-            lines.push(`  ${fmtT(b.start).padEnd(4)}  ${b.name} → ${breakCover(b).text}${b.backfill ? ` (${b.backfill} takes ${b.backfillPos})` : ""}${b.kind === "merge" ? ` (${b.trainee} trains with ${b.mergeWith})` : ""}`);
+            lines.push(`  ${fmtT(b.start).padEnd(7)} ${b.name} → ${breakCover(b).text}${b.backfill ? ` (${b.backfill} takes ${b.backfillPos})` : ""}${b.kind === "merge" ? ` (${b.trainee} trains with ${b.mergeWith})` : ""}`);
         });
         lines.push("");
     }
@@ -5107,7 +6221,7 @@ function lineupText(res) {
         }
         lines.push("");
     }
-    return lines.join("\n").trim() + "\n";
+    return shortNamer(res)(lines.join("\n").trim()) + "\n";
 }
 
 // =====================================================================
@@ -5116,7 +6230,13 @@ function lineupText(res) {
 function segAt(segs, t) { return (segs || []).find(x => x.from <= t && t < x.to) || null; }
 
 // Every change, grouped by time: spots opening/handing over, tasks, breaks
-function breakdownBlocks(res) {
+function breakdownBlocks(res) { return shortBlocks(res, breakdownBlocksFull(res)); }
+// first names in what's shown (who/also keep the full names for matching)
+function shortBlocks(res, blocks) {
+    const short = shortNamer(res);
+    return blocks.map(b => ({ ...b, lines: b.lines.map(l => ({ ...l, text: short(l.text) })) }));
+}
+function breakdownBlocksFull(res) {
     const [W0, W1] = res.window;
     const order = POSITIONS.map(p => p.name);
     const blocks = [];
@@ -5207,7 +6327,8 @@ function traineeAsPerson(res, name) {
     return { name, shiftStart: Math.min(...mine.map(x => x.fullStart)), shiftEnd: Math.max(...mine.map(x => x.fullEnd)) };
 }
 
-function traineeBlocks(res, name) {
+function traineeBlocks(res, name) { return shortBlocks(res, traineeBlocksFull(res, name)); }
+function traineeBlocksFull(res, name) {
     const mine = (res.sessions || []).filter(x => x.trainee === name).sort((a, b) => a.start - b.start);
     const blocks = [];
     let last = null;
@@ -5227,7 +6348,8 @@ function traineeBlocks(res, name) {
     return blocks;
 }
 
-function personBlocks(res, name) {
+function personBlocks(res, name) { return shortBlocks(res, personBlocksFull(res, name)); }
+function personBlocksFull(res, name) {
     const p = res.people.find(x => x.name === name);
     if (!p) {
         if ((res.sessions || []).some(x => x.trainee === name)) return traineeBlocks(res, name);
@@ -5279,7 +6401,7 @@ function personBlocks(res, name) {
                 return ses ? `${pos} — training ${ses.trainee}` : pos;
             }
         }
-        return "Float / run breaks";
+        return name === res.shiftLead ? "Lead the shift (out of position)" : "Float / run breaks";
     };
     // Every change spelled out: who they replace, who takes over the spot they leave, who covers them
     const A = res.actual || res.positions;
@@ -5609,13 +6731,13 @@ function openRatings() {
         body.innerHTML = `<p class="sheet-help">Staff list hasn't loaded yet. Tap &#8635; to try again.</p>`;
     } else {
         body.innerHTML = `
-            <p class="sheet-help" style="margin-top:0; margin-bottom:0.75rem;">1 = needs work, 5 = ace. Edit these in the staff sheet.</p>
+            <p class="sheet-help" style="margin-top:0; margin-bottom:0.75rem;">1 = never put them there, blank = 3, 5 = ace. Headset counts for DT Drinks and DT Bagger 1 until iPOS is outside. Catering = the catering list (1 = first choice, any number of people). Edit these in the staff sheet.</p>
             <div class="ratings-scroll"><table class="ratings-table">
-                <thead><tr><th>Name</th>${SKILLS.map(s => `<th>${s}</th>`).join("")}</tr></thead>
-                <tbody>${sorted.map(n => `<tr><td>${esc(n)}${onRoster.has(n) ? " &#9679;" : ""}</td>${SKILLS.map(s => {
+                <thead><tr><th>Name</th>${RATED.map(s => `<th>${s}</th>`).join("")}<th>Catering</th></tr></thead>
+                <tbody>${sorted.map(n => `<tr><td>${esc(n)}${onRoster.has(n) ? " &#9679;" : ""}</td>${RATED.map(s => {
                     const v = RATINGS[n] && RATINGS[n][s];
                     return `<td><span class="rt ${v ? "rt-" + v : "rt-none"}">${v || "–"}</span></td>`;
-                }).join("")}</tr>`).join("")}</tbody>
+                }).join("")}<td>${STAFF[n] && typeof STAFF[n].cater === "number" ? `<b class="cq-rank">#${STAFF[n].cater}</b>` : "–"}</td></tr>`).join("")}</tbody>
             </table></div>
             <p class="sheet-help">${esc(ratingSource)}</p>`;
     }
