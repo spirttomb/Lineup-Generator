@@ -111,6 +111,16 @@
         .bd-panel .bd-list { border: none; }
         .bd-panel .bd-block.now { background: var(--gold-soft); }
         .import-leads { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem; margin-bottom: 0.8rem; }
+        a.link-btn.ext { text-decoration: none; display: inline-flex; align-items: center; }
+        .cimp-row { display: grid; gap: 0.35rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line, #e2e8f0); }
+        .cimp-row.off { opacity: 0.5; }
+        .cimp-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+        .cimp-items { font-size: 0.82rem; color: var(--muted); line-height: 1.35; }
+        .cimp-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+        .cimp-ctl .time-input.num { width: 4.4rem; min-width: 0; flex: 0 0 auto; }
+        .cimp-f { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
+        .cat-remove { margin-left: auto; }
+        .seg button.auto-pick { color: var(--navy-900); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; text-underline-offset: 5px; }
         .lead-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; justify-content: space-between; padding: 0.6rem 0.75rem; margin-bottom: 0.6rem; border: 1.5px solid var(--line, #e2e8f0); border-radius: 12px; background: var(--gold-soft, #fff8e6); }
         .lead-line > span { display: grid; gap: 0.1rem; min-width: 0; flex: 1 1 200px; }
         .lead-line small { color: var(--muted); font-size: 0.75rem; line-height: 1.25; }
@@ -156,6 +166,10 @@
             box-shadow: var(--shadow-md), 0 0 0 1px var(--line); z-index: 2000; padding: 5px;
         }
         .suggest-item { padding: 0.62rem 0.75rem; border-radius: 9px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; font-weight: 700; color: var(--ink); }
+        .combo { display: inline-flex; position: relative; min-width: 0; }
+        .combo-in { min-width: 9.5rem; width: 100%; }
+        .suggest-item.special { color: var(--navy-700); font-weight: 600; }
+        .suggest-none { padding: 0.55rem 0.75rem; color: var(--muted); font-size: 0.9rem; }
         .suggest-item small { color: var(--muted); font-weight: 500; font-size: 0.8rem; text-align: right; }
         .suggest-item:hover, .suggest-item.highlighted { background: var(--gold-soft); }
 
@@ -312,7 +326,7 @@
         .item-row:first-child { border-top: none; }
         .time-input.sel { padding-right: 0.3rem; max-width: 100%; }
         .mini-label { color: var(--muted); font-size: 0.82rem; }
-        .btn-dark.sm { padding: 0.45rem 0.9rem; }
+        .btn-dark.sm, .btn-secondary.sm { padding: 0.45rem 0.9rem; }
         .hc-chip.trainee { background: #0f766e; }
         .cat-add .seg { margin-bottom: 0.15rem; }
         .cat-add .opt-help { margin-top: 0.45rem; }
@@ -538,6 +552,55 @@
         @media (max-width: 400px) {
             .am-pm-btn svg { display: none; }
         }
+
+        /* ---------- Same look as the Checklist Tracker / Change Fund Log ---------- */
+        :root { --primary: #003d73; --primary-hover: #044e8f; --header: #002a4f; --signin: #f1f5f9; --frame-bg: #f1f5f9; }
+        body { background: var(--primary); }
+        .appbar { background: var(--primary); color: var(--ink); padding: 1.5rem 1.5rem 0; }
+        .appbar-inner {
+            background: var(--signin); border: 12px solid var(--header); border-bottom: none; border-radius: 12px 12px 0 0;
+            padding: 0.75rem 1.25rem; box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .brand-name { color: var(--header); }
+        .brand-name small { color: var(--muted); }
+        .dp-switch { background: var(--header); padding: 0.25rem; }
+        .am-pm-btn { color: #b5c8db; }
+        .am-pm-btn:hover { color: #fff; }
+        .am-pm-btn.active { background: var(--primary); color: #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+        .icon-btn { background: var(--header); color: #fff; border-radius: 8px; margin-left: 0.3rem; }
+        .icon-btn:hover { background: var(--primary-hover); color: #fff; }
+        .viewport { padding: 0 1.5rem 2rem; }
+        .frame {
+            max-width: 1500px; margin: 0 auto; background: var(--frame-bg); border: 12px solid var(--header); border-top: none;
+            border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: clip;
+        }
+        .hero { background: #ffffff; color: var(--ink); padding: 1.4rem 1.5rem 1.1rem; border-bottom: 2px solid var(--header); }
+        .eyebrow { color: var(--primary); }
+        .hero h1 { color: var(--header); }
+        .hero-sub { color: var(--muted); }
+        .view-tabs { background: transparent; padding: 0; gap: 0.5rem; }
+        .nav-tab { background: var(--header); color: #fff; border-radius: 0.5rem; font-weight: 600; }
+        .nav-tab:hover { background: var(--primary-hover); color: #fff; }
+        .nav-tab.active { background: var(--primary); color: #fff; box-shadow: inset 0 -3px 0 var(--gold); }
+        .workspace { max-width: none; margin: 0; padding: 1.4rem 1.5rem 2rem; }
+        .card { border: 2px solid var(--header); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .step { background: var(--header); color: #fff; }
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 8px 18px -8px rgba(0, 42, 79, 0.6); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-primary svg { color: #fff; }
+        .generate-bar { background: linear-gradient(rgba(241, 245, 249, 0), var(--frame-bg) 40%); }
+        body.wide .bd-panel { top: 7.25rem; max-height: calc(100vh - 8.25rem); }
+        @media (max-width: 720px) {
+            .appbar { padding: 0.75rem 0.75rem 0; }
+            .appbar-inner { border-width: 6px; padding: 0.5rem 0.7rem; }
+            .viewport { padding: 0 0.75rem 1rem; }
+            .frame { border-width: 6px; }
+            .hero { padding: 1rem 0.9rem 0.9rem; }
+            .workspace { padding: 0.9rem 0.6rem 1.5rem; }
+            #statusMessageBar { top: 5rem; }
+            .lineup-toolbar .seg { flex-wrap: nowrap; }
+            .lineup-toolbar .seg button { padding-left: 0.6rem; padding-right: 0.6rem; }
+        }
     </style>
 </head>
 <body>
@@ -547,7 +610,6 @@
 <header class="appbar">
     <div class="appbar-inner">
         <div class="brand">
-            <span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="4.5" cy="12" r="2.3" fill="currentColor" stroke="none"/><path d="M6.8 12H10M10 5.5v13M10 5.5h3.5M10 12h3.5M10 18.5h3.5"/><rect x="14" y="3.8" width="7" height="3.4" rx="1.4"/><rect x="14" y="10.3" width="7" height="3.4" rx="1.4"/><rect x="14" y="16.8" width="7" height="3.4" rx="1.4"/></svg></span>
             <div class="brand-name">Lineup<small>Builder</small></div>
         </div>
 
@@ -557,13 +619,13 @@
         </div>
 
         <div class="appbar-actions">
-            <button class="icon-btn" onclick="refreshEverything()" title="Refresh" aria-label="Refresh staff, ratings and lineup"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
-            <button class="icon-btn" onclick="openRatings()" title="Ratings" aria-label="Position ratings"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></button>
+            <button class="icon-btn" onclick="refreshEverything()" title="Refresh" aria-label="Refresh the staff list and lineup"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
             <button class="icon-btn" onclick="openExport()" title="Save &amp; Share" aria-label="Save and share"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button>
         </div>
     </div>
 </header>
 
+<div class="viewport"><div class="frame">
 <section class="hero">
     <div class="hero-inner">
         <div>
@@ -584,6 +646,7 @@
     <div id="lineupPanel" style="display:none;"></div>
     <div id="notesPanel" style="display:none;"></div>
 </main>
+</div></div>
 
 <!-- Save / Share -->
 <div class="modal-overlay" id="exportModal" onclick="if(event.target===this) closeExport()">
@@ -666,6 +729,18 @@
     </div>
 </div>
 
+<!-- Import the day's caterings (Order Management export) -->
+<div class="modal-overlay" id="catImportModal" onclick="if(event.target===this) closeCatImport()">
+    <div class="sheet wide-sheet">
+        <div class="sheet-head">
+            <h3>Import Caterings</h3>
+            <button type="button" class="sheet-close" onclick="closeCatImport()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="sheet-body" id="catImportBody"></div>
+    </div>
+</div>
+<input type="file" id="catFile" accept=".xlsx,.csv" style="display:none" onchange="readCateringFile(this)">
+
 <!-- Import a roster pasted from HotSchedules -->
 <div class="modal-overlay" id="importModal" onclick="if(event.target===this) closeImport()">
     <div class="sheet">
@@ -725,6 +800,12 @@
 // =====================================================================
 // CONFIG
 // =====================================================================
+
+// Quick links to where the exports come from
+const LINKS = {
+    catering: "https://order-management.cfahome.com/dashboard",
+    schedule: "https://app.hotschedules.com/hs/menuParser.hs?screen=newReporting&sub_heading=scheduleReport&type=3"
+};
 
 // Same staff sheet as the checklist tracker. Columns A-D stay as they are
 // (Name, PIN, Role, House). Position ratings (1-5) go in columns E onward.
@@ -1157,6 +1238,17 @@ function buildLineup(st, ratings, seed) {
             return { name: r.name, shiftStart: s, shiftEnd: e, start: Math.max(s, dayStart), end: Math.min(e, dayEnd), floater: !!r.floater, prefer: r.prefer || "",
                 brk: r.brk === "yes" || r.brk === "no" ? r.brk : "auto", at2: !isAM && r.at2 && POS_INFO[r.at2] ? r.at2 : "" };
         });
+    // the same name twice on the roster: keep the first (otherwise one "covers" the other's break)
+    const seenNames = new Set();
+    const dupes = [];
+    const uniq = everyone.filter(p => { const k = p.name.toLowerCase(); if (seenNames.has(k)) { dupes.push(p.name); return false; } seenNames.add(k); return true; });
+    if (dupes.length) warnings.push(`${[...new Set(dupes)].join(", ")} ${dupes.length === 1 ? "is" : "are"} on the roster twice — only the first one is used.`);
+    everyone.length = 0; uniq.forEach(p => everyone.push(p));
+    // AM: the PM's shift lead walking in at 2:00 isn't put in a spot at the handover
+    if (isAM && st.nextLead) {
+        const i = everyone.findIndex(p => p.name === st.nextLead && p.shiftStart >= SPLIT);
+        if (i >= 0) everyone.splice(i, 1);
+    }
     everyone.filter(p => p.end <= p.start).forEach(p => warnings.push(`${p.name}'s shift is outside ${isAM ? "the AM lineup (open – 2:00)" : "the PM lineup (2:00 – close)"}, so they aren't in it.`));
     const traineeNames = new Set((st.trainings || []).filter(x => x.trainee).map(x => x.trainee.trim().toLowerCase()));
     // A trainee can also be on the roster: they count as a body outside their training, not during it
@@ -1347,7 +1439,8 @@ function buildLineup(st, ratings, seed) {
     function planClosing() {
         const prefs = (st.closing && st.closing.prefs) || {};
         const rate = (n, pos) => (ratings && ratings[n] && ratings[n][POS_INFO[pos].skill]) || 3;
-        const here = people.filter(p => p.start <= IN_CLOSE && p.end >= CLOSE && !inTraining(p.name, IN_CLOSE));
+        // (the shift lead runs the close — they don't get a closing job or the closing Lead spot, which is for the other leaders)
+        const here = people.filter(p => p.start <= IN_CLOSE && p.end >= CLOSE && !inTraining(p.name, IN_CLOSE) && p.name !== shiftLead);
         if (!here.length) return null;
         const isTen = p => p.shiftEnd > CLOSE;
         // Closing training: the trainer is put on the job being trained (9-10, and their 10:30 area)
@@ -1371,7 +1464,7 @@ function buildLineup(st, ratings, seed) {
         const trainsAt9 = n => !!(tjob[n] || tjob10[n]);
         // Lead is the first extra: only when there's someone left after the required spots and 5 checklists
         let lead = null;
-        const ldrs = here.filter(p => leaders.has(p.name) && !trainsAt9(p.name)).sort((a, b) => (b.name === shiftLead) - (a.name === shiftLead) || isTen(b) - isTen(a) || b.shiftEnd - a.shiftEnd || a.name.localeCompare(b.name));
+        const ldrs = here.filter(p => leaders.has(p.name) && !trainsAt9(p.name)).sort((a, b) => isTen(b) - isTen(a) || b.shiftEnd - a.shiftEnd || a.name.localeCompare(b.name));
         if (ldrs.length && here.length > CLOSE_POSITIONS.length + 5) lead = ldrs[0].name;
         const pool = here.filter(p => p.name !== lead);
         // the required 9-10 spots come first
@@ -1603,7 +1696,12 @@ function buildLineup(st, ratings, seed) {
             // ---- Trainers: their break has to keep the training going ----
             if (isTrainer(p.name)) {
                 const mine = sessions.filter(x => x.trainer === p.name);
-                const leaderFree = (s0) => people.find(L => L.name !== p.name && leaders.has(L.name) && L.start <= s0 && s0 + BREAK_LEN <= L.end
+                // (never the shift lead — if no other leader can stay with the trainee, the break waits until training is over)
+                // …and only a leader who can actually work the training spot (not rated 1 there, not "inside only" for outside)
+                const canRun = (n, pos) => !!POS_INFO[pos] && !(ratings && ratings[n] && ratings[n][POS_INFO[pos].skill] === 1)
+                    && !((people.find(x => x.name === n) || {}).prefer === "inside" && POS_INFO[pos].group === "Outside");
+                const leaderFree = (s0, ses) => people.find(L => L.name !== p.name && L.name !== shiftLead && leaders.has(L.name) && L.start <= s0 && s0 + BREAK_LEN <= L.end
+                    && (!ses || canRun(L.name, ses.pos))
                     && !sessions.some(x => x.trainer === L.name && overlaps(s0, s0 + BREAK_LEN, x.start, x.end))
                     && !ownBusy(L.name, s0, s0 + BREAK_LEN)
                     && !breaks.some(b => b.name === L.name && overlaps(s0, s0 + BREAK_LEN, b.start, b.end)));
@@ -1614,7 +1712,7 @@ function buildLineup(st, ratings, seed) {
                     const ses = mine.find(x => overlaps(s0, s0 + BREAK_LEN, x.start, x.end));
                     if (!ses) return { kind: "free", cost: 0 };
                     if (ses.tb && s0 >= ses.tb.ideal && s0 <= ses.tb.last && s0 + BREAK_LEN <= ses.end) return { kind: "joint", cost: 0.5, ses };
-                    const L = leaderFree(s0);
+                    const L = leaderFree(s0, ses);
                     if (L) return { kind: "leader", cost: 4, ses, leader: L.name };
                     const o = otherSession(s0, ses);
                     if (o) return { kind: "merge", cost: 6, ses, mergeWith: o.trainer };
@@ -1991,9 +2089,10 @@ function buildLineup(st, ratings, seed) {
     const ratedOne = (n, pos) => !!POS_INFO[pos] && ratingAt(n, pos) === 1;
     // the store's first stretch: the lead works a spot until there are 4 other people to run the main spots
     const openingPhase = t => isAM && t < OPEN + 120 && people.filter(p => p.name !== shiftLead && onShift(p, t) && !isBusy(p.name, t)).length < 4;
-    const leadLimited = t => !!shiftLead && !openingPhase(t) && !(insideClosed(t) && closing);
+    const leadLimited = t => !!shiftLead && !openingPhase(t);
+    // (after 9 there's no Mobile Drinks / Register 2 / Runner, so the lead never fills a spot 9–10:30)
     const canWork = (n, pos) => !(insideOnly(n) && POS_INFO[pos] && POS_INFO[pos].group === "Outside") && !ratedOne(n, pos)
-        && !(n === shiftLead && leadLimited(simT) && !LEAD_SPOTS.includes(pos));
+        && !(n === shiftLead && leadLimited(simT) && (!LEAD_SPOTS.includes(pos) || insideClosed(simT)));
     // a preference can be a whole area (FC / DT / Outside), a job ("skill:Bagging" = any bagger spot) or one spot
     const prefersPos = (n, pos) => { const x = personOf(n); return !!x && !!x.prefer && x.prefer !== "inside" && !!POS_INFO[pos]
         && (x.prefer === pos || POS_INFO[pos].group === x.prefer || x.prefer === "skill:" + POS_INFO[pos].skill); };
@@ -2079,6 +2178,7 @@ function buildLineup(st, ratings, seed) {
     const runnerLog = {};
     const swapLog = [];
     const leadSlots = [], headsetSlots = [];
+    const fitSwapAt = {};   // when someone last traded spots for a better fit
     let handover = null;
 
     let simT = 0;
@@ -2175,7 +2275,10 @@ function buildLineup(st, ratings, seed) {
                 pinned[m.pos] = m.name;
             });
             let order = orderAt(t).filter(pos => !pinned[pos] && !forcedFront.includes(pos));
-            const room = Math.max(0, K - Object.keys(pinned).filter(pos => pinned[pos] !== shiftLead).length);
+            // Dining Room breaks themselves: the spot just closes for their break (nobody covers)
+            const drOwner = homeOwner["Dining Room"];
+            if (drOwner && breaks.some(b => b.name === drOwner && b.start <= t && t < b.end)) order = order.filter(pos => pos !== "Dining Room");
+            let room = Math.max(0, K - Object.keys(pinned).filter(pos => pinned[pos] !== shiftLead).length);
             // (the kept FC bagger doesn't count here — it's the first to give way, before iPOS or the lead)
             const needed = () => forcedFront.length + essentialAt(t).filter(pos => order.includes(pos) && !(keptOpen.has(pos) && POS_INFO[pos].priority > 2)).length;
             // too few for the spots that have to be open: the lead steps onto Register 2 (the front counter register)
@@ -2228,9 +2331,9 @@ function buildLineup(st, ratings, seed) {
                 if (needsLeader[pos] !== undefined) {
                     // a leader has to break this trainer: take one who's free, or move one over from their spot
                     const wanted = needsLeader[pos];
-                    const L = pool.find(p => p.name === wanted && canWork(p.name, pos)) || pool.find(p => leaders.has(p.name) && !sessionOf(p.name, t) && canWork(p.name, pos));
+                    const L = pool.find(p => p.name === wanted && canWork(p.name, pos)) || pool.find(p => leaders.has(p.name) && p.name !== shiftLead && !sessionOf(p.name, t) && canWork(p.name, pos));
                     if (L) { pool = pool.filter(x => x !== L); assign[pos] = L.name; used.add(L.name); tempAt[L.name] = pos; continue; }
-                    const held = Object.entries(assign).filter(([y, n]) => leaders.has(n) && !noTouch.has(y) && !sessionOf(n, t) && canWork(n, pos))
+                    const held = Object.entries(assign).filter(([y, n]) => leaders.has(n) && n !== shiftLead && !noTouch.has(y) && !sessionOf(n, t) && canWork(n, pos))
                         .sort((a, b) => (b[1] === wanted) - (a[1] === wanted) || POS_INFO[b[0]].priority - POS_INFO[a[0]].priority)[0];
                     if (held) { const [y, n] = held; delete assign[y]; assign[pos] = n; tempAt[n] = pos; continue; }
                 }
@@ -2270,6 +2373,28 @@ function buildLineup(st, ratings, seed) {
                 const [ip, n] = cand;
                 assign[ip] = L1; assign[opos] = n;
             });
+            // 3c) better fits: people placed in order (whoever was free when a spot opened) trade spots when that's
+            //     clearly better for the mode — e.g. Aces: a 2 on FC Bagger 1 trades with a 4 bagger on a less important spot.
+            //     Each person moves like this at most once every 2 hours, so it doesn't churn.
+            {
+                const W = pos => POS_INFO[pos].priority <= 2 ? 1.5 : POS_INFO[pos].priority <= 6 ? 1.2 : 1;
+                const fit = (n, pos) => modeScore(n, pos, assign) + (prefersPos(n, pos) ? 3 : 0);
+                const movable = (pos, n) => !OUTSIDE.has(pos) && !pinned[pos] && !noTouch.has(pos) && !tempAt[n] && homeOwner[pos] === n
+                    && !sessionOf(n, t) && !runnerSet.has(n) && n !== shiftLead && !(on.find(x => x.name === n) || {}).floater
+                    && (fitSwapAt[n] === undefined || t - fitSwapAt[n] >= 120);
+                for (let round = 0; round < 3; round++) {
+                    let best = null;
+                    const spots = Object.entries(assign).filter(([pos, n]) => movable(pos, n));
+                    spots.forEach(([X, A], i) => spots.slice(i + 1).forEach(([Y, B]) => {
+                        if (!canWork(A, Y) || !canWork(B, X)) return;
+                        const gain = W(X) * (fit(B, X) - fit(A, X)) + W(Y) * (fit(A, Y) - fit(B, Y));
+                        if (gain >= 2 && (!best || gain > best.gain)) best = { X, Y, A, B, gain };
+                    }));
+                    if (!best) break;
+                    assign[best.X] = best.B; assign[best.Y] = best.A;
+                    fitSwapAt[best.A] = t; fitSwapAt[best.B] = t;
+                }
+            }
             // 4) a floater stuck in a spot hands it to someone free who isn't a floater
             Object.entries(assign).forEach(([pos, n]) => {
                 const person = on.find(p => p.name === n);
@@ -2356,6 +2481,7 @@ function buildLineup(st, ratings, seed) {
         const ownSpot = n => { const pos = prevPosOf[n]; return pos && homeOwner[pos] === n ? pos : null; };
         breaks.filter(b => b.start === t).forEach(b => {
             b.pos = ownSpot(b.name); b.cover = b.pos ? (assign[b.pos] || null) : null;
+            if (b.pos === "Dining Room" && !b.cover) b.self = true;
             const sw = swapFor(b.name); if (sw) { b.backfillPos = sw.backfillPos; b.backfill = sw.backfill; }
         });
         tasks.filter(k => k.start === t && k.name).forEach(k => {
@@ -2408,6 +2534,16 @@ function buildLineup(st, ratings, seed) {
         });
         return segs;
     };
+    // A break where the cover takes the spot for good (the owner doesn't come back to it): the spot shows the
+    // replacement from the start of the break, not the owner "through" it
+    breaks.forEach(b => {
+        if (!b.pos || !b.cover || b.trainee === true) return;
+        const iEnd = slots.indexOf(b.end);
+        const after = iEnd >= 0 ? timeline[b.pos][iEnd] : null;
+        if (after === b.name) return;   // back on their spot after the break
+        b.takeover = true;
+        slots.forEach((t, i) => { if (t >= b.start && t < b.end && shownTimeline[b.pos][i] === b.name) shownTimeline[b.pos][i] = timeline[b.pos][i]; });
+    });
     const positions = {}, actual = {};
     POSITIONS.forEach(p => { positions[p.name] = toSegs(shownTimeline[p.name]); actual[p.name] = toSegs(timeline[p.name]); });
     const floaters = {};
@@ -2432,10 +2568,12 @@ function buildLineup(st, ratings, seed) {
             (firstOpen < 0 ? ` — there's no one left to put there.`
                 : ts.includes(openBy[pos]) ? ` — it opens at ${fmtClock(slots[firstOpen])}.` : ` (it's empty at times after that).`));
     });
+    // a trainer's break where the leader didn't end up on the training spot: say what really happens (trainee waits)
+    breaks.forEach(b => { if (b.kind === "leader" && b.cover && b.cover !== b.leaderCover) b.kind = "forced"; });
     // stretches of time, as "2:00 PM – 2:30 PM"
     const stretches = list => { const out = []; [...new Set(list)].sort((a, b) => a - b).forEach(t => { const l = out[out.length - 1]; if (l && l.to === t) l.to = t + STEP; else out.push({ from: t, to: t + STEP }); }); return out.map(x => `${fmtClock(x.from)} – ${fmtClock(x.to)}`); };
     if (headsetSlots.length) warnings.push(`Too few people to keep iPOS outside${shiftLead ? " even with the lead in a spot" : ""} ${stretches(headsetSlots).join(", ")} — iPOS comes inside and DT Drinks and DT Bagger 1 take orders on headset.`);
-    if (leadSlots.length) warnings.push(`${shiftLead} (lead) has to work Register 2 ${stretches(leadSlots).join(", ")} — nobody else is free.`);
+    if (leadSlots.length) warnings.push(`${shiftLead} (lead) has to work a spot ${stretches(leadSlots).join(", ")} — nobody else is free.`);
     if (rotationShort.size) warnings.push(`Not enough inside people to rotate ${[...rotationShort].join(", ")} on schedule, so they stay outside longer.`);
     shortRanges.forEach(([a, b]) => warnings.push(`Not enough people for DT Bagger 1, DT Drinks and Window 1 from ${fmtClock(a)} to ${fmtClock(b)}.`));
     // Outside stays open once it's out: say so when there just aren't enough people to keep it that way
@@ -2464,7 +2602,7 @@ function buildLineup(st, ratings, seed) {
         people: people.map(p => ({ name: p.name, start: p.start, end: p.end, shiftStart: p.shiftStart, shiftEnd: p.shiftEnd, floater: p.floater, trainee: !!p.isTrainee })),
         positions, floaters,
         breaks: breaks.map(b => ({ name: b.name, start: b.start, end: b.end, ideal: b.ideal, override: b.override, pos: b.pos, cover: b.cover, backfillPos: b.backfillPos || null, backfill: b.backfill || null,
-            kind: b.kind || null, trainee: b.trainee || null, trainingPos: b.trainingPos || null, leaderCover: b.leaderCover || null, mergeWith: b.mergeWith || null }))
+            kind: b.kind || null, trainee: b.trainee || null, trainingPos: b.trainingPos || null, leaderCover: b.leaderCover || null, mergeWith: b.mergeWith || null, self: !!b.self, takeover: !!b.takeover }))
             .concat(traineeBreaks.map(b => ({ ...b }))),
         moves: moves.filter(m => !m.closing && !m.at2).map(m => ({ ...m })),
         closing,
@@ -2509,7 +2647,7 @@ function loadDefaults(dp) {
 function newState(dp) {
     const d = loadDefaults(dp);
     return {
-        v: 1, date: todayIso(), daypart: dp, mode: d.mode || "balanced", runners: d.runners || "auto",
+        v: 1, date: todayIso(), daypart: dp, mode: d.mode || "balanced", modeAuto: d.modeAuto !== undefined ? !!d.modeAuto : true, runners: d.runners || "auto",
         roster: [], defaultShift: { start: d.start, end: d.end },
         lemonade: dp === "AM" ? [DAYPART_SPLIT] : [], sweep: { on: true }, ice: { on: !!d.iceOn },
         caterings: [], trainings: [], moves: [], rules: loadRules(),
@@ -2531,6 +2669,8 @@ function draftKey(dp) { return `lineupDraft:${todayIso()}:${dp}`; }
 function upgradeState(st, dp) {
     const base = newState(dp);
     const out = Object.assign({}, base, st || {});
+    if (st && st.modeAuto === undefined) out.modeAuto = false;   // a lineup saved before Auto existed keeps the mode it had
+    if (out.modeAuto) out.mode = modeForDate(out.date);
     ["roster", "lemonade", "caterings", "trainings", "moves", "leadersExtra"].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
     ["breakOverrides", "taskOverrides"].forEach(k => { if (!out[k] || typeof out[k] !== "object") out[k] = {}; });
     out.sweep = Object.assign({}, base.sweep, out.sweep || {});
@@ -2570,7 +2710,7 @@ function saveDraftNow() {
         localStorage.setItem(draftKey(state.daypart), JSON.stringify({ state, result }));
         localStorage.setItem("lineupDefaults:" + state.daypart, JSON.stringify({
             start: state.defaultShift.start, end: state.defaultShift.end,
-            iceOn: state.ice.on, mode: state.mode, runners: state.runners
+            iceOn: state.ice.on, mode: state.mode, modeAuto: !!state.modeAuto, runners: state.runners
         }));
     } catch (e) {}
 }
@@ -2966,6 +3106,7 @@ function renderAll() {
 
 function updateHero() {
     if (!state) return;
+    applyAutoMode();
     const n = state.roster.length;
     document.getElementById("heroEyebrow").innerText = `${state.daypart === "AM" ? "Morning" : "Night"} shift lineup`;
     document.getElementById("heroTitle").innerText = prettyDate(state.date);
@@ -3023,6 +3164,7 @@ function renderRoster() {
                 </div>
                 <div class="row-actions">
                     <button type="button" class="link-btn" onclick="openImport()">Paste from HotSchedules</button>
+                    <a class="link-btn ext" href="${LINKS.schedule}" target="_blank" rel="noopener">Open the schedule report ↗</a>
                     <button type="button" class="link-btn" onclick="sortRoster()">Sort by start time</button>
                     <button type="button" class="link-btn danger" onclick="clearRoster()">Clear roster</button>
                 </div>
@@ -3077,6 +3219,10 @@ function renderRoster() {
             <div class="card-body">
                 <p class="opt-help" style="margin:0 0 0.6rem">${cateringMode() === "auto" ? "Auto: the first person on the catering list who's free for it." : "Manual: you pick who — with suggested plans from the catering list."}</p>
                 <div id="caterQueue"></div>
+                <div class="row-actions" style="margin:0 0 0.6rem">
+                    <button type="button" class="btn-secondary sm" onclick="document.getElementById('catFile').click()">${ICON.box} Import the day's caterings</button>
+                    <a class="link-btn ext" href="${LINKS.catering}" target="_blank" rel="noopener">Open Order Management ↗</a>
+                </div>
                 <div class="task">
                     <span class="task-icon cater">${ICON.box}</span>
                     <div class="task-main">
@@ -3087,7 +3233,7 @@ function renderRoster() {
                                 <button type="button" class="${catType === "delivery" ? "on" : ""}" onclick="setCatType('delivery')">Delivery</button>
                             </div>
                             <div class="add-row">
-                                <select class="time-input sel" id="catName" onchange="document.getElementById('catOther').style.display = this.value === '__other__' ? '' : 'none'; if (this.value === '__other__') document.getElementById('catOther').focus()">${catWhoOptions()}</select>
+                                <select class="time-input sel name-pick" id="catName" onchange="document.getElementById('catOther').style.display = this.value === '__other__' ? '' : 'none'; if (this.value === '__other__') document.getElementById('catOther').focus()">${catWhoOptions()}</select>
                                 <input type="text" class="time-input grow" id="catOther" placeholder="Name (catering only)" autocomplete="off" style="display:none">
                                 <span class="mini-label">${catType === "delivery" ? "leaves" : "due"}</span>
                                 <input type="time" class="time-input" step="900" id="catDue" value="${state.daypart === "AM" ? "11:00" : "17:00"}" onchange="queueCatSuggest()">
@@ -3123,14 +3269,15 @@ function renderRoster() {
                         <div id="trainingList"></div>
                         <div class="add-box">
                         <div class="add-row" style="margin-top:0">
-                            <input type="text" class="time-input grow" id="trTrainee" placeholder="Trainee name" autocomplete="off">
-                            <select class="time-input sel" id="trPos">${trainingPosOptions("Position")}</select>
-                            <select class="time-input sel" id="trTrainer">${leaderOptions("Trainer")}</select>
+                            <input type="text" class="time-input grow name-free" id="trTrainee" placeholder="Trainee name" autocomplete="off">
+                            <select class="time-input sel" id="trPos" onchange="trPosChanged()">${trainingPosOptions("Position")}</select>
+                            <select class="time-input sel name-pick" id="trTrainer" onchange="trPosChanged()">${leaderOptions("Trainer")}</select>
                         </div>
                         <div class="add-row">
-                            <input type="time" class="time-input" step="900" id="trStart" value="${state.defaultShift.start}">
+                            <span id="trTimes" class="shift-pair"><input type="time" class="time-input" step="900" id="trStart" value="${state.defaultShift.start}">
                             <span class="mini-label">to</span>
-                            <input type="time" class="time-input" step="900" id="trEnd" value="${state.defaultShift.end}">
+                            <input type="time" class="time-input" step="900" id="trEnd" value="${state.defaultShift.end}"></span>
+                            <span id="trFixed" class="times-inline" style="display:none"></span>
                             <button type="button" class="btn-dark sm" onclick="addTraining()">Add</button>
                         </div>
                         <div class="form-error" id="trErr" style="display:none"></div>
@@ -3158,7 +3305,7 @@ function renderRoster() {
             <div class="card-body">
                 <div class="opt">
                     <div class="seg">${modeButtons()}</div>
-                    <p class="opt-help" id="modeHelp">${MODES[state.mode].help}</p>
+                    <p class="opt-help" id="modeHelp">${state.modeAuto ? `Auto: ${MODES[state.mode].long} today — Mon &amp; Tue Training, Wed &amp; Sat Balanced, Thu &amp; Fri Aces.` : MODES[state.mode].help}</p>
                 </div>
                 <div class="opt">
                     <div class="opt-label">Break runners</div>
@@ -3208,7 +3355,7 @@ function rosterClosers() {
     return state.roster.filter(r => !r.calledOff && r.start && r.end).map(r => {
         const s = toMin(r.start), e = s + shiftMinutes(r);
         return { name: r.name, start: s, end: e, ten: e > CL };
-    }).filter(x => x.start <= IN && x.end >= CL);
+    }).filter(x => x.start <= IN && x.end >= CL && x.name !== state.shiftLead);   // the shift lead runs the close, no closing job
 }
 function closingPrefOptions(sel, ten) {
     const opt = (v, l) => `<option value="${v}" ${v === (sel || "") ? "selected" : ""}>${l}</option>`;
@@ -3226,8 +3373,7 @@ function renderClosingList() {
     if (!cl.length) { box.innerHTML = `<p class="opt-help" style="margin:0">Inside closes at ${inClose}. Add people working until close and they'll show up here.</p>`; return; }
     // a quick look at how the close will run with this crew
     const L = new Set(leaderNames());
-    if (state.shiftLead) L.add(state.shiftLead);
-    const tens = cl.filter(x => x.ten), ldr = cl.filter(x => L.has(x.name)).sort((a, b) => (b.name === state.shiftLead) - (a.name === state.shiftLead) || b.ten - a.ten)[0];
+    const tens = cl.filter(x => x.ten), ldr = cl.filter(x => L.has(x.name) && x.name !== state.shiftLead).sort((a, b) => b.ten - a.ten)[0];
     const lead = ldr && cl.length > CLOSE_POSITIONS.length + 5 ? ldr.name : null;
     const pool = cl.length - (lead ? 1 : 0);
     const n930 = Math.max(0, Math.min(5, pool - CLOSE_POSITIONS.length));
@@ -3239,7 +3385,6 @@ function renderClosingList() {
             <span>${tens.length} until ${fmtClock(toMin(STORE_HOURS.close) + 30)}</span>
             ${lead ? `<span>${esc(lead)} leads</span>` : ""}
         </div>
-        <p class="opt-help" style="margin:0 0 0.4rem">Inside closes at ${inClose}. ${Math.min(CLOSE_POSITIONS.length, pool)} on drive-thru &amp; outside spots, ${n930} on inside checklists, ${Math.min(6, tens.length)} on the 10:30 close.</p>
         ${pool < CLOSE_POSITIONS.length ? `<p class="opt-help" style="margin:0 0 0.4rem; color:#b91c1c">Only ${pool} here until close — some 9:00 – 10:00 spots will stay empty.</p>` : ""}
         ${sp.cuts.length ? `<ul class="close-cuts">${sp.cuts.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
         ${cl.map(x => `
@@ -3265,7 +3410,7 @@ function renderClosingCard() {
     if (!c) { box.style.display = "none"; return; }
     box.style.display = "";
     const all = c.closers.map(x => x.name), tens = c.closers.filter(x => x.ten).map(x => x.name);
-    const pick = (key, cur, names) => `<select class="time-input sel" data-k="${esc(key)}" onchange="setClosingSwap(this.dataset.k, this.value)">
+    const pick = (key, cur, names) => `<select class="time-input sel name-pick" data-k="${esc(key)}" onchange="setClosingSwap(this.dataset.k, this.value)">
         ${cur ? "" : `<option value="">Nobody</option>`}${names.map(n => `<option ${n === cur ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>`;
     const notes = b => b.notes && b.notes.length ? `<div class="break-sub">Also: ${esc(b.notes.join("; "))}</div>` : "";
     const later = n => { const j = c.spots.find(s => s.from && s.name === n); const b = c.block930.find(x => x.name === n && x.thenHelp);
@@ -3589,7 +3734,7 @@ function openImport() {
     importMode = "replace";
     importLead = {};
     document.getElementById("importBody").innerHTML = `
-        <p class="sheet-help" style="margin-top:0">In HotSchedules, open the day's schedule report, select the names and times, copy, and paste here. One paste fills both the AM and PM rosters.</p>
+        <p class="sheet-help" style="margin-top:0">In HotSchedules, open the day's schedule report (<a href="${LINKS.schedule}" target="_blank" rel="noopener">open it ↗</a>), select the names and times, copy, and paste here. One paste fills both the AM and PM rosters.</p>
         <textarea class="import-text" id="importText" placeholder="Front of House&#10;Akira   Hagler&#9;2:00 PM&#9;10:00 PM&#10;…" oninput="renderImportPreview()"></textarea>
         <div id="importPreview"></div>`;
     renderImportPreview();
@@ -3618,7 +3763,7 @@ function renderImportPreview() {
             <div class="import-row">
                 <div><b>${esc(r.name)}</b>${r.section === "lead" ? `<span class="import-tag">Leader</span>` : r.section === "train" ? `<span class="import-tag trainee">Trainee</span>` : ""}
                     <div class="from">${esc(r.raw)}${r.known && !r.mapped && !r.close ? "" : r.mapped ? ` · matched by you` : r.close ? ` · <span class="new">close match — check</span>` : ` · <span class="new">not on the staff list</span>`}${r.dupe ? ` · <span class="new">already used by someone above</span>` : ""}</div>
-                    ${!r.known || r.mapped || r.close ? `<select class="time-input sel hs-map" data-raw="${esc(r.raw)}" onchange="setHsName(this.dataset.raw, this.value)">${hsMapOptions(r)}</select>` : ""}</div>
+                    ${!r.known || r.mapped || r.close ? `<select class="time-input sel hs-map name-pick" data-raw="${esc(r.raw)}" onchange="setHsName(this.dataset.raw, this.value)">${hsMapOptions(r)}</select>` : ""}</div>
                 <div>${t12(r.start)} – ${t12(r.end)}</div>
                 <div class="dp">${[r.am ? "AM" : "", r.pm ? "PM" : ""].filter(Boolean).join(" + ")}</div>
             </div>`).join("")}</div>
@@ -3630,7 +3775,7 @@ function renderImportPreview() {
             const ld = rows.filter(r => r.section === "lead" && (dp === "AM" ? r.am : r.pm));
             if (!ld.length) return "";
             const cur = importLeadFor(rows, dp);
-            return `<label class="move-field"><span>${dp} shift lead</span><select class="time-input sel" onchange="importLead['${dp}']=this.value; renderImportPreview()">
+            return `<label class="move-field"><span>${dp} shift lead</span><select class="time-input sel name-pick" onchange="importLead['${dp}']=this.value; renderImportPreview()">
                 <option value="" ${cur ? "" : "selected"}>No lead set</option>${ld.map(r => `<option value="${esc(r.name)}" ${r.name === cur ? "selected" : ""}>${esc(r.name)} · ${t12(r.start)} – ${t12(r.end)}</option>`).join("")}</select></label>`;
         }).join("")}</div>` : ""}
         ${n(r => r.section === "train") ? `<p class="sheet-help" style="margin:0 0 0.8rem">Trainees go on the Training card — pick a position and a trainer for each.</p>` : ""}
@@ -3983,7 +4128,7 @@ function noteCateringsDefault(dp) {
     // AM: the rest of today's caterings (from the PM lineup). PM: tomorrow's — typed in.
     if (dp !== "AM") return [];
     const pm = lineupStateFor("PM");
-    return ((pm && pm.caterings) || []).map(c => ({ who: "", type: c.type === "delivery" ? "Delivery" : "Pickup", time: c.due || "" }));
+    return ((pm && pm.caterings) || []).map(c => ({ who: c.customer || "", type: c.type === "delivery" ? "Delivery" : "Pickup", time: c.promised || c.due || "" }));
 }
 const shortClock = v => { const m = toMin(v); if (m === null) return v || ""; const h = Math.floor(m / 60) % 24, mm = m % 60; return `${h % 12 || 12}${mm ? ":" + String(mm).padStart(2, "0") : ""}${h < 12 ? "am" : "pm"}`; };
 // ---------- the note as text (the same layout as the store's notes) ----------
@@ -4068,7 +4213,7 @@ function renderNotes() {
             <div class="card-body">
                 ${lineList("attendance")}
                 <div class="note-add">
-                    <select class="time-input sel" id="attName"><option value="">Who</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
+                    <select class="time-input sel name-pick" id="attName"><option value="">Who</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
                     <select class="time-input sel" id="attKind">${ATT_KINDS.map(([v, l]) => `<option value="${v}">${l}</option>`).join("")}</select>
                     <input class="field" id="attDetail" placeholder="Details (15 mins, with Joel, sick note…)" onkeydown="if(event.key==='Enter') addAttendance()">
                     <button type="button" class="btn-dark sm" onclick="addAttendance()">Add</button>
@@ -4080,8 +4225,8 @@ function renderNotes() {
             <div class="card-body">
                 ${lineList("training")}
                 <div class="note-add">
-                    <select class="time-input sel" id="trnBy"><option value="">Trainer</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
-                    <input class="field" id="trnWho" placeholder="Trainee">
+                    <select class="time-input sel name-pick" id="trnBy"><option value="">Trainer</option>${roster.map(r => `<option>${esc(r)}</option>`).join("")}</select>
+                    <input class="field name-free" id="trnWho" placeholder="Trainee" autocomplete="off">
                     <input class="field" id="trnWhat" placeholder="On what (register, closing FC…)" onkeydown="if(event.key==='Enter') addTrainingLine()">
                     <button type="button" class="btn-dark sm" onclick="addTrainingLine()">Add</button>
                 </div>
@@ -4178,8 +4323,24 @@ async function shareNote() {
     catch (e) { if (!e || e.name !== "AbortError") copyNote(); }
 }
 
+// Auto placement by day: Mon & Tue Training, Wed & Sat Balanced, Thu & Fri Aces
+const MODE_BY_DAY = { 1: "training", 2: "training", 3: "balanced", 4: "aces", 5: "aces", 6: "balanced", 0: "balanced" };
+function modeForDate(iso) { const [y, m, d] = String(iso || todayIso()).split("-").map(Number); return MODE_BY_DAY[new Date(y, m - 1, d).getDay()] || "balanced"; }
+function applyAutoMode() { if (state && state.modeAuto) state.mode = modeForDate(state.date); }
 function modeButtons() {
-    return Object.keys(MODES).map(m => `<button type="button" class="${state.mode === m ? "on" : ""}" onclick="setMode('${m}')">${MODES[m].label}</button>`).join("");
+    applyAutoMode();
+    // in Auto, today's pick is underlined
+    return `<button type="button" class="${state.modeAuto ? "on" : ""}" onclick="setModeAuto()" title="Mon & Tue Training · Wed & Sat Balanced · Thu & Fri Aces">Auto</button>`
+        + Object.keys(MODES).map(m => `<button type="button" class="${!state.modeAuto && state.mode === m ? "on" : state.modeAuto && state.mode === m ? "auto-pick" : ""}" onclick="setMode('${m}')">${MODES[m].label}</button>`).join("");
+}
+function setModeAuto() {
+    state.modeAuto = true;
+    applyAutoMode();
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    updateHero();
+    if (view === "lineup") renderLineup();
+    else renderRoster();
 }
 
 function shiftMetaHtml(r) {
@@ -4189,7 +4350,7 @@ function shiftMetaHtml(r) {
     const brk = r.brk === "yes" || (r.brk !== "no" && len > BREAK_MIN_SHIFT);
     const unknown = staffReady && Object.keys(STAFF).length && !staffNameFor(r.name);
     return durLabel(len) + (brk ? ' · <span class="brk">break</span>' : "")
-        + (unknown ? ` · <span class="warn-tag" title="Not on the staff list, so no ratings (counts as 3 everywhere), leader role or catering place. Fix the spelling, or match the name when you paste from HotSchedules.">no ratings</span>` : "");
+        + (unknown ? ` · <span class="warn-tag" title="Not on the staff list — fix the spelling, or match the name when you paste from HotSchedules.">not on staff list</span>` : "");
 }
 
 // The Who / Trainer dropdowns follow the roster and the staff list as they change
@@ -4215,7 +4376,7 @@ function renderRosterList() {
     const box = document.getElementById("rosterList");
     if (!box) return;
     if (!state.roster.length) {
-        box.innerHTML = `<div class="empty-note">${ICON.users}<b>No one added yet</b><span>Search above to build the ${state.daypart} roster.</span></div>`;
+        box.innerHTML = `<div class="empty-note"><b>No one added yet</b><span>Search above to build the ${state.daypart} roster.</span></div>`;
         return;
     }
     const rowHtml = (r, i) => {
@@ -4272,8 +4433,8 @@ function leadPickerHtml() {
     const lead = names.includes(state.shiftLead) ? state.shiftLead : "";
     const opt = (v, l) => `<option value="${esc(v)}" ${v === lead ? "selected" : ""}>${esc(l)}</option>`;
     const ld = names.filter(n => L.has(n)), rest = names.filter(n => !L.has(n));
-    return `<label class="lead-line"><span><b>Shift lead</b><small>In a spot at open, then out of position — last resort only (Mobile Drinks, Register 2, Runner)</small></span>
-        <select class="time-input sel pref ${lead ? "set" : ""}" onchange="setShiftLead(this.value)">${opt("", "No lead set")}${ld.length ? `<optgroup label="Leaders">${ld.map(n => opt(n, n)).join("")}</optgroup>` : ""}${rest.length ? `<optgroup label="Everyone else">${rest.map(n => opt(n, n)).join("")}</optgroup>` : ""}</select></label>`;
+    return `<label class="lead-line"><span><b>Shift lead</b></span>
+        <select class="time-input sel pref name-pick ${lead ? "set" : ""}" onchange="setShiftLead(this.value)">${opt("", "No lead set")}${ld.length ? `<optgroup label="Leaders">${ld.map(n => opt(n, n)).join("")}</optgroup>` : ""}${rest.length ? `<optgroup label="Everyone else">${rest.map(n => opt(n, n)).join("")}</optgroup>` : ""}</select></label>`;
 }
 function setShiftLead(v) {
     state.shiftLead = v || "";
@@ -4569,7 +4730,9 @@ function useCatSuggestion(name) {
     addCatering();
 }
 function durationOptions(sel, allowNone) {
-    return (allowNone ? [0] : []).concat([15, 30, 45, 60, 90, 120]).map(m => `<option value="${m}" ${m === +sel ? "selected" : ""}>${m === 0 ? "No prep" : m < 60 ? m + " min" : (m / 60) + " hr"}</option>`).join("");
+    const list = (allowNone ? [0] : []).concat([15, 30, 45, 60, 90, 120]);
+    if (+sel > 0 && !list.includes(+sel)) { list.push(+sel); list.sort((a, b) => a - b); }   // an imported time like 10 or 25 min
+    return list.map(m => `<option value="${m}" ${m === +sel ? "selected" : ""}>${m === 0 ? "No prep" : m < 60 ? m + " min" : (m / 60) + " hr"}</option>`).join("");
 }
 let catType = "pickup";
 let catSplit = false;
@@ -4603,6 +4766,18 @@ function setCatType(t) { keepCatForm(() => { catType = t; }); }
 // Training: any position, plus (PM) a closing job — the trainee follows the trainer's close
 const TRAIN_CLOSE_OPTS = [["close:FC", "Close Front Counter"], ["close:FLOORS", "Close Floors"], ["close:DR", "Close Dining Room"], ["close:BATH", "Close Bathrooms"], ["close:BR", "Close Break Room & Tech"],
     ["close10:DESSERTS", "Close Desserts (10:30)"], ["close10:DRINKS", "Close Drinks (10:30)"], ["close10:CHUTES", "Close Chutes (10:30)"], ["close10:FLOORS", "Close Floors (10:30)"], ["close10:STOCKING", "Close Stocking (10:30)"], ["close10:TRASH", "Close Trash (10:30)"]];
+// A closing job has fixed times: the 9:00 checklists run 9–10, the 10:30 close runs 10–10:30
+// (a 9:00 checklist trainee stays with a trainer who closes at 10:30 for their 10:30 area too)
+function closingTrainTimes(v, trainer) {
+    const CL = toMin(STORE_HOURS.close);
+    if (/^close10:/.test(v || "")) return { start: hhmm(CL), end: hhmm(CL + 30) };
+    if (/^close:/.test(v || "")) {
+        const t = trainer && state ? state.roster.find(r => r.name === trainer && !r.calledOff) : null;
+        const tenCloser = t && t.start && t.end && toMin(t.start) + shiftMinutes(t) > CL;
+        return { start: INSIDE_CLOSE, end: hhmm(tenCloser ? CL + 30 : CL) };
+    }
+    return null;
+}
 function trainPosLabel(v) { const o = TRAIN_CLOSE_OPTS.find(x => x[0] === v); return o ? o[1] : v; }
 function trainingPosOptions(placeholder, selected) {
     const opt = (v, l) => `<option value="${esc(v)}" ${v === selected ? "selected" : ""}>${esc(l)}</option>`;
@@ -4638,9 +4813,10 @@ function renderCateringList() {
         const picked = c.auto ? (result && result.caterPicks ? result.caterPicks[i] : null) : c.name;
         return `
         <div class="item-row cat-row">
-            <span class="hc-chip"><span class="chip-avatar">${esc(initials(picked || "?"))}</span><span class="chip-name">${esc(picked || "Nobody yet")}</span><span class="hc-chip-x" title="Remove" onclick="state.caterings.splice(${i},1); markChanged(); renderCateringList()">${ICON.x}</span></span>
-            ${c.offRoster ? "" : `<select class="time-input sel" title="Who handles it" onchange="setCatWho(${i}, this.value)">${catWhoOptions(c.auto ? "__auto__" : c.name, true)}</select>`}
+            <span class="hc-chip"><span class="chip-avatar">${esc(initials(picked || "?"))}</span><span class="chip-name">${esc(picked || "Nobody yet")}</span><span class="hc-chip-x" title="Remove" onclick="removeCatering(${i})">${ICON.x}</span></span>
+            ${c.offRoster ? "" : `<select class="time-input sel name-pick" title="Who handles it" onchange="setCatWho(${i}, this.value)">${catWhoOptions(c.auto ? "__auto__" : c.name, true)}</select>`}
             <span class="type-tag ${delivery ? "deliv" : ""}">${delivery ? "Delivery" : "Pickup"}</span>
+            ${c.customer ? `<span class="mini-label" title="${esc(c.items || "")}">${esc(c.customer)}</span>` : ""}
             ${c.offRoster ? `<span class="type-tag extra" title="Comes in just for this — not counted as a body">Catering only</span>` : ""}
             <span class="mini-label">${delivery ? "leaves" : "due"}</span>
             <input type="time" class="time-input" step="900" value="${c.due}" onchange="state.caterings[${i}].due=this.value; markChanged(); renderCateringList()">
@@ -4651,8 +4827,25 @@ function renderCateringList() {
             <button type="button" class="mini-toggle ${c.split ? "on" : ""}" title="Supplies earlier, food right before" onclick="toggleCatSplit(${i})">Split</button>
             ${delivery ? `<span class="mini-label">gone</span><input type="number" class="time-input num" min="5" step="5" value="${+c.gone || 40}" onchange="state.caterings[${i}].gone=Math.max(5, +this.value || 40); markChanged(); renderCateringList()"><span class="mini-label">min</span>` : ""}
             <span class="times-inline">${span}${c.split ? ` · supplies earlier` : ""}</span>
+            <button type="button" class="link-btn danger cat-remove" onclick="removeCatering(${i})">Remove</button>
         </div>`;
-    }).join("");
+    }).join("") + (state.caterings.length > 1 ? `<div class="row-actions" style="margin:0.2rem 0 0.6rem"><button type="button" class="link-btn danger" onclick="clearCaterings()">Remove all ${state.caterings.length} caterings</button></div>` : "");
+}
+function removeCatering(i) {
+    const c = state.caterings[i];
+    if (!c) return;
+    state.caterings.splice(i, 1);
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderCateringList();
+    showStatusMessage(`Removed ${c.customer ? c.customer + "'s" : "the"} ${c.type === "delivery" ? "delivery" : "catering"}.`, "success", 2500);
+}
+function clearCaterings() {
+    if (!state.caterings.length || !confirm(`Remove all ${state.caterings.length} caterings from the ${state.daypart} lineup?`)) return;
+    state.caterings = [];
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderCateringList();
 }
 
 function toggleCatSplit(i) {
@@ -4697,30 +4890,325 @@ function addCatering() {
     document.getElementById("catOther").style.display = "none";
 }
 
+// =====================================================================
+// IMPORT CATERINGS (Order Management export: .xlsx or .csv)
+// =====================================================================
+// A small .xlsx reader (an .xlsx is a zip of XML files) — no library needed
+async function readXlsxRows(buf) {
+    const u8 = new Uint8Array(buf), dv = new DataView(buf);
+    let eocd = -1;
+    for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    if (eocd < 0) throw new Error("not an xlsx file");
+    const files = {};
+    let p = dv.getUint32(eocd + 16, true);
+    for (let k = 0, n = dv.getUint16(eocd + 10, true); k < n; k++) {
+        const nameLen = dv.getUint16(p + 28, true), extraLen = dv.getUint16(p + 30, true), commLen = dv.getUint16(p + 32, true);
+        const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nameLen));
+        files[name] = { method: dv.getUint16(p + 10, true), size: dv.getUint32(p + 20, true), off: dv.getUint32(p + 42, true) };
+        p += 46 + nameLen + extraLen + commLen;
+    }
+    const read = async name => {
+        const f = files[name];
+        if (!f) return null;
+        const start = f.off + 30 + dv.getUint16(f.off + 26, true) + dv.getUint16(f.off + 28, true);
+        const data = u8.subarray(start, start + f.size);
+        if (f.method === 0) return new TextDecoder().decode(data);
+        const out = await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer();
+        return new TextDecoder().decode(out);
+    };
+    const P = new DOMParser();
+    const tags = (node, t) => [...node.getElementsByTagNameNS("*", t)];
+    const ssXml = await read("xl/sharedStrings.xml");
+    const shared = ssXml ? tags(P.parseFromString(ssXml, "application/xml"), "si").map(si => tags(si, "t").map(t => t.textContent).join("")) : [];
+    const sheet = Object.keys(files).filter(n => /^xl\/worksheets\/[^/]+\.xml$/.test(n)).sort((a, b) => a.length - b.length || a.localeCompare(b))[0];
+    if (!sheet) throw new Error("no sheet in the file");
+    const doc = P.parseFromString(await read(sheet), "application/xml");
+    const colOf = ref => { const m = String(ref).match(/^[A-Z]+/); let n = 0; if (m) for (const ch of m[0]) n = n * 26 + ch.charCodeAt(0) - 64; return n - 1; };
+    return tags(doc, "row").map(r => {
+        const row = [];
+        tags(r, "c").forEach((c, i) => {
+            const t = c.getAttribute("t");
+            let v;
+            if (t === "inlineStr") v = tags(c, "t").map(x => x.textContent).join("");
+            else { const ve = tags(c, "v")[0]; v = ve ? ve.textContent : ""; if (t === "s") v = shared[+v] ?? ""; }
+            const ci = c.getAttribute("r") ? colOf(c.getAttribute("r")) : i;
+            row[ci] = v;
+        });
+        return row;
+    });
+}
+function readCsvRows(text) {
+    const rows = []; let row = [], cell = "", q = false;
+    for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (q) { if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; } else if (ch === '"') q = false; else cell += ch; }
+        else if (ch === '"') q = true;
+        else if (ch === ",") { row.push(cell); cell = ""; }
+        else if (ch === "\n" || ch === "\r") { if (ch === "\r" && text[i + 1] === "\n") i++; row.push(cell); rows.push(row); row = []; cell = ""; }
+        else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+}
+// "Thursday, October 22, 9:58 am" -> { month: 10, day: 22, time: "09:58" } (or an Excel date number)
+function parsePromised(v) {
+    const s = String(v || "").trim();
+    if (/^\d+(\.\d+)?$/.test(s)) {
+        const d = new Date(Math.round((+s - 25569) * 86400 * 1000));
+        return { month: d.getUTCMonth() + 1, day: d.getUTCDate(), time: hhmm(d.getUTCHours() * 60 + d.getUTCMinutes()) };
+    }
+    const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const md = s.match(/([A-Za-z]{3,})\.?\s+(\d{1,2})\b/g) || [];
+    let month = null, day = null;
+    md.forEach(x => { const m = x.match(/([A-Za-z]{3,})\.?\s+(\d{1,2})/); const i = MONTHS.indexOf(m[1].slice(0, 3).toLowerCase()); if (i >= 0) { month = i + 1; day = +m[2]; } });
+    const tm = s.match(/(\d{1,2}):(\d{2})\s*([ap])\.?m/i);
+    let time = null;
+    if (tm) { let h = +tm[1] % 12; if (/p/i.test(tm[3])) h += 12; time = `${String(h).padStart(2, "0")}:${tm[2]}`; }
+    return { month, day, time };
+}
+// Prep time from what's on the order:
+//   supplies — box meal 1 min (the boxes), tray 30 s (paper goods/utensils, only if they want paper goods),
+//              gallon 2½ min, coffee jug 5 min, a bunch of sauces/condiments/bag stuffers 5 min
+//   food     — box meal 30 s, tray 1 min, sandwich/biscuit/wrap 15 s (single nuggets, fries, sides and the like count the same)
+const CAT_SKIP = /^(tax|description|restaurant notes|open percent|promo|state sales|discount|tip|delivery fee|service charge)/i;
+const CAT_SAUCE = /sauce|ranch|dressing|bottle|\b\d+\s*oz\b|must\.?\b|mustard|\bbbq\b|barbe?que|buffalo|honey|\bhny\b|ketchup|mayo|jelly|jam\b|syrup|\bpoly\b|polynesian|vinaigrette|\bvin\b|salsa|zesty|sriracha|\bitl\b|\blt bal\b|\bbal\b|^granola$|^fork|^knife|^spoon|napkin|utensil|stuffer|creamer|sweetener|sugar/i;
+function catLineKind(name) {
+    if (CAT_SKIP.test(name) || /:\s*$/.test(name)) return "skip";
+    if (/coffee/i.test(name)) return "coffee";
+    if (/gallon|\bgal\b|\bgln\b/i.test(name)) return "gallon";
+    if (/tray|bundle|platter/i.test(name)) return "tray";
+    if (/\bmeal\b|boxed|\bbox\b|packaged|\bmbo\b/i.test(name)) return "box";
+    if (/\bice\b/i.test(name)) return "ice";
+    if (/sand\b|sandwich|biscuit|wrap\b|\bclub\b|dlx|deluxe|bkfst|breakfast|waffle(?!.*chips)|muffin|burrito/i.test(name)) return "sandwich";
+    if (/water|dasani|simply|juice|milk|sprite|coke|soda|\bdr\.? pepper/i.test(name)) return "drink";
+    if (CAT_SAUCE.test(name)) return "sauce";
+    if (/\bnug|nugget|strips|fries|salad|sld\b|parfait|fruit cup|cookie|brownie|mac ?(&|and) ?ch|mac&chz|side|kale|hash ?brown|chips|soup|bowl/i.test(name)) return "single";
+    if (/water|dasani|simply|orange|juice|milk|sprite|coke|soda|lemonade|\btea\b|drink|\blg\b|\bmd\b|\bsm\b/i.test(name)) return "drink";
+    return "other";
+}
+function cateringPrep(items, subItems, instructions) {
+    const lines = t => String(t || "").replace(/<[^>]+>/g, "").split(/\r?\n/).map(x => x.trim()).filter(Boolean).map(x => { const m = x.match(/^(\d+)\s*x?\s+(.+)$/i); return m ? { qty: +m[1], name: m[2].trim() } : { qty: 1, name: x }; });
+    const it = lines(items).filter(l => l.qty > 0);
+    // all-caps sub item lines are the guest's notes cut into pieces ("INCLUDE PAPER GOODS, DELI…") — read them as instructions
+    const isNote = n => !/[a-z]/.test(n) && /[A-Z]{3,}/.test(n) && !/^(BBQ|CFA|GF)\b/.test(n);
+    const sub = lines(subItems).filter(l => l.qty > 0 && !isNote(l.name));
+    const ins = String(instructions || "") + " " + lines(subItems).filter(l => isNote(l.name)).map(l => l.name).join("");
+    // "NO Paper Goods" is often stamped on by the register even when the guest asks for paper goods — the guest's ask wins
+    const negative = /no\s*paper\s*goods|do not include (any )?(plates|cutlery|napkins|cups|paper|utensils)[^.]*/gi;
+    const asked = /paper\s*goods|plates?\b|plated|cutlery|utensils?|untensils|napkins?|forks?|cups\b/i.test(ins.replace(negative, " "));
+    const paper = asked || !negative.test(ins);
+    const c = { boxes: 0, trays: 0, gallons: 0, coffee: 0, sauces: 0, sandwiches: 0, singles: 0 };
+    const other = {};
+    it.forEach(({ qty, name }) => {
+        const k = catLineKind(name);
+        if (k === "coffee") c.coffee += qty;
+        else if (k === "gallon") c.gallons += qty;
+        else if (k === "tray") c.trays += qty;
+        else if (k === "box") c.boxes += qty;
+        else if (k === "sandwich") c.sandwiches += qty;
+        else if (k === "single") c.singles += qty;
+        else if (k === "sauce") c.sauces += qty;
+        else if (k === "other") other[name] = (other[name] || 0) + qty;
+    });
+    // sub items are the dressings that come with trays and what's inside box meals: only the sauces count
+    sub.forEach(({ qty, name }) => { if (catLineKind(name) === "sauce") c.sauces += qty; });
+    const askedSauces = /sauces?|condiments?|mayo|honey|jams?|jelly|ketchup|dressings?|creamer|sweetener/i.test(ins.replace(negative, " "));
+    const bunch = c.sauces >= 4 || askedSauces;
+    const supRaw = c.boxes * 1 + (paper ? c.trays * 0.5 : 0) + c.gallons * 2.5 + c.coffee * 5 + (bunch ? 5 : 0);
+    const foodRaw = c.boxes * 0.5 + c.trays * 1 + (c.sandwiches + c.singles) * 0.25;
+    const up5 = m => m > 0 ? Math.ceil(m / 5) * 5 : 0;
+    return { ...c, bunch, paper, supplies: up5(supRaw), food: up5(foodRaw), supRaw, foodRaw, other: Object.entries(other).map(([n, q]) => `${q} ${n}`) };
+}
+// The export's rows -> orders
+function cateringOrdersFrom(rows) {
+    const hi = rows.findIndex(r => r && r.some(v => /promised/i.test(v || "")) && r.some(v => /^items$/i.test(String(v || "").trim())));
+    if (hi < 0) return [];
+    const H = rows[hi].map(v => String(v || "").trim().toLowerCase());
+    const col = (...names) => H.findIndex(h => names.some(n => h === n || h.includes(n)));
+    const cId = col("transactionid", "order"), cName = col("guest name", "customer"), cWhen = col("promised"), cMethod = col("method", "destination"),
+        cItems = H.findIndex(h => h === "items"), cSub = col("sub items"), cIns = col("special instructions", "instructions");
+    return rows.slice(hi + 1).filter(r => r && r[cWhen]).map((r, i) => {
+        const when = parsePromised(r[cWhen]);
+        const prep = cateringPrep(r[cItems], cSub >= 0 ? r[cSub] : "", cIns >= 0 ? r[cIns] : "");
+        const itemList = String(r[cItems] || "").replace(/<[^>]+>/g, "").split(/\r?\n/).map(x => x.trim()).filter(x => x && !/^0\s/.test(x) && catLineKind(x.replace(/^\d+\s*/, "")) !== "skip");
+        return {
+            id: String(r[cId] || `row${i}`), customer: String(r[cName] || "").trim() || "Catering", when,
+            delivery: /deliver/i.test(String(r[cMethod] || "")), items: itemList.join(", "), prep
+        };
+    }).filter(o => o.when.time);
+}
+let catImport = null;   // { orders, picks: { id: { on, who, drive, supplies, food } }, mismatch }
+async function readCateringFile(input) {
+    const f = input.files && input.files[0];
+    input.value = "";
+    if (!f) return;
+    let rows;
+    try {
+        rows = /\.csv$/i.test(f.name) ? readCsvRows(await f.text()) : await readXlsxRows(await f.arrayBuffer());
+    } catch (e) { showStatusMessage("Couldn't read that file — export the orders from Order Management as Excel (.xlsx) and try again.", "error", 6000); return; }
+    const all = cateringOrdersFrom(rows);
+    if (!all.length) { showStatusMessage("No catering orders found in that file.", "warning", 5000); return; }
+    const [y, mo, d] = state.date.split("-").map(Number);
+    const today = all.filter(o => !o.when.month || (o.when.month === mo && o.when.day === d));
+    const orders = (today.length ? today : all).sort((a, b) => toMin(a.when.time) - toMin(b.when.time));
+    const auto = cateringMode() === "auto";
+    const picks = {};
+    orders.forEach(o => {
+        const had = ["AM", "PM"].map(dp => (lineupStateFor(dp) || {}).caterings || []).flat().find(c => c.orderId === o.id);
+        const empty = !o.prep.supplies && !o.prep.food;
+        picks[o.id] = { on: !empty || !!had, who: had ? (had.auto ? "__auto__" : had.name) : auto ? "__auto__" : "", drive: had && had.drive ? had.drive : 15,
+            supplies: had && had.split ? +had.supplies : o.prep.supplies, food: had && had.split ? +had.food : o.prep.food };
+    });
+    catImport = { orders, picks, mismatch: !today.length, fileDay: all[0].when };
+    renderCatImport();
+    document.getElementById("catImportModal").classList.add("active");
+}
+function closeCatImport() { document.getElementById("catImportModal").classList.remove("active"); }
+// Which lineup an order belongs to (by when the work has to be done: pickup time, or when a delivery leaves)
+function catImportPlan(o) {
+    const pk = catImport.picks[o.id];
+    const promised = toMin(o.when.time);
+    const due = o.delivery ? promised - (+pk.drive || 15) : promised;
+    return { pk, due, dp: due < toMin(DAYPART_SPLIT) ? "AM" : "PM", gone: o.delivery ? (+pk.drive || 15) * 2 + 10 : 0 };
+}
+function renderCatImport() {
+    const body = document.getElementById("catImportBody");
+    if (!body || !catImport) return;
+    const auto = cateringMode() === "auto";
+    const rank = caterRankMap();
+    const whoOpts = (dp, sel) => {
+        const st = lineupStateFor(dp);
+        const names = ((st && st.roster) || []).filter(r => !r.calledOff).map(r => r.name).sort((a, b) => (rank[a] ?? Infinity) - (rank[b] ?? Infinity) || a.localeCompare(b));
+        const opt = (v, l) => `<option value="${esc(v)}" ${v === sel ? "selected" : ""}>${esc(l)}</option>`;
+        return opt("", "Who handles it?") + opt("__auto__", "Auto — catering list") + names.map(n => opt(n, rank[n] !== undefined ? `${n} (#${rank[n]})` : n)).join("");
+    };
+    const n = catImport.orders.filter(o => catImport.picks[o.id].on).length;
+    const fd = catImport.fileDay;
+    body.innerHTML = `
+        <p class="sheet-help" style="margin-top:0">Prep times are worked out from the items. ${auto ? "Auto mode: the catering list picks who." : "Pick who handles each one."} For deliveries, set the drive time — the export has no address.</p>
+        ${catImport.mismatch ? `<p class="form-error">These orders are for ${fd.month}/${fd.day}, not this lineup's day (${shortDate(state.date)}). Check the date you exported.</p>` : ""}
+        ${catImport.orders.map(o => {
+            const { pk, due, dp, gone } = catImportPlan(o);
+            const p = o.prep;
+            const empty = !p.supplies && !p.food;
+            const bits = [p.boxes && `${p.boxes} box meals`, p.trays && `${p.trays} trays`, p.sandwiches && `${p.sandwiches} sandwiches/biscuits`, p.singles && `${p.singles} other single items`, p.gallons && `${p.gallons} gallons`, p.coffee && `${p.coffee} coffee`, p.bunch && "sauces & condiments", p.paper ? "paper goods" : "no paper goods"].filter(Boolean).join(" · ");
+            return `<div class="cimp-row ${pk.on ? "" : "off"}">
+                <div class="cimp-top">
+                    <label class="check-line" style="margin:0"><input type="checkbox" ${pk.on ? "checked" : ""} onchange="catImport.picks['${esc(o.id)}'].on=this.checked; renderCatImport()"> <b>${esc(o.customer)}</b></label>
+                    <span class="type-tag ${o.delivery ? "deliv" : ""}">${o.delivery ? "Delivery" : "Pickup"}</span>
+                    <span class="mini-label">${o.delivery ? `due there ${fmtClock(toMin(o.when.time))} · leaves ${fmtClock(due)}, back ~${fmtClock(due + gone)}` : `due ${fmtClock(toMin(o.when.time))}`}</span>
+                    <span class="import-tag">${dp} lineup</span>
+                </div>
+                <div class="cimp-items">${esc(o.items)}${bits ? `<br><b>${esc(bits)}</b>` : ""}${p.other.length ? `<br><span class="new">Not counted: ${esc(p.other.join(", "))}</span>` : ""}${empty ? `<br>Nothing to prep — left off unless you check it.` : ""}</div>
+                ${pk.on ? `<div class="cimp-ctl">
+                    <select class="time-input sel name-pick" onchange="catImport.picks['${esc(o.id)}'].who=this.value; renderCatImport()">${whoOpts(dp, pk.who)}</select>
+                    <label class="cimp-f"><span class="mini-label">Supplies</span><input type="number" class="time-input num" min="0" step="5" value="${+pk.supplies || 0}" onchange="catImport.picks['${esc(o.id)}'].supplies=Math.max(0, +this.value || 0)"><span class="mini-label">min</span></label>
+                    <label class="cimp-f"><span class="mini-label">Food</span><input type="number" class="time-input num" min="0" step="5" value="${+pk.food || 0}" onchange="catImport.picks['${esc(o.id)}'].food=Math.max(0, +this.value || 0)"><span class="mini-label">min</span></label>
+                    ${o.delivery ? `<label class="cimp-f"><span class="mini-label">Drive</span><input type="number" class="time-input num" min="5" step="5" value="${+pk.drive || 15}" onchange="catImport.picks['${esc(o.id)}'].drive=Math.max(5, +this.value || 15); renderCatImport()"><span class="mini-label">min each way</span></label>` : ""}
+                </div>` : ""}
+            </div>`;
+        }).join("")}
+        <div class="form-error" id="catImpErr" style="display:none"></div>
+        <button type="button" class="btn-primary block" style="margin-top:1rem" onclick="applyCatImport()">${ICON.box} Add ${n} catering${n === 1 ? "" : "s"}</button>`;
+}
+function applyCatImport() {
+    if (!catImport) return;
+    const chosen = catImport.orders.filter(o => catImport.picks[o.id].on);
+    const missing = chosen.filter(o => !catImport.picks[o.id].who);
+    if (missing.length) { formError("catImpErr", `Pick who handles ${missing.map(o => o.customer).join(", ")}.`); return; }
+    const byDp = { AM: [], PM: [] };
+    chosen.forEach(o => {
+        const { pk, due, dp, gone } = catImportPlan(o);
+        const sup = Math.max(0, +pk.supplies || 0), food = Math.max(0, +pk.food || 0);
+        const c = { type: o.delivery ? "delivery" : "pickup", due: hhmm(due), orderId: o.id, customer: o.customer, items: o.items, promised: o.when.time };
+        if (pk.who === "__auto__") { c.auto = true; c.name = ""; } else c.name = pk.who;
+        if (sup >= 5 && food > 0) Object.assign(c, { split: true, supplies: sup, food });
+        else c.mins = sup + food || (o.delivery ? 0 : 15);
+        if (o.delivery) { c.gone = gone; c.drive = +pk.drive || 15; }
+        byDp[dp].push(c);
+    });
+    const ids = new Set(catImport.orders.map(o => o.id));
+    ["AM", "PM"].forEach(dp => {
+        const st = dp === state.daypart ? state : (lineupStateFor(dp) || (byDp[dp].length ? upgradeState(newState(dp), dp) : null));
+        if (!st) return;
+        // re-importing replaces the same orders (by order number); anything typed in by hand stays
+        st.caterings = (st.caterings || []).filter(c => !c.orderId || !ids.has(c.orderId)).concat(byDp[dp])
+            .sort((a, b) => (toMin(a.due) ?? 0) - (toMin(b.due) ?? 0));
+        if (st !== state) { try { localStorage.setItem(draftKey(dp), JSON.stringify({ state: st, result: null })); } catch (e) {} }
+    });
+    closeCatImport();
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderRoster();
+    showStatusMessage(`Added ${chosen.length} catering${chosen.length === 1 ? "" : "s"} — AM ${byDp.AM.length}, PM ${byDp.PM.length}.`, "success", 4000);
+}
+
 function renderTrainingList() {
     const box = document.getElementById("trainingList");
     if (!box) return;
     box.innerHTML = state.trainings.map((x, i) => `
         <div class="item-row train-row">
-            <span class="hc-chip trainee"><span class="chip-avatar">${esc(initials(x.trainee))}</span><span class="chip-name">${esc(x.trainee)}</span><span class="hc-chip-x" title="Remove" onclick="state.trainings.splice(${i},1); markChanged(); renderTrainingList()">${ICON.x}</span></span>
-            <select class="time-input sel" onchange="state.trainings[${i}].pos=this.value; markChanged()">${trainingPosOptions("Position", x.pos)}</select>
+            <span class="hc-chip trainee"><span class="chip-avatar">${esc(initials(x.trainee))}</span><span class="chip-name">${esc(x.trainee)}</span><span class="hc-chip-x" title="Remove" onclick="removeTraining(${i})">${ICON.x}</span></span>
+            <select class="time-input sel" onchange="setTrainingPos(${i}, this.value)">${trainingPosOptions("Position", x.pos)}</select>
             <span class="mini-label">with</span>
-            <select class="time-input sel" onchange="state.trainings[${i}].trainer=this.value; markChanged(); renderTrainingList()">${leaderOptions("Trainer", x.trainer)}</select>
-            <span class="shift-pair">
+            <select class="time-input sel name-pick" onchange="setTrainingTrainer(${i}, this.value)">${leaderOptions("Trainer", x.trainer)}</select>
+            ${closingTrainTimes(x.pos, x.trainer) ? `<span class="times-inline">${fmtClock(toMin(closingTrainTimes(x.pos, x.trainer).start))} – ${fmtClock(toMin(closingTrainTimes(x.pos, x.trainer).end))} (closing)</span>` : `<span class="shift-pair">
                 <input type="time" class="time-input" step="900" value="${x.start}" onchange="state.trainings[${i}].start=this.value; markChanged()">
                 <span class="mini-label">to</span>
                 <input type="time" class="time-input" step="900" value="${x.end}" onchange="state.trainings[${i}].end=this.value; markChanged()">
-            </span>
+            </span>`}
             ${!x.pos || !x.trainer ? `<span class="warn-tag">Pick ${!x.pos && !x.trainer ? "a position and trainer" : !x.pos ? "a position" : "a trainer"}</span>`
                 : !state.roster.some(r => r.name === x.trainer && !r.calledOff) ? `<span class="warn-tag">Add ${esc(x.trainer)} to the roster</span>` : ""}
-        </div>`).join("");
+            <button type="button" class="link-btn danger cat-remove" onclick="removeTraining(${i})">Remove</button>
+        </div>`).join("") + (state.trainings.length > 1 ? `<div class="row-actions" style="margin:0.2rem 0 0.6rem"><button type="button" class="link-btn danger" onclick="clearTrainings()">Remove all ${state.trainings.length} trainings</button></div>` : "");
+}
+function removeTraining(i) {
+    const x = state.trainings[i];
+    if (!x) return;
+    state.trainings.splice(i, 1);
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderTrainingList();
+    showStatusMessage(`Removed ${x.trainee || "the"} training.`, "success", 2500);
+}
+function clearTrainings() {
+    if (!state.trainings.length || !confirm(`Remove all ${state.trainings.length} trainings from the ${state.daypart} lineup?`)) return;
+    state.trainings = [];
+    markChanged();
+    if (state.roster.length && !rosterProblems()) generate();
+    renderTrainingList();
 }
 
+function trPosChanged() {
+    const fixed = closingTrainTimes((document.getElementById("trPos") || {}).value, (document.getElementById("trTrainer") || {}).value);
+    const a = document.getElementById("trTimes"), b = document.getElementById("trFixed");
+    if (a) a.style.display = fixed ? "none" : "";
+    if (b) { b.style.display = fixed ? "" : "none"; b.textContent = fixed ? `${fmtClock(toMin(fixed.start))} – ${fmtClock(toMin(fixed.end))} (closing)` : ""; }
+}
+function setTrainingTrainer(i, v) {
+    const x = state.trainings[i];
+    if (!x) return;
+    x.trainer = v;
+    const fixed = closingTrainTimes(x.pos, v);
+    if (fixed) Object.assign(x, fixed);
+    markChanged();
+    renderTrainingList();
+}
+function setTrainingPos(i, v) {
+    const x = state.trainings[i];
+    if (!x) return;
+    x.pos = v;
+    const fixed = closingTrainTimes(v, x.trainer);
+    if (fixed) Object.assign(x, fixed);
+    markChanged();
+    renderTrainingList();
+}
 function addTraining() {
     const trainee = document.getElementById("trTrainee").value.trim();
     const pos = document.getElementById("trPos").value;
     const trainer = document.getElementById("trTrainer").value;
-    const start = document.getElementById("trStart").value, end = document.getElementById("trEnd").value;
+    const fixed = closingTrainTimes(pos, trainer);
+    const start = fixed ? fixed.start : document.getElementById("trStart").value, end = fixed ? fixed.end : document.getElementById("trEnd").value;
     if (!trainee) { formError("trErr", "Type the trainee's name."); return; }
     if (!pos) { formError("trErr", "Pick the position they're training on."); return; }
     if (!trainer) { formError("trErr", leaderNames().length ? "Pick the leader training them." : "No leaders found in the staff list — tap ↻ to reload it."); return; }
@@ -4767,6 +5255,7 @@ function renderSweepTimes() {
 
 function setMode(m) {
     state.mode = m;
+    state.modeAuto = false;
     markChanged();
     if (state.roster.length && !rosterProblems()) generate();
     updateHero();
@@ -4908,14 +5397,19 @@ function dropBoh() {
     saveDraft();
     showStatusMessage(`Took ${gone.join(", ")} off the roster — back of house is hidden for now.`, "info", 5000);
 }
+// The PM lineup's shift lead (from today's PM draft) — they aren't put in a spot at the AM's 2:00 handover
+function pmLeadName() {
+    try { const o = JSON.parse(localStorage.getItem(draftKey("PM")) || "null"); return (o && o.state && o.state.shiftLead) || ""; } catch (e) { return ""; }
+}
 function generate() {
     dropBoh();
+    applyAutoMode();
     if (!state || !state.roster.length) { result = null; dirty = false; return; }
     if (state.rotationAuto) { const w = weatherFor(state.daypart, state.date); if (w) { state.rotation = w.rot; state.rotationHours = w.hours; } }
     else state.rotationHours = null;
     // leaders come from the staff sheet's Role column (trainers are always treated as leaders)
     const leaders = leaderNames();
-    result = buildLineup({ ...state, leaders, caterRank: caterRankMap() }, rosterRatings(), state.daypart === "PM" ? amHandover() : null);
+    result = buildLineup({ ...state, leaders, caterRank: caterRankMap(), nextLead: state.daypart === "AM" ? pmLeadName() : "" }, rosterRatings(), state.daypart === "PM" ? amHandover() : null);
     dirty = false;
     saveDraft();
     renderSweepTimes();
@@ -4940,7 +5434,7 @@ function regenerate() {
 }
 
 async function refreshEverything() {
-    showStatusMessage("Refreshing staff and ratings...", "info", 3000);
+    showStatusMessage("Refreshing the staff list...", "info", 3000);
     const ok = await startStaffLoad();
     await loadRedistribution();
     await fetchWeather(state.date, true); applyAutoRotation(false);
@@ -4961,7 +5455,6 @@ function renderLineup() {
     if (!result) {
         el.innerHTML = `
             <section class="card empty-card">
-                <div class="empty-art">${ICON.treeBig}</div>
                 <h2>No lineup yet</h2>
                 <p>Add who's working on the Roster tab, then generate the ${state.daypart} lineup.</p>
                 <button type="button" class="btn-primary" onclick="setView('roster')">Go to Roster</button>
@@ -5105,7 +5598,7 @@ function renderMove() {
     document.getElementById("moveBody").innerHTML = `
         <div class="move-form">
             <label class="move-field"><span>Who</span>
-                <select class="time-input sel" onchange="moveDraft.name=this.value; renderMove()"><option value="">Pick someone</option>${names.map(n => `<option ${n === moveDraft.name ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>
+                <select class="time-input sel name-pick" onchange="moveDraft.name=this.value; renderMove()"><option value="">Pick someone</option>${names.map(n => `<option ${n === moveDraft.name ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>
             </label>
             ${where ? `<p class="sheet-help" style="margin:0">Now on <b>${esc(where)}</b></p>` : ""}
             <label class="move-field"><span>Move to</span>
@@ -5287,6 +5780,133 @@ function applyCallOffs() {
 }
 
 // =====================================================================
+// TYPE-TO-SEARCH NAME BOXES
+// =====================================================================
+// Every name picker (<select class="name-pick">) becomes a box you type in: "carme" puts Carmen first.
+// The select stays underneath (hidden) so everything that listens to it keeps working.
+// Free-text name boxes (<input class="name-free">) get the same suggestions but still take any name.
+function nameScore(label, q) {
+    const l = label.toLowerCase();
+    if (l.startsWith(q)) return 0;
+    const words = l.split(/[\s(·—-]+/).filter(Boolean);
+    if (words.some(w => w.startsWith(q))) return 1;
+    if (l.includes(q)) return 2;
+    const f = (words[0] || "").slice(0, q.length);
+    if (q.length >= 4 && nameDistance(f, q) <= (q.length >= 6 ? 2 : 1)) return 3;   // a typo or two ("kianan")
+    return -1;
+}
+let comboList = null;
+function comboOpen(input, items, hi, onPick) {
+    if (!comboList) {
+        comboList = document.createElement("div");
+        comboList.className = "suggest-list"; comboList.id = "comboList";
+        document.body.appendChild(comboList);
+        comboList.addEventListener("mousedown", e => {
+            const d = e.target.closest(".suggest-item");
+            e.preventDefault();
+            if (d && comboList._pick) comboList._pick(+d.dataset.i);
+        });
+    }
+    comboList._pick = onPick;
+    comboList.innerHTML = items.length
+        ? items.map((o, i) => `<div class="suggest-item ${i === hi ? "highlighted" : ""} ${o.special ? "special" : ""}" data-i="${i}">${esc(o.l)}${o.sub ? `<small>${esc(o.sub)}</small>` : ""}</div>`).join("")
+        : `<div class="suggest-none">No match</div>`;
+    comboList._input = input;
+    comboPlace();
+    comboList.style.display = "block";
+    const h = comboList.querySelector(".highlighted");
+    if (h) h.scrollIntoView({ block: "nearest" });
+}
+function comboPlace() {
+    const input = comboList && comboList._input;
+    if (!input) return;
+    const r = input.getBoundingClientRect();
+    const below = window.innerHeight - r.bottom;
+    comboList.style.left = Math.max(8, Math.min(r.left, window.innerWidth - Math.max(r.width, 220) - 8)) + "px";
+    comboList.style.width = Math.max(r.width, 220) + "px";
+    if (below < 200 && r.top > below) { comboList.style.top = ""; comboList.style.bottom = (window.innerHeight - r.top + 4) + "px"; }
+    else { comboList.style.bottom = ""; comboList.style.top = (r.bottom + 4) + "px"; }
+}
+function comboClose() { if (comboList) comboList.style.display = "none"; }
+function rankNames(all, q) {
+    return all.map((o, i) => ({ ...o, s: nameScore(o.l, q), i })).filter(o => o.s >= 0).sort((a, b) => a.s - b.s || a.i - b.i).slice(0, 8);
+}
+function comboKeys(e, st, choose) {
+    if (e.key === "ArrowDown") { e.preventDefault(); st.hi = Math.min(st.hits.length - 1, st.hi + 1); st.show(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); st.hi = Math.max(0, st.hi - 1); st.show(); }
+    else if (e.key === "Enter") { if (st.hits[st.hi] && comboList && comboList.style.display === "block") { e.preventDefault(); choose(st.hits[st.hi]); } }
+    else if (e.key === "Escape") comboClose();
+}
+function enhanceNamePicks(root) {
+    (root || document).querySelectorAll("select.name-pick:not([data-combo])").forEach(sel => {
+        sel.dataset.combo = "1";
+        const wrap = document.createElement("span");
+        wrap.className = "combo";
+        const inp = document.createElement("input");
+        inp.type = "text"; inp.autocomplete = "off"; inp.spellcheck = false;
+        inp.className = "time-input combo-in" + (sel.classList.contains("pref") ? " pref" : "") + (sel.classList.contains("set") ? " set" : "");
+        if (sel.title) inp.title = sel.title;
+        sel.parentNode.insertBefore(wrap, sel);
+        wrap.append(sel, inp);
+        sel.style.display = "none";
+        const opts = () => [...sel.options].filter(o => !o.disabled).map(o => ({ v: o.value, l: o.textContent.trim(), special: o.value.startsWith("__") }));
+        const showCur = () => {
+            const o = sel.options[sel.selectedIndex];
+            inp.value = o && o.value ? o.textContent.trim() : "";
+            inp.placeholder = (opts().find(x => !x.v) || {}).l || "Type a name";
+        };
+        // code that sets the select's value directly also updates the text box
+        const d = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+        Object.defineProperty(sel, "value", { configurable: true, get() { return d.get.call(this); }, set(v) { d.set.call(this, v); showCur(); } });
+        showCur();
+        const st = { hits: [], hi: 0 };
+        const choose = o => { comboClose(); d.set.call(sel, o.v); showCur(); sel.dispatchEvent(new Event("change", { bubbles: true })); };
+        st.show = () => comboOpen(inp, st.hits, st.hi, i => choose(st.hits[i]));
+        const render = () => {
+            const q = inp.value.trim().toLowerCase();
+            const cur = sel.options[sel.selectedIndex];
+            const all = opts().filter(o => o.v);
+            st.hits = !q || (cur && cur.value && inp.value === cur.textContent.trim()) ? all.slice(0, 60) : rankNames(all, q);
+            st.hi = 0;
+            st.show();
+        };
+        inp.addEventListener("focus", () => { inp.select(); render(); });
+        inp.addEventListener("input", render);
+        inp.addEventListener("keydown", e => comboKeys(e, st, choose));
+        inp.addEventListener("blur", () => setTimeout(() => { comboClose(); showCur(); }, 120));
+    });
+    (root || document).querySelectorAll("input.name-free:not([data-combo])").forEach(inp => {
+        inp.dataset.combo = "1";
+        inp.removeAttribute("list");
+        const names = () => {
+            const roster = state ? state.roster.map(r => r.name) : [];
+            const pool = inp.dataset.names === "addnow"
+                ? state.roster.filter(r => r.calledOff).map(r => r.name).concat(staffNameList().filter(n => !roster.some(x => x.toLowerCase() === n.toLowerCase())))
+                : [...new Set(roster.concat((state ? state.trainings : []).map(x => x.trainee).filter(Boolean), staffNameList()))];
+            return pool.map(n => ({ v: n, l: n }));
+        };
+        const st = { hits: [], hi: 0 };
+        const choose = o => { comboClose(); inp.value = o.v; inp.dispatchEvent(new Event("input", { bubbles: true })); inp.dispatchEvent(new Event("change", { bubbles: true })); };
+        st.show = () => comboOpen(inp, st.hits, st.hi, i => choose(st.hits[i]));
+        const render = () => {
+            const q = inp.value.trim().toLowerCase();
+            if (!q) { comboClose(); return; }
+            st.hits = rankNames(names(), q); st.hi = 0;
+            if (st.hits.length === 1 && st.hits[0].v.toLowerCase() === q) { comboClose(); return; }
+            if (!st.hits.length) { comboClose(); return; }
+            st.show();
+        };
+        inp.addEventListener("input", e => { if (e.isTrusted) render(); });
+        inp.addEventListener("keydown", e => comboKeys(e, st, choose));
+        inp.addEventListener("blur", () => setTimeout(comboClose, 120));
+    });
+}
+if (typeof MutationObserver !== "undefined") new MutationObserver(() => enhanceNamePicks()).observe(document.documentElement, { childList: true, subtree: true });
+// keep the list under its box while the page (or a sheet) scrolls
+window.addEventListener("scroll", e => { if (comboList && comboList.style.display === "block" && e.target !== comboList) comboPlace(); }, true);
+window.addEventListener("resize", () => { if (comboList && comboList.style.display === "block") comboPlace(); });
+
+// =====================================================================
 // ADD SOMEONE MID-SHIFT  +  "DO THIS NOW"
 // =====================================================================
 // Someone shows up who wasn't scheduled: put them in with as few changes as possible —
@@ -5310,8 +5930,7 @@ function renderAddNow() {
     document.getElementById("addNowBody").innerHTML = `
         <div class="move-form">
             <label class="move-field"><span>Who</span>
-                <input type="text" class="field" id="addNowName" list="addNowNames" placeholder="Name" value="${esc(addNowDraft.name)}" oninput="addNowDraft.name=this.value" autocomplete="off">
-                <datalist id="addNowNames">${back.concat(names).map(n => `<option value="${esc(n)}">`).join("")}</datalist>
+                <input type="text" class="field name-free" id="addNowName" data-names="addnow" placeholder="Name" value="${esc(addNowDraft.name)}" oninput="addNowDraft.name=this.value" autocomplete="off">
             </label>
             ${live !== null ? `<p class="sheet-help" style="margin:0">Starts now (${fmtClock(live)}). Everything before stays the same, and everyone else keeps their breaks.</p>`
                 : `<label class="move-field"><span>Starts</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.start)}" onchange="addNowDraft.start=this.value"></label>`}
@@ -5499,8 +6118,9 @@ function elbow(x1, y1, tx, x2, y2) {
 // or "<spot> closes" — only ever the lowest-priority spot open at that moment (the next one to go)
 function breakCover(b) {
     if (b.trainee === true) return { text: b.kind === "joint" ? `with ${b.trainer}` : `${b.trainer} runs ${b.pos}`, info: true, from: b.start, to: b.end };
-    if (!b.pos) return { text: "self", info: true, from: b.start, to: b.end };
+    if (!b.pos || b.self || b.cover === b.name) return { text: "self", info: true, from: b.start, to: b.end };
     if (!b.cover) return { text: `${b.pos} closes (next to go)`, info: true, from: b.start, to: b.end };
+    if (b.takeover) return { text: `${b.cover} takes over ${b.pos}`, name: b.cover, from: b.start, to: b.end };
     return { text: b.cover, name: b.cover, from: b.start, to: b.end };
 }
 
@@ -5557,10 +6177,11 @@ function mapGroups(res) {
             rows: list.slice().sort((a, b) => a.start - b.start || a.name.localeCompare(b.name)).map(b => ({
                 branch: fmtT(b.start), branchFrom: b.start, branchTo: b.end,
                 label: b.kind === "joint" && typeof b.trainee === "string" ? `${b.name} & ${b.trainee}` : b.name, labelName: b.name, from: b.start, to: b.end,
-                chain: [breakCover(b)]
+                chain: (b.kind === "leader" && b.trainee && b.leaderCover
+                        ? [{ text: `${b.leaderCover} (leader) runs ${b.trainingPos || b.pos} with ${b.trainee}`, name: b.leaderCover, from: b.start, to: b.end }]
+                        : [breakCover(b)].concat(b.kind === "forced" && b.trainee ? [{ text: `${b.trainee} waits`, info: true, from: b.start, to: b.end }] : []))
                     .concat(b.backfill ? [{ text: `${b.backfillPos}: ${b.backfill}`, name: b.backfill, info: true, from: b.start, to: b.end }] : [])
                     .concat(b.kind === "merge" ? [{ text: `${b.trainee} trains with ${b.mergeWith}`, info: true, from: b.start, to: b.end }] : [])
-                    .concat(b.kind === "leader" && b.trainee ? [{ text: b.leaderCover ? `${b.leaderCover} (leader) stays with ${b.trainee}` : `a leader stays with ${b.trainee}`, info: true, from: b.start, to: b.end }] : [])
             }))
         });
     }
@@ -6297,8 +6918,9 @@ function breakdownBlocksFull(res) {
             else if (b.kind === "leader" && b.cover) text = `Break: ${b.cover} covers ${b.name} (leader, training ${b.trainee})`;
             else if (b.kind === "merge" && b.cover) text = `Break: ${b.cover} covers ${b.name} — ${b.trainee} trains with ${b.mergeWith}`;
             else if (b.kind === "forced" && b.trainee) text = `Break: ${b.cover || "nobody"} covers ${b.name} — ${b.trainee} waits (no leader free)`;
-            else if (!b.pos) text = `Break: ${b.name} (Self-break)`;
+            else if (!b.pos || b.self) text = `Break: ${b.name} (Self-break)`;
             else if (!b.cover) text = `Break: ${b.name} (${b.pos} closes)`;
+            else if (b.takeover) text = `Break: ${b.name} — ${b.cover} takes over ${b.pos}`;
             else text = `Break: ${b.cover} covers ${b.name}${b.backfill ? ` (${b.backfill} takes ${b.backfillPos})` : ""}`;
             lines.push({ who: b.name, also: [b.cover, b.backfill], text });
         });
