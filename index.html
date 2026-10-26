@@ -120,6 +120,9 @@
         .cimp-ctl .time-input.num { width: 4.4rem; min-width: 0; flex: 0 0 auto; }
         .cimp-f { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
         .cat-remove { margin-left: auto; }
+        .my-who { font-size: 0.9rem; color: var(--muted); margin: -0.2rem 0 0.6rem; }
+        .my-who b { color: var(--navy-900); }
+        .my-list { margin-top: 0.7rem; }
         .task-line:has(> .times-inline:empty) { display: none; }
         .seg button.auto-pick { color: var(--navy-900); text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 3px; text-underline-offset: 5px; }
         .lead-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; justify-content: space-between; padding: 0.6rem 0.75rem; margin-bottom: 0.6rem; border: 1.5px solid var(--line, #e2e8f0); border-radius: 12px; background: var(--gold-soft, #fff8e6); }
@@ -784,17 +787,20 @@
                 <div class="export-title">Files</div>
                 <div class="export-grid">
                     <button type="button" class="needs-result" onclick="downloadLineupFile()">Lineup File<span>.lineup &mdash; reopen here later</span></button>
-                    <button type="button" class="needs-result" onclick="downloadMindMap()">Mind Map File<span>.mm &mdash; FreeMind format</span></button>
+                    <button type="button" class="needs-result" onclick="downloadMindMap('opml')">Mind Map (OPML)<span>.opml &mdash; opens in NiceMind</span></button>
+                    <button type="button" class="needs-result" onclick="downloadMindMap('md')">Mind Map (Markdown)<span>.md &mdash; opens in NiceMind</span></button>
                     <button type="button" onclick="document.getElementById('importInput').click()">Import Lineup File<span>Open a .lineup file</span></button>
                 </div>
                 <input type="file" id="importInput" style="display:none" onchange="importFile(this)">
             </div>
             <div class="export-group">
-                <div class="export-title">Google Sheets</div>
+                <div class="export-title">My lineups in Google Sheets</div>
+                <div class="my-who" id="myWho"></div>
                 <div class="export-grid">
-                    <button type="button" class="needs-result" id="saveSheetsBtn" onclick="saveToSheets()">Save to Sheets<span>So other devices can load it</span></button>
-                    <button type="button" onclick="loadFromSheets()">Load Saved<span>Today's saved lineup</span></button>
+                    <button type="button" id="saveSheetsBtn" onclick="saveMine()">Save my lineup<span>Roster + lineup, AM and PM — open it on any device</span></button>
+                    <button type="button" onclick="openMySaved()">My saved lineups<span>Pull one up on this device</span></button>
                 </div>
+                <div id="mySaved"></div>
             </div>
             <p class="sheet-help" id="exportHelp"></p>
         </div>
@@ -874,6 +880,17 @@
     </div>
 </div>
 
+<!-- Someone came in early / is leaving early -->
+<div class="modal-overlay" id="shiftChangeModal" onclick="if(event.target===this) closeShiftChange()">
+    <div class="sheet">
+        <div class="sheet-head">
+            <h3>Early / Leaving</h3>
+            <button type="button" class="sheet-close" onclick="closeShiftChange()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="sheet-body" id="shiftChangeBody"></div>
+    </div>
+</div>
+
 <!-- What to do now after a mid-shift change -->
 <div class="modal-overlay" id="nowMovesModal" onclick="if(event.target===this) closeNowMoves()">
     <div class="sheet">
@@ -919,13 +936,16 @@ const STAFF_SHEET_ID = "1Y1alfXEMbRiIWTbllZTQ4_K4-O5bhTnOiRn8DxN5QqY";
 //   1) Daypart (short answer)   2) Business Date (short answer)
 //   3) Lineup Data (paragraph)  4) Submitted By (short answer)
 // None of them should be marked Required.
+// "Lineup Saves" form → its responses land on the "Form Responses 1" tab of the saves spreadsheet
+// (columns: Timestamp, Daypart, Date, Lineup Data, Saved By)
 const LINEUP_FORM = {
-    formId: "1FAIpQLSe-3emk_9kkkoi-P4-85VlmRPe0xTsI5cBgWxMPaqOHacdNUg",
-    sheetId: "1oyJaf6VXIaHxZ-0Pk1FVZMNx7vwNORkQXcXoby4TvtM",
-    daypartEntry: "entry.747672722",
-    dateEntry: "entry.1849691723",
-    dataEntry: "entry.348560586",
-    byEntry: "entry.857096984"
+    formId: "1FAIpQLSfPkoWUTIx9Qb1LASrVb1N9GsD4w0Mrdwq_MsEPK-v63-rLMQ",
+    sheetId: "1vbuQrTVRsHdhP7zWrPG3KabtzBk9c3zkHEG7ha5QICY",
+    sheetTab: "Form Responses 1",
+    daypartEntry: "entry.152638625",
+    dateEntry: "entry.1693752520",
+    dataEntry: "entry.1150020575",
+    byEntry: "entry.1449851507"
 };
 
 // The Checklist Tracker's forms and sheets (same IDs as in its code). The lineup sends tonight's
@@ -2210,6 +2230,15 @@ function buildLineup(st, ratings, seed) {
         if (prefersPos(p.name, pos)) s += 3;
         if (simT < IN_CLOSE && closeNear[p.name] && closeNear[p.name].includes(pos)) s += 2;
         if (home[p.name] === pos) s += 2;   // go back to your own spot
+        // after a mid-shift change, stick to what the lineup already said wherever it still works
+        if (lock && lock.keepFuture && simT >= lock.until) {
+            if (lockAt(pos, simT) === p.name) s += 6;
+            else {
+                // pulling someone off the spot they were going to be on: cheapest from the least important spot
+                const was = POSITIONS.find(q => lockAt(q.name, simT) === p.name);
+                if (was) s -= 3 + (14 - was.priority) / 2;
+            }
+        }
         if (p.floater) s -= 100;            // floaters only fill in when needed
         if (p.name === shiftLead && leadLimited(simT)) s -= 200;   // the lead is the very last resort
         if (runnerSet.has(p.name)) s -= 50; // this stretch's break runner stays a runner
@@ -3091,7 +3120,7 @@ function lineupFormReady() {
 
 // Newest first. Each saved row's Lineup Data cell is JSON {id, state, result}.
 async function fetchSavedLineups() {
-    const rows = await gvizRows(LINEUP_FORM.sheetId, "SELECT A, B, C, D, E ORDER BY A DESC LIMIT 80", 15000);
+    const rows = await savedRowsFrom("SELECT A, B, C, D, E ORDER BY A DESC LIMIT 80");
     if (rows === null) return null;
     const list = [];
     rows.forEach(row => {
@@ -3106,10 +3135,10 @@ async function fetchSavedLineups() {
     return list;
 }
 
-async function findSaved(dp, dateIso) {
+async function findSaved(dp, dateIso, by) {
     const list = await fetchSavedLineups();
     if (!list) return undefined;
-    return list.find(x => x.state.daypart === dp && x.state.date === dateIso) || null;
+    return list.find(x => x.state.daypart === dp && x.state.date === dateIso && (!by || x.by === by)) || null;
 }
 
 // =====================================================================
@@ -3170,7 +3199,8 @@ function startApp() {
 
 // Who saved a lineup to Sheets. Asked once, remembered on this device.
 function saverName() {
-    let n = "";
+    let n = myLeader();
+    if (n) return n;
     try { n = localStorage.getItem("lineupSaverName") || ""; } catch (e) {}
     if (n) return n;
     n = (prompt("Your name (shows who saved this lineup):") || "").trim();
@@ -5603,6 +5633,7 @@ function renderLineup() {
                 <button type="button" class="btn-secondary" id="breakdownBtn" onclick="openBreakdown()">${ICON.list} Breakdown</button>
                 <button type="button" class="btn-secondary" id="moveBtn" onclick="openMove()">${ICON.swap} Move${(state.moves || []).length ? ` (${state.moves.length})` : ""}</button>
                 <button type="button" class="btn-secondary" id="addNowBtn" onclick="openAddNow()">${ICON.userplus} Add someone</button>
+                <button type="button" class="btn-secondary" id="shiftChangeBtn" onclick="openShiftChange()">${ICON.clock} Early / leaving</button>
                 <button type="button" class="btn-secondary" id="callOffBtn" onclick="openCallOffs()">${ICON.userx} Call offs${result.calledOff && result.calledOff.length ? ` (${result.calledOff.length})` : ""}</button>
                 <div class="seg">${modeButtons()}</div>
                 <button type="button" class="btn-secondary ${showNow ? "on" : ""}" onclick="showNow=!showNow; renderLineup()" title="Highlight who should be where right now">${ICON.clock} Now</button>
@@ -5968,17 +5999,21 @@ function vmSync() {
     const nb = document.getElementById("vmNowBtn"); if (nb) nb.classList.toggle("on", !!showNow);
     const bb = document.getElementById("vmBdBtn"); if (bb) bb.classList.toggle("on", !document.body.classList.contains("vm-bd-hidden"));
 }
-function askExitViewMode(msg) {
+let pinPurpose = "exit";
+function askPin(purpose, msg) {
+    pinPurpose = purpose;
     const o = document.getElementById("pinOverlay");
     document.getElementById("vmPinInput").value = "";
-    document.getElementById("pinHelp").textContent = msg || "A leader's PIN is needed to leave view mode.";
+    document.getElementById("pinHelp").textContent = msg;
+    document.querySelector(".pin-cancel").textContent = purpose === "exit" ? "Stay in view mode" : "Cancel";
     o.classList.add("active");
     vmLoadPins();
     setTimeout(() => document.getElementById("vmPinInput").focus(), 50);
 }
+function askExitViewMode(msg) { askPin("exit", msg || "A leader's PIN is needed to leave view mode."); }
 function cancelExitViewMode() {
     document.getElementById("pinOverlay").classList.remove("active");
-    vmGoFull();
+    if (pinPurpose === "exit") vmGoFull();
 }
 function vmPinDigit(d) { const i = document.getElementById("vmPinInput"); if (i.value.length < 4) { i.value += d; if (i.value.length === 4) checkViewPin(); } }
 function vmPinBack() { const i = document.getElementById("vmPinInput"); i.value = i.value.slice(0, -1); }
@@ -5999,8 +6034,17 @@ async function checkViewPin() {
         input.value = "";
         return;
     }
+    if (pinPurpose === "signin") {
+        document.getElementById("pinOverlay").classList.remove("active");
+        setMyLeader(displayForRaw(who));
+        renderMyWho();
+        showStatusMessage(`Signed in as ${myLeader()}.`, "success", 2500);
+        const then = afterSignIn; afterSignIn = null;
+        if (then) then();
+        return;
+    }
     exitViewMode();
-    showStatusMessage(`View mode off (${staffNameFor(who) || who}).`, "success", 3000);
+    showStatusMessage(`View mode off (${displayForRaw(who)}).`, "success", 3000);
 }
 function exitViewMode() {
     try { localStorage.removeItem("lineupViewMode"); } catch (e) {}
@@ -6177,8 +6221,8 @@ function renderAddNow() {
             <label class="move-field"><span>Who</span>
                 <input type="text" class="field name-free" id="addNowName" data-names="addnow" placeholder="Name" value="${esc(addNowDraft.name)}" oninput="addNowDraft.name=this.value" autocomplete="off">
             </label>
-            ${live !== null ? `<p class="sheet-help" style="margin:0">Starts now (${fmtClock(live)}). Everything before stays the same, and everyone else keeps their breaks.</p>`
-                : `<label class="move-field"><span>Starts</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.start)}" onchange="addNowDraft.start=this.value"></label>`}
+            <label class="move-field"><span>Starts</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.start)}" onchange="addNowDraft.start=this.value"></label>
+            <p class="sheet-help" style="margin:0">${live !== null ? `Set to now (${fmtClock(live)}) — change it if they're coming later. ` : ""}Everything before they start stays the same, and everyone else keeps their breaks.</p>
             <label class="move-field"><span>Here until</span><input type="time" class="time-input" step="900" value="${esc(addNowDraft.end)}" onchange="addNowDraft.end=this.value"></label>
             <button type="button" class="btn-primary block" onclick="applyAddNow()">${ICON.userplus} Add and place them</button>
         </div>`;
@@ -6189,7 +6233,8 @@ function applyAddNow() {
     if (!addNowDraft.end) { showStatusMessage("Set when they leave.", "warning"); return; }
     const name = staffNameList().find(n => n.toLowerCase() === raw.toLowerCase()) || raw;
     const live = liveNow();
-    const from = live !== null ? live : round15(toMin(addNowDraft.start) ?? result.window[0]);
+    const picked = round15(toMin(addNowDraft.start) ?? (live ?? result.window[0]));
+    const from = live !== null ? Math.max(live, picked) : picked;   // can't change what already happened
     const was = state.roster.find(r => r.name.toLowerCase() === name.toLowerCase());
     if (was && !was.calledOff) { showStatusMessage(`${name} is already on the lineup.`, "warning"); return; }
     const before = result;
@@ -6203,6 +6248,70 @@ function applyAddNow() {
     updateHero();
     renderAll();
     showNowMoves(before, result, from, `${entry.name} added`);
+}
+
+// Someone on the roster came in early (or is leaving early): change just their shift, keep everything before
+// now and everyone else's breaks and tasks, and say what to do on the floor
+let shiftDraft = { name: "", kind: "early", time: "" };
+function openShiftChange(name) {
+    if (!result) return;
+    const live = liveNow();
+    shiftDraft = { name: name || "", kind: "early", time: hhmm(live !== null ? live : result.window[0]) };
+    renderShiftChange();
+    document.getElementById("shiftChangeModal").classList.add("active");
+}
+function closeShiftChange() { document.getElementById("shiftChangeModal").classList.remove("active"); }
+function renderShiftChange() {
+    const live = liveNow();
+    const r = state.roster.find(x => x.name === shiftDraft.name);
+    const early = shiftDraft.kind === "early";
+    // early: people who haven't started yet; leaving: people here (or coming) who'd leave sooner
+    const t0 = live !== null ? live : result.window[0];
+    const names = state.roster.filter(x => !x.calledOff && x.start && x.end).filter(x => early ? (toMin(x.start) ?? 0) > t0 : true).map(x => x.name);
+    const opt = (v, l) => `<option value="${esc(v)}" ${v === shiftDraft.name ? "selected" : ""}>${esc(l)}</option>`;
+    document.getElementById("shiftChangeBody").innerHTML = `
+        <div class="move-form">
+            <div class="seg">
+                <button type="button" class="${early ? "on" : ""}" onclick="shiftDraft.kind='early'; renderShiftChange()">Came in early</button>
+                <button type="button" class="${!early ? "on" : ""}" onclick="shiftDraft.kind='leave'; renderShiftChange()">Leaving early</button>
+            </div>
+            <label class="move-field"><span>Who</span>
+                <select class="time-input sel name-pick" onchange="shiftDraft.name=this.value; renderShiftChange()">${opt("", early ? "Who's here early?" : "Who's leaving?")}${names.map(n => {
+                    const x = state.roster.find(y => y.name === n);
+                    return opt(n, `${n} (${fmtClock(toMin(x.start))} – ${fmtClock(toMin(x.end))})`);
+                }).join("")}</select>
+            </label>
+            <label class="move-field"><span>${early ? "Starts at" : "Leaves at"}</span><input type="time" class="time-input" step="900" value="${esc(shiftDraft.time)}" onchange="shiftDraft.time=this.value"></label>
+            <p class="sheet-help" style="margin:0">${early && r ? `Instead of ${fmtClock(toMin(r.start))}. ` : !early && r ? `Instead of ${fmtClock(toMin(r.start) + shiftMinutes(r))}. ` : ""}Everything before then stays the same, and everyone else keeps their breaks.</p>
+            <button type="button" class="btn-primary block" onclick="applyShiftChange()">${ICON.clock} Update the lineup</button>
+        </div>`;
+}
+function applyShiftChange() {
+    const r = state.roster.find(x => x.name === shiftDraft.name);
+    if (!r) { showStatusMessage("Pick who.", "warning"); return; }
+    const live = liveNow();
+    const early = shiftDraft.kind === "early";
+    let at = round15(toMin(shiftDraft.time) ?? NaN);
+    if (isNaN(at)) { showStatusMessage("Set the time.", "warning"); return; }
+    const s0 = toMin(r.start), e0 = toMin(r.start) + shiftMinutes(r);
+    if (early && at >= s0) { showStatusMessage(`${r.name} already starts at ${fmtClock(s0)}.`, "warning"); return; }
+    if (!early && (at <= s0 || at >= e0)) { showStatusMessage(`Pick a time between ${fmtClock(s0)} and ${fmtClock(e0)}.`, "warning"); return; }
+    const before = result;
+    // lock up to the change; everyone else keeps their breaks/tasks — this person's break gets planned again
+    // nothing changes until they actually come in / leave (and what already happened stays as it was)
+    const lockFrom = live !== null ? Math.max(at, live) : at;
+    const lock = Object.assign(lockAt(lockFrom), { keepFuture: true });
+    lock.breaks = (lock.breaks || []).filter(b => b.name !== r.name);
+    state.lock = lock;
+    if (early) r.start = hhmm(at); else r.end = hhmm(at);
+    if (state.daypart === "PM" && early && at <= toMin(DAYPART_SPLIT)) { r.at2 = r.at2 || ""; r.brk = r.brk || "auto"; }
+    closeShiftChange();
+    markChanged();
+    generate();
+    updateHero();
+    renderAll();
+    // early: what to do now; leaving: what to do when they leave
+    showNowMoves(before, result, lockFrom, early ? `${r.name} starts at ${fmtClock(at)}` : `${r.name} leaves at ${fmtClock(at)}`);
 }
 
 // Where someone is at time t, and what they're doing if they're not in a spot
@@ -6234,7 +6343,13 @@ function nowMovesList(oldRes, newRes, t) {
         if (a === b && da === dbb) return;
         if (!inOld) { arrive.push(b ? `${n} starts on ${b}.` : `${n} starts — ${dbb}.`); return; }
         if (!inNew) { now.push(a ? `${n} is out — off ${a}.` : `${n} is out.`); return; }
-        if (a && b) now.push(`${n}: move from ${a} to ${b}.`);
+        // where they are right before this moment (the same in both lineups)
+        const cur = spotOf(newRes, n, t - STEP);
+        const arriving = !newRes.people.some(p => p.name === n && p.start <= t - STEP);
+        if (b && arriving) { now.push(`${n} starts on ${b}${a ? ` (instead of ${a})` : ""}.`); return; }
+        if (b && cur === b) { now.push(`${n} stays on ${b}${a ? ` (instead of moving to ${a})` : ""}.`); return; }
+        if (a && b && cur) { now.push(`${n}: move from ${cur} to ${b}${a !== cur ? ` (instead of ${a})` : ""}.`); return; }
+        if (a && b) now.push(`${n}: go to ${b} (instead of ${a}).`);
         else if (b) now.push(`${n}: go to ${b}${da && da !== "float / run breaks" ? ` (instead of ${da.replace(/ until .*/, "")})` : ""}.`);
         else if (a) now.push(`${n}: leave ${a} — ${dbb}.`);
         else if (da !== dbb) now.push(`${n}: ${dbb} (instead of ${da}).`);
@@ -6758,8 +6873,10 @@ function openExport() {
     const help = [];
     if (!has) help.push("Generate a lineup first to export it.");
     if (!lineupFormReady()) help.push("Saving to Google Sheets isn't set up yet — paste the form and sheet IDs into LINEUP_FORM at the top of the code.");
-    help.push("The .mm file opens in mind map apps that import FreeMind maps. The .lineup file keeps everything (roster, tasks, breaks) and reopens here with Import.");
+    help.push("The .opml and .md files open in NiceMind (and most mind map apps). The .lineup file keeps everything (roster, tasks, breaks) and reopens here with Import.");
     document.getElementById("exportHelp").innerText = help.join(" ");
+    renderMyWho();
+    document.getElementById("mySaved").innerHTML = "";
     document.getElementById("exportModal").classList.add("active");
 }
 function closeExport() { document.getElementById("exportModal").classList.remove("active"); }
@@ -7415,40 +7532,42 @@ function downloadLineupFile() {
     downloadBlob(new Blob([JSON.stringify(data, null, 1)], { type: "application/json" }), fileBase() + ".lineup");
 }
 
-// FreeMind .mm - each chain is nested so it reads left to right like the on-screen map
-function downloadMindMap() {
+// Mind map files for NiceMind: OPML or Markdown. Each chain is nested so it reads left to right like the on-screen map.
+function mindMapTree(res) {
+    const groups = mapGroups(res);
+    const chainTree = r => {
+        let node = null;
+        [...r.chain].reverse().forEach(c => { node = { text: c.text, kids: node ? [node] : [] }; });
+        return { text: r.label, kids: node ? [node] : [] };
+    };
+    return {
+        text: `Lineup ${res.daypart} ${shortDate(res.date)}`,
+        kids: groups.map(g => {
+            const G = GROUPS[g.key];
+            if (!g.branched) return { text: G.label, kids: g.rows.map(chainTree) };
+            // Breaks: time -> person going on break -> who covers
+            const times = [];
+            g.rows.forEach(r => { let b = times.find(x => x.text === r.branch); if (!b) { b = { text: r.branch, kids: [] }; times.push(b); } b.kids.push(chainTree(r)); });
+            return { text: G.label, kids: times };
+        })
+    };
+}
+function downloadMindMap(kind) {
     if (!result) return;
-    const x = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    const groups = mapGroups(result);
-    let out = `<map version="1.0.1">\n<node TEXT="${x(`Lineup ${result.daypart} ${shortDate(result.date)}`)}">\n`;
-    groups.forEach((g, gi) => {
-        const G = GROUPS[g.key];
-        out += `<node TEXT="${x(G.label)}" POSITION="right" COLOR="${G.color}" BACKGROUND_COLOR="#ffffff">\n<edge COLOR="${G.color}" WIDTH="2"/>\n`;
-        const rowOut = r => {
-            out += `<node TEXT="${x(r.label)}">\n`;
-            r.chain.forEach(c => { out += `<node TEXT="${x(c.text)}">\n`; });
-            r.chain.forEach(() => { out += `</node>\n`; });
-            out += `</node>\n`;
-        };
-        if (g.branched) {
-            // Breaks: time -> person going on break -> person covering
-            let open = null;
-            g.rows.forEach(r => {
-                if (r.branch !== open) {
-                    if (open !== null) out += `</node>\n`;
-                    out += `<node TEXT="${x(r.branch)}">\n`;
-                    open = r.branch;
-                }
-                rowOut(r);
-            });
-            if (open !== null) out += `</node>\n`;
-        } else {
-            g.rows.forEach(rowOut);
-        }
-        out += `</node>\n`;
-    });
-    out += `</node>\n</map>\n`;
-    downloadBlob(new Blob([out], { type: "application/x-freemind" }), fileBase() + ".mm");
+    const tree = mindMapTree(result);
+    if (kind === "md") {
+        const lines = [`# ${tree.text}`, ""];
+        const walk = (n, d) => { lines.push(`${"  ".repeat(d)}- ${n.text}`); n.kids.forEach(k => walk(k, d + 1)); };
+        tree.kids.forEach(k => walk(k, 0));
+        downloadBlob(new Blob([lines.join("\n") + "\n"], { type: "text/markdown" }), fileBase() + ".md");
+        return;
+    }
+    const x = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    const walk = (n, d) => n.kids.length
+        ? `${"  ".repeat(d)}<outline text="${x(n.text)}">\n${n.kids.map(k => walk(k, d + 1)).join("")}${"  ".repeat(d)}</outline>\n`
+        : `${"  ".repeat(d)}<outline text="${x(n.text)}"/>\n`;
+    const out = `<?xml version="1.0" encoding="UTF-8"?>\n<opml version="2.0">\n<head><title>${x(tree.text)}</title></head>\n<body>\n${walk(tree, 1)}</body>\n</opml>\n`;
+    downloadBlob(new Blob([out], { type: "text/x-opml" }), fileBase() + ".opml");
 }
 
 function importFile(input) {
@@ -7493,6 +7612,122 @@ function applyLoadedLineup(loadedState, loadedResult, label, savedId) {
 // SAVE / LOAD WITH SHEETS
 // =====================================================================
 let savingToSheets = false;
+
+// ---------- Each leader's own saved lineups (signed in with their PIN, remembered on this device) ----------
+function myLeader() { try { return localStorage.getItem("lineupLeader") || ""; } catch (e) { return ""; } }
+function setMyLeader(n) { try { if (n) localStorage.setItem("lineupLeader", n); else localStorage.removeItem("lineupLeader"); } catch (e) {} }
+function displayForRaw(raw) { return Object.keys(STAFF).find(d => STAFF[d].raw === raw) || staffNameFor(raw) || raw; }
+function renderMyWho() {
+    const el = document.getElementById("myWho");
+    if (!el) return;
+    const me = myLeader();
+    el.innerHTML = me
+        ? `Signed in as <b>${esc(me)}</b> <button type="button" class="link-btn" onclick="setMyLeader(''); renderMyWho(); document.getElementById('mySaved').innerHTML=''">Switch</button>`
+        : `<button type="button" class="link-btn" onclick="signInLeader()">Sign in with your PIN</button> — your saves are kept under your name.`;
+}
+let afterSignIn = null;
+function signInLeader(then) {
+    afterSignIn = then || null;
+    askPin("signin", "Sign in with your PIN to save and pull up your own lineups.");
+}
+function needLeader(then) { if (myLeader()) return true; signInLeader(then); return false; }
+// The form's timestamp cell -> "Mon 10/26, 7:01 AM"
+function savedAtText(cell) {
+    const v = cell && cell.v;
+    const m = typeof v === "string" && v.match(/^Date\((\d+),(\d+),(\d+)(?:,(\d+),(\d+))?/);
+    if (m) {
+        const d = new Date(+m[1], +m[2], +m[3], +(m[4] || 0), +(m[5] || 0));
+        const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+        return `${shortDate(iso)}, ${fmtClock(d.getHours() * 60 + d.getMinutes())}`;
+    }
+    return cellText(cell);
+}
+// Saved rows from the saves spreadsheet, newest first
+async function savedRowsFrom(q) {
+    const tab = LINEUP_FORM.sheetTab ? "&sheet=" + encodeURIComponent(LINEUP_FORM.sheetTab) : "";
+    return gvizRows(LINEUP_FORM.sheetId, q, 15000, tab);
+}
+async function fetchMySaved(name) {
+    const q = `SELECT A, B, C, D, E WHERE E = "${String(name).replace(/"/g, "")}" ORDER BY A DESC LIMIT 30`;
+    const rows = await savedRowsFrom(q);
+    if (rows === null) return null;
+    const list = [];
+    rows.forEach(row => {
+        const c = row.c || [];
+        const raw = cellRaw(c[3]);
+        if (!raw || raw.charAt(0) !== "{") return;
+        try { const o = JSON.parse(raw); if (o && o.state) list.push({ id: o.id, state: o.state, result: o.result || null, by: cellText(c[4]), at: savedAtText(c[0]) }); } catch (e) {}
+    });
+    return list;
+}
+async function saveMine() {
+    if (savingToSheets) return;
+    if (!lineupFormReady()) { showStatusMessage("Saving to Sheets isn't set up yet — add the form IDs to LINEUP_FORM in the code.", "error", 8000); return; }
+    if (!needLeader(saveMine)) return;
+    const me = myLeader();
+    saveDraftNow();
+    // the open daypart, plus the other one if it has a roster
+    const items = ["AM", "PM"].map(dp => {
+        if (dp === state.daypart) return state.roster.length ? { st: state, res: result } : null;
+        try { const o = JSON.parse(localStorage.getItem(draftKey(dp)) || "null"); return o && o.state && (o.state.roster || []).length ? { st: o.state, res: o.result } : null; } catch (e) { return null; }
+    }).filter(Boolean);
+    if (!items.length) { showStatusMessage("Add people to the roster first.", "warning"); return; }
+    savingToSheets = true;
+    const btn = document.getElementById("saveSheetsBtn");
+    btn.disabled = true; btn.firstChild.textContent = "Saving...";
+    const ids = [];
+    for (const it of items) {
+        const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        let payload = JSON.stringify({ id, state: { ...it.st, savedId: id }, result: it.res });
+        if (payload.length > 45000) payload = JSON.stringify({ id, state: { ...it.st, savedId: id } });
+        const form = {};
+        form[LINEUP_FORM.daypartEntry] = it.st.daypart;
+        form[LINEUP_FORM.dateEntry] = it.st.date;
+        form[LINEUP_FORM.dataEntry] = payload;
+        form[LINEUP_FORM.byEntry] = me;
+        await submitToGoogleForm(LINEUP_FORM.formId, form);
+        ids.push(id);
+        if (it.st === state) state.savedId = id;
+    }
+    let ok = false;
+    for (let i = 0; i < 5 && !ok; i++) {
+        await new Promise(r => setTimeout(r, 2500));
+        const list = await fetchMySaved(me);
+        ok = !!list && ids.every(id => list.some(x => x.id === id));
+    }
+    btn.disabled = false; btn.firstChild.textContent = "Save my lineup";
+    savingToSheets = false;
+    if (!ok) { showStatusMessage("Your lineup did NOT save — Google never received it. Check the connection and try again.", "error", 10000); return; }
+    saveDraftNow();
+    showStatusMessage(`Saved under ${me}: ${items.map(it => it.st.daypart).join(" + ")} for ${shortDate(items[0].st.date)}.`, "success", 4500);
+}
+async function openMySaved() {
+    if (!lineupFormReady()) { showStatusMessage("Loading from Sheets isn't set up yet.", "error", 6000); return; }
+    if (!needLeader(openMySaved)) return;
+    const me = myLeader();
+    const box = document.getElementById("mySaved");
+    box.innerHTML = `<p class="sheet-help">Loading ${esc(me)}'s lineups…</p>`;
+    const list = await fetchMySaved(me);
+    if (list === null) { box.innerHTML = `<p class="sheet-help" style="color:#b91c1c">Couldn't reach the lineup sheet.</p>`; return; }
+    if (!list.length) { box.innerHTML = `<p class="sheet-help">Nothing saved under ${esc(me)} yet — tap Save my lineup.</p>`; return; }
+    // newest save for each day + daypart
+    const seen = new Set();
+    const latest = list.filter(x => { const k = x.state.date + x.state.daypart; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 14);
+    window._mySaved = latest;
+    box.innerHTML = `<div class="calllist my-list">${latest.map((x, i) => `
+        <div class="callrow">
+            <span class="type-tag">${esc(x.state.daypart)}</span>
+            <div><b>${esc(prettyDate(x.state.date))}</b><div class="break-sub">${(x.state.roster || []).length} people${x.result ? " · lineup" : " · roster"}${x.at ? " · saved " + esc(x.at) : ""}</div></div>
+            <button type="button" class="link-btn" onclick="loadMySaved(${i})">Open</button>
+        </div>`).join("")}</div>`;
+}
+function loadMySaved(i) {
+    const x = (window._mySaved || [])[i];
+    if (!x) return;
+    if (state.roster.length && x.id !== state.savedId && x.state.daypart === state.daypart && !confirm(`Replace the ${x.state.daypart} roster on this device with your saved one?`)) return;
+    applyLoadedLineup(x.state, x.result, `Opened your saved ${x.state.daypart} lineup`, x.id);
+    closeExport();
+}
 async function saveToSheets() {
     if (!result || savingToSheets) return;
     if (!lineupFormReady()) { showStatusMessage("Saving to Sheets isn't set up yet — add the form IDs to LINEUP_FORM in the code.", "error", 8000); return; }
@@ -7560,7 +7795,10 @@ async function checkSavedLineup() {
             if (state.roster.length && !rosterProblems() && daypart === "PM") { generate(); renderAll(); }
         }
     }
-    const s = await findSaved(dp, todayIso());
+    // your own save from another device (each leader has their own lineups)
+    const me = myLeader();
+    if (!me) return;
+    const s = await findSaved(dp, todayIso(), me);
     if (!s || dp !== daypart || s.id === state.savedId) return;
     if (!state.roster.length) {
         applyLoadedLineup(s.state, s.result, `Loaded the lineup ${s.by || "a leader"} saved`, s.id);
@@ -7574,7 +7812,7 @@ function renderSavedBanner() {
     document.querySelectorAll(".saved-slot").forEach((slot, i) => {
         // On wide screens show it once (above the roster), not in both columns
         if (!pendingSaved || pendingSaved.state.daypart !== daypart) { slot.innerHTML = ""; return; }
-        slot.innerHTML = `<div class="saved-banner">${esc(pendingSaved.by || "A leader")} saved a different ${daypart} lineup to Sheets.
+        slot.innerHTML = `<div class="saved-banner">You saved a different ${daypart} lineup on another device.
             <button type="button" onclick="applyPendingSaved()">Load it</button>
             <button type="button" class="x" title="Dismiss" onclick="pendingSaved=null; renderSavedBanner()">${ICON.x}</button></div>`;
     });
