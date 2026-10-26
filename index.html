@@ -1384,6 +1384,9 @@ function buildLineup(st, ratings, seed) {
     const inTraining = (n, t) => (trainBusy[String(n).toLowerCase()] || []).some(([a, b]) => a <= t && t < b);
     const onShift = (p, t) => p.start <= t && t < p.end && !inTraining(p.name, t);
     const headAt = t => people.filter(p => onShift(p, t)).length;
+    // bodies for the spots: not floaters, and not the shift lead once the store is open (the lead is a last resort,
+    // so breaks and tasks are planned as if the lead isn't there)
+    const bodiesAt = t => people.filter(p => onShift(p, t) && !p.floater && !(p.name === st.shiftLead && t >= OPEN + 60)).length;
     const peak = Math.max(...slots.map(headAt));
     const runnerSetting = String(st.runners || "auto");
     const maxConc = runnerSetting === "auto" ? (peak >= 14 ? 2 : 1) : Math.max(1, +runnerSetting);
@@ -1858,7 +1861,7 @@ function buildLineup(st, ratings, seed) {
             }
             // 0) keep every spot open: start the break when the crew can absorb it (someone arriving, nobody leaving),
             //    up to an hour after the ideal time — otherwise a spot goes empty for the break and reopens after
-            const working = t => people.filter(q => onShift(q, t) && !q.floater).length - concAt(t);
+            const working = t => bodiesAt(t) - concAt(t);
             const absorbs = s0 => { const before = working(s0 - STEP); for (let t = s0; t < s0 + BREAK_LEN; t += STEP) if (working(t) - 1 < before) return false; return true; };
             let absorbed = false;
             if (chosen === null) {
@@ -1939,7 +1942,7 @@ function buildLineup(st, ratings, seed) {
             sc += concAt(t) * 10;
             const n = headAt(t);
             if (n === 0) sc += 1000; else if (n < 3) sc += 40; else if (n < 6) sc += 8;
-            if (n - concAt(t) - 1 < mustStaffAt(t)) sc += 200;   // would leave outside (or the drive-thru) short
+            if (bodiesAt(t) - concAt(t) - 1 < mustStaffAt(t)) sc += 200;   // would leave outside (or the drive-thru) short
         }
         if (inLunch(s, s + len)) sc += 30;
         if (inRush(s, s + len)) sc += 15;
@@ -1953,7 +1956,7 @@ function buildLineup(st, ratings, seed) {
         }
         return best;
     };
-    const shortAt = (x, len) => { for (let t = x; t < x + len; t += STEP) if (headAt(t) - concAt(t) - 1 < mustStaffAt(t)) return true; return false; };
+    const shortAt = (x, len) => { for (let t = x; t < x + len; t += STEP) if (bodiesAt(t) - concAt(t) - 1 < mustStaffAt(t)) return true; return false; };
     const rushFree = (lo, hi, len, cost, label, earliest) => {
         let best = null, bestScore = Infinity;
         for (let x = lo; x <= hi; x += STEP) {
@@ -2191,11 +2194,14 @@ function buildLineup(st, ratings, seed) {
     // A 1 in the staff sheet means never put them on that spot (a hard rule, like "Not outside")
     const ratedOne = (n, pos) => !!POS_INFO[pos] && ratingAt(n, pos) === 1;
     // the store's first stretch: the lead works a spot until there are 4 other people to run the main spots
-    const openingPhase = t => isAM && t < OPEN + 120 && people.filter(p => p.name !== shiftLead && onShift(p, t) && !isBusy(p.name, t)).length < 4;
+    // (it ends for good the first time 4 others are on — the lead doesn't hop back in for a break later)
+    let openingEnd = OPEN + 120;
+    for (let t = OPEN; t < OPEN + 120; t += STEP) if (people.filter(p => p.name !== shiftLead && onShift(p, t)).length >= 4) { openingEnd = t; break; }
+    const openingPhase = t => isAM && t < openingEnd;
     const leadLimited = t => !!shiftLead && !openingPhase(t);
     // (after 9 there's no Mobile Drinks / Register 2 / Runner, so the lead never fills a spot 9–10:30)
     const canWork = (n, pos) => !(insideOnly(n) && POS_INFO[pos] && POS_INFO[pos].group === "Outside") && !ratedOne(n, pos)
-        && !(n === shiftLead && leadLimited(simT) && (!LEAD_SPOTS.includes(pos) || insideClosed(simT)));
+        && !(n === shiftLead && leadLimited(simT));   // after open the lead only steps in on purpose (Register 2, below) — never as a filler
     // a preference can be a whole area (FC / DT / Outside), a job ("skill:Bagging" = any bagger spot) or one spot
     const prefersPos = (n, pos) => { const x = personOf(n); return !!x && !!x.prefer && x.prefer !== "inside" && !!POS_INFO[pos]
         && (x.prefer === pos || POS_INFO[pos].group === x.prefer || x.prefer === "skill:" + POS_INFO[pos].skill); };
